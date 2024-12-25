@@ -3,7 +3,13 @@
     <div class="wrapper">
         <%@ include file="navbar.jsp" %>
         <%@ include file="sidebar.jsp" %>
-        <%@ include file="main-content.jsp" %>
+        <% 
+            String pageurl = (String) request.getAttribute("pageUrl");
+            if (pageurl == null || pageurl.isEmpty()) {
+                pageurl = "index.jsp";
+            }
+        %>
+        <jsp:include page="<%= pageurl %>" />
     </div>
     <%@ include file="scripts.jsp" %>
 </body>
