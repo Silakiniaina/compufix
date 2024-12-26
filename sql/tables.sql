@@ -15,3 +15,13 @@ CREATE TABLE type_ram(
    PRIMARY KEY(id_type_ram),
    UNIQUE(nom_type_ram)
 );
+
+CREATE TABLE RAM(
+   id_ram SERIAL,
+   est_portable BOOLEAN DEFAULT true,
+   id_type_ram INTEGER NOT NULL,
+   id_composant INTEGER NOT NULL,
+   PRIMARY KEY(id_ram),
+   FOREIGN KEY(id_type_ram) REFERENCES type_ram(id_type_ram),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);
