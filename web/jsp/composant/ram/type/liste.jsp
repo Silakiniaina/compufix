@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <!-- Bordered table -->
-                <div class="col-md-12 my-4">
+                <div class="col-md-8 my-4">
                     <div class="card shadow">
                         <div class="card-body">
                             <table class="table table-hover mb-0">
