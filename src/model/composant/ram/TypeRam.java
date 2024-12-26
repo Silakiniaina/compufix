@@ -76,6 +76,40 @@ public class TypeRam {
         }
     }
 
+    public void delete(Connection c) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String query = "DELETE FROM type_ram WHERE id_type_ram = ?";
+        
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false);
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, this.getIdTypeRam());
+            
+            int affectedRows = prstm.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("La suppression a échoué, aucun type RAM trouvé pour l'id " + this.getIdTypeRam());
+            }
+            c.commit();
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback();
+            }
+            throw e;
+        } finally {
+            if (prstm != null) {
+                prstm.close();
+            }
+            if (c != null && isNewConnection) {
+                c.close();
+            }
+        }
+    }
+
     // GETTERS AND SETTERS
     public int getIdTypeRam() {
         return idTypeRam;
