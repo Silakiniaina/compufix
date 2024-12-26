@@ -2,7 +2,9 @@ package model.composant.ram;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.composant.Composant;
@@ -13,6 +15,45 @@ public class RAM extends Composant{
     private int idRam; 
     private boolean portable;
     private TypeRam typeRam;
+
+    
+    @Override
+    public List<Composant> getAll(Connection c) throws SQLException {
+        List<Composant> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM ram, composant WHERE ram.id_composant = composant.id_composant ORDER BY id_ram";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            
+            rs = prstm.executeQuery();
+            while (rs.next()) {
+                RAM r = new RAM();
+                r.setIdRam(rs.getInt("id_ram"));
+                r.setPortable(rs.getBoolean("est_portable"));
+                r.setTypeRam(c, rs.getInt("id_type_ram"));
+                r.setIdComposant(rs.getInt("id_composant"));
+                r.setNomComposant(rs.getString("nom_composant"));
+                r.setCapacite(rs.getDouble("capacite"));
+                r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                results.add(r);
+            }
+            return results;
+        } finally {
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+    
+    @Override
+    public Composant getById(Connection c, int id) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     public void delete(Connection c) throws SQLException {
@@ -43,17 +84,6 @@ public class RAM extends Composant{
         } finally {
            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
-    }
-
-    @Override
-    public List<Composant> getAll(Connection c) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    @Override
-    public Composant getById(Connection c, int id) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
