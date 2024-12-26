@@ -48,11 +48,36 @@ public class RAM extends Composant{
             Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
-    
+
     @Override
     public Composant getById(Connection c, int id) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM ram, composant WHERE ram.id_composant = composant.id_composant AND id_ram = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, id);
+            
+            rs = prstm.executeQuery();
+            if (rs.next()) {
+                this.setIdRam(rs.getInt("id_ram"));
+                this.setPortable(rs.getBoolean("est_portable"));
+                this.setTypeRam(c, rs.getInt("id_type_ram"));
+                this.setIdComposant(rs.getInt("id_composant"));
+                this.setNomComposant(rs.getString("nom_composant"));
+                this.setCapacite(rs.getDouble("capacite"));
+                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                return this;
+            }
+            return null;
+        } finally {
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
     }
 
     @Override
