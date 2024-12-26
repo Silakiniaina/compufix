@@ -32,6 +32,26 @@ public class Composant {
         }
     }
 
+    public void updateComposant(Connection connection) throws SQLException {
+        if (this.getIdComposant() == 0) {
+            throw new SQLException("Un composant avec un ID : "+this.getIdComposant()+" est inexistant");
+        }
+
+        String sql = "UPDATE composant SET nom_composant = ?, capacite = ?, prix_unitaire = ? WHERE id_composant = ?";
+        
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, this.getNomComposant());
+            pstmt.setDouble(2, this.getCapacite());
+            pstmt.setDouble(3, this.getPrixUnitaire());
+            pstmt.setInt(4, this.getIdComposant());
+            
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Mise a jour echoue : le composant ID : " + this.getIdComposant() + " non trouve");
+            }
+        }
+    }
+
     // GETTERS AND SETTERS
     public int getIdComposant() {
         return idComposant;
