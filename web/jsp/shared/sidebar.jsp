@@ -40,7 +40,7 @@
                                         <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">List type RAM</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">Add type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/add"><span class="ml-1 item-text">Add type RAM</span></a>
                                     </li>
                                 </ul>
                             </li>

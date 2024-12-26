@@ -37,4 +37,31 @@ public class TypeRamServlet extends HttpServlet{
             e.printStackTrace(out);
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter out = resp.getWriter();
+        String mode = req.getParameter("mode");
+        try {
+            Connection c = (Connection)req.getSession().getAttribute("connexion");
+            TypeRam t = new TypeRam();
+            t.setNomTypeRam(req.getParameter("nom"));
+
+            if( mode != null ){
+                if( mode.equals("u")){
+                    int id = Integer.parseInt(req.getParameter("id"));
+                    t.setIdTypeRam(id);
+
+                    t.update(c);
+                }else{
+                    t.insert(c);
+                }
+            }else{
+
+            }
+            resp.sendRedirect(req.getContextPath()+"/composant/ram/type/list");
+        } catch (Exception e) {
+            e.printStackTrace(out);
+        }
+    }
 }
