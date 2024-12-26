@@ -44,6 +44,38 @@ public class TypeRam {
         }
     }
 
+    public void update(Connection c) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String query = "UPDATE type_ram SET nom_type_ram = ? WHERE id_type_ram = ?";
+        
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false);
+            prstm = c.prepareStatement(query);
+            prstm.setString(1, this.getNomTypeRam());
+            prstm.setInt(2, this.getIdTypeRam());
+            
+            prstm.executeUpdate();
+            c.commit();
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback();
+            }
+            throw e;
+        } finally {
+            if (prstm != null) {
+                prstm.close();
+            }
+            if (c != null && isNewConnection) {
+                c.close();
+            }
+        }
+    }
+
     // GETTERS AND SETTERS
     public int getIdTypeRam() {
         return idTypeRam;
