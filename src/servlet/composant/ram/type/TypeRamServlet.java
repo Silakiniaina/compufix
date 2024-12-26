@@ -32,7 +32,7 @@ public class TypeRamServlet extends HttpServlet{
                 }
             }
             req.setAttribute("pageUrl", "/WEB-INF/views/composant/ram/type/addType.jsp");
-            req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp");
+            req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);;
         } catch (Exception e) {
             e.printStackTrace(out);
         }

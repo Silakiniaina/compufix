@@ -5,7 +5,7 @@
     <nav class="vertnav navbar navbar-light">
         <div class="w-100 mb-3 d-flex">
             <a class="navbar-brand mx-auto mt-1 flex-fill text-center" href="index">
-                <img src="${pageContext.request.contextPath}/assets/images/logo.svg" alt="Logo" class="navbar-brand-img brand-sm" style="width: 30%">
+                <img src="<%= request.getContextPath() %>/assets/images/logo.svg" alt="Logo" class="navbar-brand-img brand-sm" style="width: 30%">
             </a>            
         </div>
         <ul class="navbar-nav flex-fill w-100 mb-2">
@@ -37,10 +37,10 @@
                                 </a>
                                 <ul class="collapse list-unstyled pl-4 w-100" id="ram">
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="${pageContext.request.contextPath}/composant/ram/type/list"><span class="ml-1 item-text">List type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">List type RAM</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="${pageContext.request.contextPath}/composant/ram/type/list"><span class="ml-1 item-text">Add type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">Add type RAM</span></a>
                                     </li>
                                 </ul>
                             </li>
