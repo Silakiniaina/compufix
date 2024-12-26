@@ -25,7 +25,7 @@ public class ListRamServlet extends HttpServlet{
             List<Composant> composants = new RAM().getAll(c);
 
             req.setAttribute("composants", composants);
-            req.setAttribute("pageUrl", "WEB-INF/views/composant/ram/liste.jsp");
+            req.setAttribute("pageUrl", "/WEB-INF/views/composant/ram/liste.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace(out);
