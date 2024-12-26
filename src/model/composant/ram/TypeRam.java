@@ -38,12 +38,7 @@ public class TypeRam {
             }
             throw e;
         } finally {
-            if (prstm != null) {
-                prstm.close();
-            }
-            if (c != null && isNewConnection) {
-                c.close();
-            }
+           Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
 
@@ -70,12 +65,7 @@ public class TypeRam {
             }
             throw e;
         } finally {
-            if (prstm != null) {
-                prstm.close();
-            }
-            if (c != null && isNewConnection) {
-                c.close();
-            }
+           Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
 
@@ -104,12 +94,7 @@ public class TypeRam {
             }
             throw e;
         } finally {
-            if (prstm != null) {
-                prstm.close();
-            }
-            if (c != null && isNewConnection) {
-                c.close();
-            }
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
 
@@ -134,15 +119,7 @@ public class TypeRam {
             }
             return null;
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (prstm != null) {
-                prstm.close();
-            }
-            if (c != null && isNewConnection) {
-                c.close();
-            }
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
 
@@ -168,15 +145,7 @@ public class TypeRam {
             }
             return results;
         } finally {
-            if( rs != null){
-                rs.close();
-            }
-            if (prstm != null) {
-                prstm.close();
-            }
-            if (c != null && isNewConnection) {
-                c.close();
-            }
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
 
