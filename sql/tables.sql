@@ -8,3 +8,10 @@ CREATE TABLE composant(
    CHECK(capacite >= 0),
    CHECK(prix_unitaire >= 0)
 );
+
+CREATE TABLE type_ram(
+   id_type_ram SERIAL,
+   nom_type_ram VARCHAR(20)  NOT NULL,
+   PRIMARY KEY(id_type_ram),
+   UNIQUE(nom_type_ram)
+);
