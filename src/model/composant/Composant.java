@@ -52,6 +52,23 @@ public class Composant {
         }
     }
 
+    public void deleteComposant(Connection connection) throws SQLException {
+        if (this.getIdComposant() == 0) {
+            throw new SQLException("Un composant avec un ID : "+this.getIdComposant()+ " est inexistant");
+        }
+
+        String sql = "DELETE FROM composant WHERE id_composant = ?";
+        
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, this.getIdComposant());
+            
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Supperssion echoue: Composant avec ID " + this.getIdComposant() + " non trouve");
+            }
+        }
+    }
+
     // GETTERS AND SETTERS
     public int getIdComposant() {
         return idComposant;
