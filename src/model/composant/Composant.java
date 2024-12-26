@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
-public class Composant {
+public abstract class Composant {
     private int idComposant;
     private String nomComposant; 
     private double capacite; 
@@ -68,6 +69,13 @@ public class Composant {
             }
         }
     }
+
+    // ABSTRACT
+    public abstract void insert(Connection c) throws SQLException;
+    public abstract void update(Connection c) throws SQLException;
+    public abstract void delete(Connection c) throws SQLException;
+    public abstract List<Composant> getAll(Connection c) throws SQLException;
+    public abstract Composant getById(Connection c, int id) throws SQLException;
 
     // GETTERS AND SETTERS
     public int getIdComposant() {
