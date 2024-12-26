@@ -32,24 +32,15 @@
                         <ul class="navbar-nav flex-fill w-100 mb-2">
                             <li class="nav-item dropdown">
                                 <a href="#ram" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                                    <i class="fe fe-home fe-16"></i>
+                                    <i class="fe fe-codepen fe-16"></i>
                                     <span class="ml-3 item-text">RAM</span><span class="sr-only">(current)</span>
                                 </a>
                                 <ul class="collapse list-unstyled pl-4 w-100" id="ram">
                                     <li class="nav-item active">
-                                        <ul class="navbar-nav flex-fill w-100 mb-2">
-                                            <li class="nav-item dropdown">
-                                                <a href="#typeram" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                                                    <i class="fe fe-home fe-16"></i>
-                                                    <span class="ml-3 item-text">Type Ram</span><span class="sr-only">(current)</span>
-                                                </a>
-                                                <ul class="collapse list-unstyled pl-4 w-100" id="typeram">
-                                                    <li class="nav-item active">
-                                                        <a class="nav-link pl-3" href="${pageContext.request.contextPath}/composant/ram/type/list"><span class="ml-1 item-text">List</span></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                        <a class="nav-link pl-3" href="${pageContext.request.contextPath}/composant/ram/type/list"><span class="ml-1 item-text">List type RAM</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="${pageContext.request.contextPath}/composant/ram/type/list"><span class="ml-1 item-text">Add type RAM</span></a>
                                     </li>
                                 </ul>
                             </li>
