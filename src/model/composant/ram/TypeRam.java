@@ -2,6 +2,7 @@ package model.composant.ram;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.utils.Database;
@@ -101,6 +102,39 @@ public class TypeRam {
             }
             throw e;
         } finally {
+            if (prstm != null) {
+                prstm.close();
+            }
+            if (c != null && isNewConnection) {
+                c.close();
+            }
+        }
+    }
+
+    public TypeRam getById(Connection c, int id) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String query = "SELECT * FROM type_ram WHERE id_type_ram = ?";
+        ResultSet rs = null; 
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, id);
+            
+            rs = prstm.executeQuery();
+            if (rs.next()) {
+                this.setIdTypeRam(rs.getInt("id_type_ram"));
+                this.setNomTypeRam(rs.getString("nom_type_ram"));
+                return this;
+            }
+            return null;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
             if (prstm != null) {
                 prstm.close();
             }
