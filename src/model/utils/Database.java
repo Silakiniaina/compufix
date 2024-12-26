@@ -2,6 +2,8 @@ package model.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
@@ -23,5 +25,22 @@ public class Database {
         }
         
         return con;
+    }
+
+    public static void closeRessources(ResultSet rs, PreparedStatement prstm , Connection c, Boolean isNewConnection) throws SQLException{
+        if(rs != null){
+            rs.close();
+        }
+        if(prstm != null){
+            prstm.close();
+        }
+        if( c != null){
+            if( isNewConnection != null && isNewConnection.booleanValue() == true){
+                c.close();
+            }
+            else if( isNewConnection == null){
+                c.close();
+            }
+        }
     }
 }
