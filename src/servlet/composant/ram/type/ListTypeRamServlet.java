@@ -31,5 +31,4 @@ public class ListTypeRamServlet extends HttpServlet{
             e.printStackTrace(out);
         }
     }
-    
 }
