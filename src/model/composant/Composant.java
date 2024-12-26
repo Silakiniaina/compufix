@@ -6,8 +6,6 @@ public class Composant {
     private double capacite; 
     private double prixUnitaire;
 
-    
-
     // GETTERS AND SETTERS
     public int getIdComposant() {
         return idComposant;
@@ -21,7 +19,7 @@ public class Composant {
     public double getPrixUnitaire() {
         return prixUnitaire;
     }
-
+    
     public void setIdComposant(int idComposant) {
         this.idComposant = idComposant;
     }
