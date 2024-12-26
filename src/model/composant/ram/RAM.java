@@ -26,7 +26,7 @@ public class RAM extends Composant{
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
-                        
+
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getIdRam());
             
@@ -44,6 +44,7 @@ public class RAM extends Composant{
            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
+
     @Override
     public List<Composant> getAll(Connection c) throws SQLException {
         // TODO Auto-generated method stub
@@ -90,8 +91,36 @@ public class RAM extends Composant{
 
     @Override
     public void update(Connection c) throws SQLException {
-        // TODO Auto-generated method stub
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String query = "UPDATE ram SET est_portable = ?, id_type_ram = ?, id_composant = ? WHERE id_ram = ?";
         
+        try {
+            if(c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false);
+            
+            this.updateComposant(c);
+
+            prstm = c.prepareStatement(query);
+            prstm.setBoolean(1, this.isPortable());
+            prstm.setInt(2, this.getTypeRam().getIdTypeRam());
+            prstm.setInt(3, this.getIdComposant());
+            prstm.setInt(4, this.getIdRam());
+            
+            prstm.executeUpdate();
+            
+            c.commit();
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback();
+            }
+            throw e;
+        } finally {
+           Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        } 
     }
 
     // GETTERS AND SETTERS
