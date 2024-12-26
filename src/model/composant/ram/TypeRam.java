@@ -72,7 +72,7 @@ public class TypeRam {
     public void delete(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String query = "DELETE FROM type_ram WHERE id_type_ram = ?";
+        String query = "DELETE FROM type_ram WHERE id_type_ram = ? ";
         
         try {
             if( c == null){
@@ -92,7 +92,7 @@ public class TypeRam {
             if (c != null) {
                 c.rollback();
             }
-            throw e;
+            throw new SQLException("Cette type de ram est encore utiliser par des ram et ne peut pas etre supprime");
         } finally {
             Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }

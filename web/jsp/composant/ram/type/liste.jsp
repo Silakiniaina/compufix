@@ -27,12 +27,12 @@
                                             <td class="text-center"><%= type.getIdTypeRam() %></td>
                                             <td><%= type.getNomTypeRam() %></td>
                                             <td class="text-center"> 
-                                                <button type="button" class="btn btn-sm btn-primary mx-1"> 
+                                                <a href="${pageContext.request.contextPath}/composant/ram/type/add?mode=u&id=<%= type.getIdTypeRam() %>" type="button" class="btn btn-sm btn-primary mx-1"> 
                                                     <span class="fe fe-book fe-16"></span>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-danger mx-1">
-                                                    <span class="fe fe-trash fe-16"></span>
-                                                </button>
+                                                </a>
+                                                <a href="${pageContext.request.contextPath}/composant/ram/type/add?mode=d&id=<%= type.getIdTypeRam() %>" type="button" class="btn btn-sm btn-danger mx-1">
+                                                    <span class="fe fe-trash-2 fe-16"></span>
+                                                </a>
                                             </td>
                                         </tr>
                                     <% 
