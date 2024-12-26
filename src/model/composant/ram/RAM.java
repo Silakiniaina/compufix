@@ -16,8 +16,33 @@ public class RAM extends Composant{
 
     @Override
     public void delete(Connection c) throws SQLException {
-        // TODO Auto-generated method stub
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String query = "DELETE FROM ram WHERE id_ram = ? ";
         
+        try {
+            if(c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false);
+                        
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, this.getIdRam());
+            
+            prstm.executeUpdate();
+
+            this.deleteComposant(c);
+
+            c.commit();
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback();
+            }
+            throw e;
+        } finally {
+           Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
     }
     @Override
     public List<Composant> getAll(Connection c) throws SQLException {
