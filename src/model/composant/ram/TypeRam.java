@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.utils.Database;
 
@@ -133,6 +135,40 @@ public class TypeRam {
             return null;
         } finally {
             if (rs != null) {
+                rs.close();
+            }
+            if (prstm != null) {
+                prstm.close();
+            }
+            if (c != null && isNewConnection) {
+                c.close();
+            }
+        }
+    }
+
+    public List<TypeRam> getAll(Connection c) throws SQLException {
+        List<TypeRam> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM type_ram ORDER BY id_type_ram";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            
+            rs = prstm.executeQuery();
+            while (rs.next()) {
+                TypeRam typeRam = new TypeRam();
+                typeRam.setIdTypeRam(rs.getInt("id_type_ram"));
+                typeRam.setNomTypeRam(rs.getString("nom_type_ram"));
+                results.add(typeRam);
+            }
+            return results;
+        } finally {
+            if( rs != null){
                 rs.close();
             }
             if (prstm != null) {
