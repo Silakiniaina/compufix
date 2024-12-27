@@ -16,7 +16,6 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 120px;">ID</th>
-                                        <th style="width: 120px;">ID Composant</th>
                                         <th>Nom</th>
                                         <th>Type</th>
                                         <th>Capacite</th>
@@ -32,7 +31,6 @@
                                     %>
                                         <tr>
                                             <td class="text-center"><%= r.getIdRam() %></td>
-                                            <td class="text-center"><%= r.getIdComposant() %></td>
                                             <td><%= r.getNomComposant() %></td>
                                             <td><%= r.getTypeRam().getNomTypeRam() %></td>
                                             <td><%= r.getCapacite() %></td>
