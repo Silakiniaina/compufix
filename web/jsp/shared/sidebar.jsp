@@ -40,10 +40,13 @@
                                         <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">Liste type RAM</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/add"><span class="ml-1 item-text">Ajout type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/list"><span class="ml-1 item-text">Liste RAM</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/list"><span class="ml-1 item-text">Liste RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/add"><span class="ml-1 item-text">Ajouter type RAM</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/add"><span class="ml-1 item-text">Ajouter RAM</span></a>
                                     </li>
                                 </ul>
                             </li>
