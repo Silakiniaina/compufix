@@ -25,3 +25,9 @@ CREATE TABLE RAM(
    FOREIGN KEY(id_type_ram) REFERENCES type_ram(id_type_ram),
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
+
+CREATE TABLE type_processeur(
+   id_type_processeur SERIAL,
+   nom_type_processeur VARCHAR(10)  NOT NULL,
+   PRIMARY KEY(id_type_processeur)
+);
