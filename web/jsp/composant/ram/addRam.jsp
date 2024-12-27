@@ -19,6 +19,7 @@
                             method="POST">
                             <input type="hidden" name="mode" value="<%= updated != null ? "u": "" %>">
                             <input type="hidden" name="id" value="<%= updated != null ? ((RAM)updated).getIdRam(): "" %>">
+                            <input type="hidden" name="idComposant" value="<%= updated != null ? updated.getIdComposant(): "" %>">
                             <div class="form-group">
                                 <label for="nomComposant">Nom</label>
                                 <input type="text" name="nom" class="form-control" id="nomComposant"
@@ -46,7 +47,7 @@
                                 <h5 class="mb-2">Categorie</h5>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="portable" name="categorie"
-                                        class="custom-control-input" value="true" checked>
+                                        class="custom-control-input" value="true" check>
                                     <label class="custom-control-label" for="portable">Portable</label>
                                 </div>
                                 <div class="custom-control custom-radio">

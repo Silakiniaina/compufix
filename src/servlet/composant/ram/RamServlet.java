@@ -61,7 +61,9 @@ public class RamServlet extends HttpServlet{
             if( mode != null ){
                 if( mode.equals("u")){
                     int id = Integer.parseInt(req.getParameter("id"));
-                    r.setIdComposant(id);
+                    int idComposant = Integer.parseInt(req.getParameter("idComposant"));
+                    r.setIdRam(id);
+                    r.setIdComposant(idComposant);
 
                     r.update(c);
                 }else{
