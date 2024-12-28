@@ -37,16 +37,36 @@
                                 </a>
                                 <ul class="collapse list-unstyled pl-4 w-100" id="ram">
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">Liste type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">Liste type</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/list"><span class="ml-1 item-text">Liste RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/list"><span class="ml-1 item-text">Liste</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/add"><span class="ml-1 item-text">Ajouter type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/add"><span class="ml-1 item-text">Ajouter type</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/add"><span class="ml-1 item-text">Ajouter RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/add"><span class="ml-1 item-text">Ajouter</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#processeur" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                                    <i class="fe fe-codepen fe-16"></i>
+                                    <span class="ml-3 item-text">Processeur</span><span class="sr-only">(current)</span>
+                                </a>
+                                <ul class="collapse list-unstyled pl-4 w-100" id="processeur">
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/list"><span class="ml-1 item-text">Liste type</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/list"><span class="ml-1 item-text">Liste</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/add"><span class="ml-1 item-text">Ajouter type </span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/add"><span class="ml-1 item-text">Ajouter</span></a>
                                     </li>
                                 </ul>
                             </li>
