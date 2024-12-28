@@ -37,16 +37,16 @@
                                 </a>
                                 <ul class="collapse list-unstyled pl-4 w-100" id="ram">
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">Liste type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/list"><span class="ml-1 item-text">Liste type</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/list"><span class="ml-1 item-text">Liste RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/list"><span class="ml-1 item-text">Liste</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/add"><span class="ml-1 item-text">Ajouter type RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/type/add"><span class="ml-1 item-text">Ajouter type</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/add"><span class="ml-1 item-text">Ajouter RAM</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/ram/add"><span class="ml-1 item-text">Ajouter</span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -57,16 +57,16 @@
                                 </a>
                                 <ul class="collapse list-unstyled pl-4 w-100" id="processeur">
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/list"><span class="ml-1 item-text">Liste type Processeur</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/list"><span class="ml-1 item-text">Liste type</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/list"><span class="ml-1 item-text">Liste Processeur</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/list"><span class="ml-1 item-text">Liste</span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/add"><span class="ml-1 item-text">Ajouter type Processeur</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/add"><span class="ml-1 item-text">Ajouter type </span></a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/add"><span class="ml-1 item-text">Ajouter Processeur</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/add"><span class="ml-1 item-text">Ajouter</span></a>
                                     </li>
                                 </ul>
                             </li>
