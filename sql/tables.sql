@@ -42,3 +42,19 @@ CREATE TABLE processeur(
    FOREIGN KEY(id_type_processeur) REFERENCES type_processeur(id_type_processeur),
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
+
+CREATE TABLE type_disque(
+   id_type_disque SERIAL,
+   nom_type_disque VARCHAR(10)  NOT NULL,
+   PRIMARY KEY(id_type_disque)
+);
+
+CREATE TABLE disque_dur(
+   id_disque_dur SERIAL,
+   est_portable BOOLEAN DEFAULT false,
+   id_type_disque INTEGER NOT NULL,
+   id_composant INTEGER NOT NULL,
+   PRIMARY KEY(id_disque_dur),
+   FOREIGN KEY(id_type_disque) REFERENCES type_disque(id_type_disque),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);
