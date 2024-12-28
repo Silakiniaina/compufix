@@ -50,6 +50,26 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a href="#processeur" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                                    <i class="fe fe-codepen fe-16"></i>
+                                    <span class="ml-3 item-text">Processeur</span><span class="sr-only">(current)</span>
+                                </a>
+                                <ul class="collapse list-unstyled pl-4 w-100" id="processeur">
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/list"><span class="ml-1 item-text">Liste type Processeur</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/list"><span class="ml-1 item-text">Liste Processeur</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/type/add"><span class="ml-1 item-text">Ajouter type Processeur</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/processeur/add"><span class="ml-1 item-text">Ajouter Processeur</span></a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
