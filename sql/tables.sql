@@ -31,3 +31,14 @@ CREATE TABLE type_processeur(
    nom_type_processeur VARCHAR(10)  NOT NULL,
    PRIMARY KEY(id_type_processeur)
 );
+
+CREATE TABLE processeur(
+   id_processeur SERIAL,
+   generation SMALLINT NOT NULL,
+   nombre_coeur SMALLINT NOT NULL,
+   id_type_processeur INTEGER,
+   id_composant INTEGER NOT NULL,
+   PRIMARY KEY(id_processeur),
+   FOREIGN KEY(id_type_processeur) REFERENCES type_processeur(id_type_processeur),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);
