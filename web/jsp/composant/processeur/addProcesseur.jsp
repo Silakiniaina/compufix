@@ -1,9 +1,9 @@
-<%@ page import="model.composant.ram.TypeRam" %>
-<%@ page import="model.composant.ram.RAM" %>
+<%@ page import="model.composant.processeur.TypeProcesseur" %>
+<%@ page import="model.composant.processeur.Processeur" %>
 <%@ page import="java.util.List" %>
 <%@ page import="model.composant.Composant" %>
 <%
-    List<TypeRam> types = (List<TypeRam>)request.getAttribute("types");
+    List<TypeProcesseur> types = (List<TypeProcesseur>)request.getAttribute("types");
     Composant updated = (Composant)request.getAttribute("updated");
 %>
 <main role="main" class="main-content">
@@ -11,14 +11,14 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <h2 class="page-title">
-                    <%= updated !=null ? "Mise a jour" : "Insertion" %> RAM
+                    <%= updated !=null ? "Mise a jour" : "Insertion" %> Processeur
                 </h2>
                 <div class="col-md-8 card shadow mb-4">
                     <div class="card-body">
-                        <form action="<%= request.getContextPath() %>/composant/ram/add"
+                        <form action="<%= request.getContextPath() %>/composant/processeur/add"
                             method="POST">
                             <input type="hidden" name="mode" value="<%= updated != null ? "u": "" %>">
-                            <input type="hidden" name="id" value="<%= updated != null ? ((RAM)updated).getIdRam(): "" %>">
+                            <input type="hidden" name="id" value="<%= updated != null ? ((Processeur)updated).getIdProcesseur(): "" %>">
                             <input type="hidden" name="idComposant" value="<%= updated != null ? updated.getIdComposant(): "" %>">
                             <div class="form-group">
                                 <label for="nomComposant">Nom</label>
@@ -27,34 +27,35 @@
                                     placeholder="Nom type" required>
                             </div>
                             <div class="form-group">
-                                <label for="capacite">Capacite [ Mo ]</label>
-                                <input type="nomber" name="capacite" class="form-control" min="128"
+                                <label for="capacite">Capacite [ Hz ]</label>
+                                <input type="nomber" name="capacite" class="form-control" min="0"
                                     id="capacite"
-                                    value="<%= updated != null ? updated.getCapacite(): 128 %>"
+                                    value="<%= updated != null ? updated.getCapacite(): 0 %>"
                                     placeholder="Capacite " required>
                             </div>
                             <div class="form-group">
-                                <label for="typeram">Type RAM</label>
-                                <select id="typeram" name="type" class="form-control">
-                                    <% for(TypeRam type : types){ %>
-                                        <option value="<%= type.getIdTypeRam() %>">
-                                            <%= type.getNomTypeRam() %>
+                                <label for="TypeProcesseur">Type Processeur</label>
+                                <select id="TypeProcesseur" name="type" class="form-control">
+                                    <% for(TypeProcesseur type : types){ %>
+                                        <option value="<%= type.getIdTypeProcesseur() %>">
+                                            <%= type.getNomTypeProcesseur() %>
                                         </option>
                                         <% } %>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <h5 class="mb-2">Categorie</h5>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="portable" name="categorie"
-                                        class="custom-control-input" value="true" check>
-                                    <label class="custom-control-label" for="portable">Portable</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="bureau" name="categorie"
-                                        class="custom-control-input" value="false">
-                                    <label class="custom-control-label" for="bureau">Bureau</label>
-                                </div>
+                                <label for="generation">Generation</label>
+                                <input type="nomber" name="generation" class="form-control" min="0"
+                                    id="generation"
+                                    value="<%= updated != null ? ((Processeur)updated).getGeneration(): 0 %>"
+                                    placeholder="Generation " required>
+                            </div>
+                            <div class="form-group">
+                                <label for="core">Nombre de coeur</label>
+                                <input type="nomber" name="core" class="form-control" min="2"
+                                    id="core"
+                                    value="<%= updated != null ? ((Processeur)updated).getNombreCoeur(): 2 %>"
+                                    placeholder="Capacite " required>
                             </div>
                             <div class="form-group">
                                 <label for="pu">Prix Unitaire</label>
