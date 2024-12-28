@@ -12,7 +12,7 @@ import model.utils.Database;
 
 public class Processeur extends Composant{
     
-    private int idprocesseur; 
+    private int idProcesseur; 
     private int generation;
     private int nombreCoeur;
     private TypeProcesseur typeProcesseur;
@@ -35,7 +35,7 @@ public class Processeur extends Composant{
             rs = prstm.executeQuery();
             while (rs.next()) {
                 Processeur r = new Processeur();
-                r.setIdprocesseur(rs.getInt("id_processeur"));
+                r.setIdProcesseur(rs.getInt("id_processeur"));
                 r.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 r.setIdComposant(rs.getInt("id_composant"));
                 r.setNomComposant(rs.getString("nom_composant"));
@@ -67,7 +67,7 @@ public class Processeur extends Composant{
             
             rs = prstm.executeQuery();
             if (rs.next()) {
-                this.setIdprocesseur(rs.getInt("id_processeur"));
+                this.setIdProcesseur(rs.getInt("id_processeur"));
                 this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 this.setIdComposant(rs.getInt("id_composant"));
                 this.setNomComposant(rs.getString("nom_composant"));
@@ -97,7 +97,7 @@ public class Processeur extends Composant{
             c.setAutoCommit(false);
 
             prstm = c.prepareStatement(query);
-            prstm.setInt(1, this.getIdprocesseur());
+            prstm.setInt(1, this.getIdProcesseur());
             
             prstm.executeUpdate();
 
@@ -168,7 +168,7 @@ public class Processeur extends Composant{
             prstm.setInt(2, this.getNombreCoeur());
             prstm.setInt(3, this.getIdComposant());
             prstm.setInt(4, this.getTypeProcesseur().getIdTypeProcesseur());
-            prstm.setInt(5, this.getIdprocesseur());
+            prstm.setInt(5, this.getIdProcesseur());
             
             prstm.executeUpdate();
             
@@ -184,8 +184,8 @@ public class Processeur extends Composant{
     }
 
     // GETTERS AND SETTERS
-    public int getIdprocesseur() {
-        return idprocesseur;
+    public int getIdProcesseur() {
+        return idProcesseur;
     }
     public TypeProcesseur getTypeProcesseur(){
         return this.typeProcesseur;
@@ -194,8 +194,8 @@ public class Processeur extends Composant{
     public void setTypeProcesseur(Connection c, int id)throws SQLException{
         this.typeProcesseur = new TypeProcesseur().getById(c, id);
     }
-    public void setIdprocesseur(int idprocesseur) {
-        this.idprocesseur = idprocesseur;
+    public void setIdProcesseur(int idprocesseur) {
+        this.idProcesseur = idprocesseur;
     }
 
     public int getGeneration() {
