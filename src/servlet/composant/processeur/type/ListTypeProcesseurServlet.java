@@ -30,12 +30,5 @@ public class ListTypeProcesseurServlet extends HttpServlet{
         } catch (Exception e) {
             e.printStackTrace(out);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPost(req, resp);
-    }
-    
+    }    
 }
