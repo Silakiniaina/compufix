@@ -45,6 +45,9 @@ public class CarteMere extends Composant{
                 r.setNomComposant(rs.getString("nom_composant"));
                 r.setNombreSlotRam(rs.getInt("nombre_slot_ram"));
                 r.setNombreSlotDisque(rs.getInt("nombre_slot_disque"));
+                r.setTypeDisque(c, rs.getInt("id_type_disque"));
+                r.setTypeRam(c, rs.getInt("id_type_ram"));
+                r.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
                 results.add(r);
@@ -76,6 +79,9 @@ public class CarteMere extends Composant{
                 this.setNomComposant(rs.getString("nom_composant"));
                 this.setNombreSlotRam(rs.getInt("nombre_slot_ram"));
                 this.setNombreSlotDisque(rs.getInt("nombre_slot_disque"));
+                this.setTypeDisque(c, rs.getInt("id_type_disque"));
+                this.setTypeRam(c, rs.getInt("id_type_ram"));
+                this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
                 return this;
@@ -121,7 +127,7 @@ public class CarteMere extends Composant{
     public void insert(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String query = "INSERT INTO carte_mere(nombre_slot_ram, nombre_slot_disque, id_composant) VALUES (?, ?, ?)";
+        String query = "INSERT INTO carte_mere(nombre_slot_ram, nombre_slot_disque, id_type_disque, id_type_ram, id_type_processeur, id_composant) VALUES (?, ?, ?, ?, ?, ?)";
         
         try {
             if(c == null){
@@ -135,7 +141,10 @@ public class CarteMere extends Composant{
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getNombreSlotRam());
             prstm.setInt(2, this.getNombreSlotDisque());
-            prstm.setInt(3, this.getIdComposant());
+            prstm.setInt(3, this.getTypeDisque().getIdTypeDisque());
+            prstm.setInt(4, this.getTypeRam().getIdTypeRam());
+            prstm.setInt(5, this.getTypeProcesseur().getIdTypeProcesseur());
+            prstm.setInt(6, this.getIdComposant());
             
             prstm.executeUpdate();
 
@@ -154,7 +163,7 @@ public class CarteMere extends Composant{
     public void update(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String query = "UPDATE carte_mere SET nombre_slot_ram = ?, nombre_slot_disque = ?, id_composant = ? WHERE id_carte_mere = ?";
+        String query = "UPDATE carte_mere SET nombre_slot_ram = ?, nombre_slot_disque = ?, id_type_disque = ? , id_type_ram = ?, id_type_processeur = ?, id_composant = ? WHERE id_carte_mere = ?";
         
         try {
             if(c == null){
@@ -168,8 +177,11 @@ public class CarteMere extends Composant{
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getNombreSlotRam());
             prstm.setInt(2, this.getNombreSlotDisque());
-            prstm.setInt(3, this.getIdComposant());
-            prstm.setInt(4, this.getIdCarteMere());
+            prstm.setInt(3, this.getTypeDisque().getIdTypeDisque());
+            prstm.setInt(4, this.getTypeRam().getIdTypeRam());
+            prstm.setInt(5, this.getTypeProcesseur().getIdTypeProcesseur());
+            prstm.setInt(6, this.getIdComposant());
+            prstm.setInt(7, this.getIdCarteMere());
             
             prstm.executeUpdate();
             
