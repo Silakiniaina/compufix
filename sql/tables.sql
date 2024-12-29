@@ -58,3 +58,18 @@ CREATE TABLE disque_dur(
    FOREIGN KEY(id_type_disque) REFERENCES type_disque(id_type_disque),
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
+
+CREATE TABLE carte_mere(
+   id_carte_mere SERIAL,
+   nombre_slot_ram SMALLINT NOT NULL,
+   nombre_slot_disque SMALLINT NOT NULL,
+   id_type_disque INTEGER NOT NULL,
+   id_type_processeur INTEGER NOT NULL,
+   id_type_ram INTEGER NOT NULL,
+   id_composant INTEGER NOT NULL,
+   PRIMARY KEY(id_carte_mere),
+   FOREIGN KEY(id_type_disque) REFERENCES type_disque(id_type_disque),
+   FOREIGN KEY(id_type_processeur) REFERENCES type_processeur(id_type_processeur),
+   FOREIGN KEY(id_type_ram) REFERENCES type_ram(id_type_ram),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);

@@ -1,4 +1,4 @@
-package servlet.composant.disque;
+package servlet.composant.cm;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,11 +11,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.composant.Composant;
+import model.composant.cm.CarteMere;
 import model.composant.disque.Disque;
 import model.composant.disque.TypeDisque;
+import model.composant.processeur.TypeProcesseur;
+import model.composant.ram.TypeRam;
 
-@WebServlet("/composant/disque/add")
-public class DisqueServlet extends HttpServlet{
+@WebServlet("/composant/cm/add")
+public class CarteMereServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,21 +27,25 @@ public class DisqueServlet extends HttpServlet{
         try {
             Connection c = (Connection)req.getSession().getAttribute("connection");
 
-            List<TypeDisque> types = new TypeDisque().getAll(c);
+            List<TypeDisque> types_disque = new TypeDisque().getAll(c);
+            List<TypeProcesseur> types_processeur = new TypeProcesseur().getAll(c);
+            List<TypeRam> types_ram = new TypeRam().getAll(c);
 
             if(mode != null){
                 int id = Integer.parseInt(req.getParameter("id"));
-                Composant r = new Disque().getById(c, id);
+                Composant r = new CarteMere().getById(c, id);
                 if(mode.equals("d")){ 
                     r.delete(c);
-                    resp.sendRedirect(req.getContextPath()+"/composant/disque/list");
+                    resp.sendRedirect(req.getContextPath()+"/composant/cm/list");
                 }else if(mode.equals("u")){
                     req.setAttribute("updated", r);
                 }
             }
             
-            req.setAttribute("types", types);
-            req.setAttribute("pageUrl", "/WEB-INF/views/composant/disque/addDisque.jsp");
+            req.setAttribute("types_disque", types_disque);
+            req.setAttribute("types_processeur", types_processeur);
+            req.setAttribute("types_ram", types_ram);
+            req.setAttribute("pageUrl", "/WEB-INF/views/composant/cm/addCarteMere.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);;
         } catch (Exception e) {
             e.printStackTrace(out);
@@ -51,19 +58,21 @@ public class DisqueServlet extends HttpServlet{
         String mode = req.getParameter("mode");
         try {
             Connection c = (Connection)req.getSession().getAttribute("connexion");
-            Disque r = new Disque();
+            CarteMere r = new CarteMere();
             r.setNomComposant(req.getParameter("nom"));
-            r.setCapacite(Double.parseDouble(req.getParameter("capacite")));
+            r.setCapacite(0);
             r.setPrixUnitaire(Double.parseDouble(req.getParameter("pu")));
-            r.setTypeDisque(c, Integer.parseInt(req.getParameter("type")));
-            r.setPortable(Boolean.parseBoolean(req.getParameter("categorie")));
-
+            r.setTypeDisque(c, Integer.parseInt(req.getParameter("type_disque")));
+            r.setTypeRam(c, Integer.parseInt(req.getParameter("type_ram")));
+            r.setTypeProcesseur(c, Integer.parseInt(req.getParameter("type_cpu")));
+            r.setNombreSlotRam(Integer.parseInt(req.getParameter("slot_ram")));
+            r.setNombreSlotDisque(Integer.parseInt(req.getParameter("slot_disque")));
 
             if( mode != null ){
                 if( mode.equals("u")){
                     int id = Integer.parseInt(req.getParameter("id"));
                     int idComposant = Integer.parseInt(req.getParameter("idComposant"));
-                    r.setIdDisque(id);
+                    r.setIdCarteMere(id);
                     r.setIdComposant(idComposant);
 
                     r.update(c);
@@ -73,7 +82,7 @@ public class DisqueServlet extends HttpServlet{
             }else{
 
             }
-            resp.sendRedirect(req.getContextPath()+"/composant/disque/list");
+            resp.sendRedirect(req.getContextPath()+"/composant/cm/list");
         } catch (Exception e) {
             e.printStackTrace(out);
         }
