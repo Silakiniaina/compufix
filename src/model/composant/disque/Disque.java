@@ -82,6 +82,8 @@ public class Disque extends Composant{
 
     @Override
     public void delete(Connection c) throws SQLException {
+        super.delete(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "DELETE FROM disque_dur WHERE id_disque_dur = ? ";
@@ -98,8 +100,6 @@ public class Disque extends Composant{
             
             prstm.executeUpdate();
 
-            this.deleteComposant(c);
-
             c.commit();
         } catch (SQLException e) {
             if (c != null) {
@@ -113,6 +113,8 @@ public class Disque extends Composant{
 
     @Override
     public void insert(Connection c) throws SQLException {
+        super.insert(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "INSERT INTO disque_dur(est_portable,id_type_disque, id_composant) VALUES (?, ?, ?)";
@@ -123,8 +125,6 @@ public class Disque extends Composant{
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
-
-            this.insertComposant(c);
 
             prstm = c.prepareStatement(query);
             prstm.setBoolean(1, this.isPortable());
@@ -146,6 +146,8 @@ public class Disque extends Composant{
 
     @Override
     public void update(Connection c) throws SQLException {
+        super.update(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "UPDATE disque_dur SET est_portable = ?, id_type_disque = ?, id_composant = ? WHERE id_disque_dur = ?";
@@ -156,8 +158,6 @@ public class Disque extends Composant{
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
-            
-            this.updateComposant(c);
 
             prstm = c.prepareStatement(query);
             prstm.setBoolean(1, this.isPortable());

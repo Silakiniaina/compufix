@@ -85,6 +85,8 @@ public class Processeur extends Composant{
 
     @Override
     public void delete(Connection c) throws SQLException {
+        super.delete(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "DELETE FROM processeur WHERE id_processeur = ? ";
@@ -101,8 +103,6 @@ public class Processeur extends Composant{
             
             prstm.executeUpdate();
 
-            this.deleteComposant(c);
-
             c.commit();
         } catch (SQLException e) {
             if (c != null) {
@@ -116,6 +116,8 @@ public class Processeur extends Composant{
 
     @Override
     public void insert(Connection c) throws SQLException {
+        super.insert(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "INSERT INTO processeur(generation, nombre_coeur,id_type_processeur, id_composant) VALUES (?, ?, ?, ?)";
@@ -126,8 +128,6 @@ public class Processeur extends Composant{
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
-
-            this.insertComposant(c);
 
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getGeneration());
@@ -150,6 +150,8 @@ public class Processeur extends Composant{
 
     @Override
     public void update(Connection c) throws SQLException {
+        super.update(c);
+        
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "UPDATE processeur SET generation = ?, nombre_coeur = ?, id_composant = ?, id_type_processeur = ?  WHERE id_processeur = ?";
@@ -161,8 +163,6 @@ public class Processeur extends Composant{
             }
             c.setAutoCommit(false);
             
-            this.updateComposant(c);
-
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getGeneration());
             prstm.setInt(2, this.getNombreCoeur());
