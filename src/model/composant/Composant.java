@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import model.utils.Database;
+
 public abstract class Composant {
     private int idComposant;
     private String nomComposant; 
