@@ -16,7 +16,7 @@
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
                     <li class="nav-item active">
-                        <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Default</span></a>
+                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock"><span class="ml-1 item-text">Stock</span></a>
                     </li>
                 </ul>
             </li>
