@@ -27,6 +27,9 @@ public class MouvementStockServlet extends HttpServlet{
         try {
             Connection c = (Connection)req.getSession().getAttribute("connexion");
 
+            List<Composant> composants = new Composant().getAll(c);
+
+            req.setAttribute("composants", composants);
             req.setAttribute("pageUrl", "/WEB-INF/views/composant/stock/addMouvement.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);;
         } catch (Exception e) {
@@ -40,9 +43,9 @@ public class MouvementStockServlet extends HttpServlet{
         try {
             Connection c = (Connection)req.getSession().getAttribute("connexion");
 
-            int idComposant = Integer.parseInt("idComposant");
+            int idComposant = Integer.parseInt(req.getParameter("composant"));
             Date dt = Date.valueOf(req.getParameter("date"));
-            double quantite = Double.parseDouble("quantite");
+            double quantite = Double.parseDouble(req.getParameter("quantite"));
             boolean est_entree = Boolean.parseBoolean(req.getParameter("est_entree"));
 
             ElementMouvementStock element = new ElementMouvementStock();
