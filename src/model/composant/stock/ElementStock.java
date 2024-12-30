@@ -1,4 +1,4 @@
-package model.composant;
+package model.composant.stock;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.utils.Database;
 
-public class Stock {
+public class ElementStock {
     
     private int idComposant;
     private String nomComposant;
@@ -19,8 +19,8 @@ public class Stock {
     private double restant;
 
     // etat stock 
-    public List<Stock> getEtatStock(Connection c, Date d) throws SQLException{
-        List<Stock> results = new ArrayList<>();
+    public List<ElementStock> getEtatStock(Connection c, Date d) throws SQLException{
+        List<ElementStock> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
@@ -35,7 +35,7 @@ public class Stock {
 
             rs = prstm.executeQuery();
             while(rs.next()){
-                Stock st = new Stock();
+                ElementStock st = new ElementStock();
                 st.setIdComposant(rs.getInt("id_composant"));
                 st.setNomComposant(rs.getString("nom_composant"));
                 st.setTotal(rs.getDouble("total"));
