@@ -49,7 +49,7 @@ public class Stock {
     public void addMouvement(Connection c, ElementMouvementStock element, boolean est_entree) throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String query = "INSERT INTO mouvement_stock(date_mouvement, id_composant, quantite_compsant, est_entree) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO mouvement_stock(date_mouvement, id_composant, quantite_composant, est_entree) VALUES (?, ?, ?, ?)";
         try {
             if(c == null){
                 c = Database.getConnection();
