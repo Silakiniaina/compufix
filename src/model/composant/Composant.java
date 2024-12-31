@@ -37,12 +37,14 @@ public class Composant {
             
             prstm.executeUpdate();
             
-            // Récupération de l'ID généré
+            // Récupération de l'I D généré
             try (ResultSet generatedKeys = prstm.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     this.setIdComposant(generatedKeys.getInt(1));
                 }
             }
+
+            c.commit();
         }catch(SQLException e){
             c.rollback();
             throw e;

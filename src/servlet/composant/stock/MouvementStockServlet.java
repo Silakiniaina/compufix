@@ -60,5 +60,5 @@ public class MouvementStockServlet extends HttpServlet{
             e.printStackTrace(out);
         }
     }
-    
+
 }

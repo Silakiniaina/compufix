@@ -94,8 +94,6 @@ public class CarteMere extends Composant{
 
     @Override
     public void delete(Connection c) throws SQLException {
-        super.delete(c);
-
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "DELETE FROM carte_mere WHERE id_carte_mere = ? ";
@@ -113,6 +111,7 @@ public class CarteMere extends Composant{
             prstm.executeUpdate();
 
             c.commit();
+            super.delete(c);
         } catch (SQLException e) {
             if (c != null) {
                 c.rollback();

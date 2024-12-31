@@ -85,8 +85,6 @@ public class Processeur extends Composant{
 
     @Override
     public void delete(Connection c) throws SQLException {
-        super.delete(c);
-
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "DELETE FROM processeur WHERE id_processeur = ? ";
@@ -104,6 +102,8 @@ public class Processeur extends Composant{
             prstm.executeUpdate();
 
             c.commit();
+
+            super.delete(c);
         } catch (SQLException e) {
             if (c != null) {
                 c.rollback();
@@ -151,7 +151,7 @@ public class Processeur extends Composant{
     @Override
     public void update(Connection c) throws SQLException {
         super.update(c);
-        
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "UPDATE processeur SET generation = ?, nombre_coeur = ?, id_composant = ?, id_type_processeur = ?  WHERE id_processeur = ?";
