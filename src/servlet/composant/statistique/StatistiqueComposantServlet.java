@@ -30,10 +30,17 @@ public class StatistiqueComposantServlet extends HttpServlet{
             List<StatistiqueComposant> statistiques  = new StatistiqueComposant().getStatistique(c, debut, fin);
 
             req.setAttribute("statistiques", statistiques);
+            req.setAttribute("debut", debut);
+            req.setAttribute("fin", fin);
             req.setAttribute("pageUrl", "/WEB-INF/views/composant/statistique/mouvement.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace(out);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
     }
 }

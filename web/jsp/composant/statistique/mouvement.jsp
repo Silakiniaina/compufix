@@ -1,12 +1,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="model.composant.stock.ElementStock" %>
-<%@ page import="model.composant.stock.Stock" %>
+<%@ page import="model.composant.statistique.StatistiqueComposant" %>
 
 <% 
-    List<ElementStock> stocks = (List<ElementStock>)request.getAttribute("stocks");
-    Date dateFilter = (Date)request.getAttribute("date");
+    List<StatistiqueComposant> statistiques = (List<StatistiqueComposant>)request.getAttribute("statistiques");
+    Date debut = (Date)request.getAttribute("debut");
+    Date fin = (Date)request.getAttribute("fin");
 %>
 <main role="main" class="main-content">
     <div class="container-fluid">
@@ -14,12 +14,15 @@
             <div class="col-12">
                 <div class="row align-items-center mb-2">
                     <div class="col">
-                        <h2 class="h3 page-title">Etat Stock</h2>
+                        <h2 class="h3 page-title">Statistique Composant</h2>
                     </div>
                     <div class="col-auto">
-                        <form class="form-inline" action="<%= request.getContextPath() %>/composant/stock" method="POST">
-                            <div class="form-group col-md-8">
-                                <input type="date" name="date" class="form-control" id="dateFilter" placeholder="Date" value="<%= dateFilter  %>">
+                        <form class="form-inline" action="<%= request.getContextPath() %>/composant/statistique" method="POST">
+                            <div class="form-group col-md-5">
+                                <input type="date" name="debut" class="form-control" id="debut" placeholder="Date" value="<%= debut  %>">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="date" name="fin" class="form-control" id="debut" placeholder="Date" value="<%= fin  %>">
                             </div>
                             <div class="form-group col-md-2">
                                 <button type="submit" class="btn btn-sm btn-outline-success">
@@ -38,28 +41,32 @@
                                     <tr>
                                         <th style="width: 120px;">ID</th>
                                         <th>Nom</th>
-                                        <th>Total</th>
-                                        <th>Utilise</th>
-                                        <th>Restant</th>
+                                        <th>Nombre Entree</th>
+                                        <th>Total entree</th>
+                                        <th>Nombre Sortie</th>
+                                        <th>Total Sortie</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% for(ElementStock stock : stocks){ %>
-                                        <tr class="<%= stock.isBesoinApprovisionnement() ? "bg-danger" : "" %>">
+                                    <% for(StatistiqueComposant statistique : statistiques){ %>
+                                        <tr>
                                             <td class="text-center">
-                                                <%= stock.getComposant().getIdComposant() %>
+                                                <%= statistique.getComposant().getIdComposant() %>
                                             </td>
                                             <td>
-                                                <%= stock.getComposant().getNomComposant() %>
+                                                <%= statistique.getComposant().getNomComposant() %>
                                             </td>
                                             <td>
-                                                <%= stock.getTotal() %>
+                                                <%= statistique.getNombreEntree() %>
                                             </td>
                                             <td>
-                                                <%= stock.getUtilise() %>
+                                                <%= statistique.getTotalEntree() %>
                                             </td>
                                             <td>
-                                                <%= stock.getRestant() %>
+                                                <%= statistique.getNombreSortie() %>
+                                            </td>
+                                            <td>
+                                                <%= statistique.getTotalSortie() %>
                                             </td>
                                         </tr>
                                     <% } %>
