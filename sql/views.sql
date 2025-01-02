@@ -1,4 +1,5 @@
-CREATE OR REPLACE VIEW v_etat_stock_approvisionnement AS
+CREATE
+OR REPLACE VIEW v_etat_stock_approvisionnement AS
 SELECT
     c.id_composant,
     c.nom_composant,
@@ -39,22 +40,22 @@ SELECT
     ) AS restant,
     CASE
         WHEN COALESCE(
-                SUM(
-                    CASE
-                        WHEN m.est_entree THEN m.quantite_composant
-                        ELSE 0
-                    END
-                ),
-                0
-            ) - COALESCE(
-                SUM(
-                    CASE
-                        WHEN NOT m.est_entree THEN m.quantite_composant
-                        ELSE 0
-                    END
-                ),
-                0
-            ) < 10 THEN TRUE -- Seuil fixé à 50
+            SUM(
+                CASE
+                    WHEN m.est_entree THEN m.quantite_composant
+                    ELSE 0
+                END
+            ),
+            0
+        ) - COALESCE(
+            SUM(
+                CASE
+                    WHEN NOT m.est_entree THEN m.quantite_composant
+                    ELSE 0
+                END
+            ),
+            0
+        ) < 10 THEN TRUE -- Seuil fixé à 50
         ELSE FALSE
     END AS besoin_approvisionnement
 FROM
@@ -63,3 +64,45 @@ FROM
 GROUP BY
     c.id_composant,
     c.nom_composant;
+
+-- statistique 
+CREATE
+OR REPLACE VIEW v_statistique_mouvement AS
+WITH
+    entrees AS (
+        SELECT
+            id_composant,
+            SUM(quantite_composant) AS total_entrees,
+            COUNT(*) AS nombre_entrees
+        FROM
+            mouvement_stock
+        WHERE
+            est_entree = true
+        GROUP BY
+            id_composant
+    ),
+    sorties AS (
+        SELECT
+            id_composant,
+            SUM(quantite_composant) AS total_sorties,
+            COUNT(*) AS nombre_sorties
+        FROM
+            mouvement_stock
+        WHERE
+            est_entree = false
+        GROUP BY
+            id_composant
+    )
+SELECT
+    c.id_composant,
+    c.nom_composant,
+    COALESCE(e.nombre_entrees, 0) AS nombre_entrees,
+    COALESCE(e.total_entrees, 0) AS total_entrees,
+    COALESCE(s.nombre_sorties, 0) AS nombre_sorties,
+    COALESCE(s.total_sorties, 0) AS total_sorties
+FROM
+    composant c
+    LEFT JOIN entrees e ON c.id_composant = e.id_composant
+    LEFT JOIN sorties s ON c.id_composant = s.id_composant
+ORDER BY
+    total_sorties DESC;
