@@ -36,7 +36,7 @@ public class ElementStock {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ElementStock st = new ElementStock();
-                st.setComposantt(c, rs.getInt("id_composant"));
+                st.setComposant(c, rs.getInt("id_composant"));
                 st.setTotal(rs.getDouble("total"));
                 st.setUtilise(rs.getDouble("utilise"));
                 st.setRestant(rs.getDouble("restant"));
@@ -53,7 +53,7 @@ public class ElementStock {
     }
 
     // GETTERS AND SETTERS
-    public Composant getComposantt() {
+    public Composant getComposant() {
         return this.composant;
     }
     public double getTotal() {
@@ -66,7 +66,7 @@ public class ElementStock {
         return restant;
     }
 
-    public void setComposantt(Connection c, int composant) throws SQLException {
+    public void setComposant(Connection c, int composant) throws SQLException {
         this.composant = new Composant().getById(c, composant);
     }
     public void setTotal(double total) {

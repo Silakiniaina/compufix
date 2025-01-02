@@ -111,7 +111,7 @@
                                 </a>
                                 <ul class="collapse list-unstyled pl-4 w-100" id="stock">
                                     <li class="nav-item active">
-                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock/mouvement"><span class="ml-1 item-text">Mouvement Stock</span></a>
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock/mouvement/list"><span class="ml-1 item-text">Mouvement Stock</span></a>
                                     </li>
                                     <li class="nav-item active">
                                         <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock/mouvement/add"><span class="ml-1 item-text">Ajouter Mouvement</span></a>

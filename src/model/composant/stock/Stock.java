@@ -29,7 +29,7 @@ public class Stock {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ElementStock st = new ElementStock();
-                st.setComposantt(c, rs.getInt("id_composant"));
+                st.setComposant(c, rs.getInt("id_composant"));
                 st.setTotal(rs.getDouble("total"));
                 st.setUtilise(rs.getDouble("utilise"));
                 st.setRestant(rs.getDouble("restant"));

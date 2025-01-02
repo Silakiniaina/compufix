@@ -46,10 +46,10 @@
                                     <% for(ElementStock stock : stocks){ %>
                                         <tr>
                                             <td class="text-center">
-                                                <%= stock.getIdComposant() %>
+                                                <%= stock.getComposant().getIdComposant() %>
                                             </td>
                                             <td>
-                                                <%= stock.getNomComposant() %>
+                                                <%= stock.getComposant().getNomComposant() %>
                                             </td>
                                             <td>
                                                 <%= stock.getTotal() %>
