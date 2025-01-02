@@ -106,3 +106,21 @@ FROM
     LEFT JOIN sorties s ON c.id_composant = s.id_composant
 ORDER BY
     total_sorties DESC;
+
+CREATE
+OR REPLACE VIEW v_statistique_moyenne_sortie AS
+SELECT
+    c.id_composant,
+    c.nom_composant,
+    ROUND(
+        SUM(ms.quantite_composant) / NULLIF(COUNT(ms.id_mouvement_stock), 0)::NUMERIC,
+        2
+    ) AS moyenne_sortie_par_mouvement
+FROM
+    composant c
+    LEFT JOIN mouvement_stock ms ON c.id_composant = ms.id_composant
+WHERE
+    ms.est_entree = false
+GROUP BY
+    c.id_composant,
+    c.nom_composant;
