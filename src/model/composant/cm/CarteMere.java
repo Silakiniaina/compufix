@@ -110,9 +110,8 @@ public class CarteMere extends Composant{
             
             prstm.executeUpdate();
 
-            this.deleteComposant(c);
-
             c.commit();
+            super.delete(c);
         } catch (SQLException e) {
             if (c != null) {
                 c.rollback();
@@ -125,6 +124,8 @@ public class CarteMere extends Composant{
 
     @Override
     public void insert(Connection c) throws SQLException {
+        super.insert(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "INSERT INTO carte_mere(nombre_slot_ram, nombre_slot_disque, id_type_disque, id_type_ram, id_type_processeur, id_composant) VALUES (?, ?, ?, ?, ?, ?)";
@@ -135,8 +136,6 @@ public class CarteMere extends Composant{
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
-
-            this.insertComposant(c);
 
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getNombreSlotRam());
@@ -161,6 +160,8 @@ public class CarteMere extends Composant{
 
     @Override
     public void update(Connection c) throws SQLException {
+        super.update(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "UPDATE carte_mere SET nombre_slot_ram = ?, nombre_slot_disque = ?, id_type_disque = ? , id_type_ram = ?, id_type_processeur = ?, id_composant = ? WHERE id_carte_mere = ?";
@@ -171,9 +172,7 @@ public class CarteMere extends Composant{
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
-            
-            this.updateComposant(c);
-
+        
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getNombreSlotRam());
             prstm.setInt(2, this.getNombreSlotDisque());
