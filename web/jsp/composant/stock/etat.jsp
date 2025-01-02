@@ -44,7 +44,8 @@
                                 </thead>
                                 <tbody>
                                     <% for(ElementStock stock : stocks){ %>
-                                        <tr>
+                                        <tr class="<%= stock.isBesoinApprovisionnement() ? "bg-danger" : "" %>">
+                                            <%= stock.isBesoinApprovisionnement() %>
                                             <td class="text-center">
                                                 <%= stock.getComposant().getIdComposant() %>
                                             </td>
@@ -61,7 +62,7 @@
                                                 <%= stock.getRestant() %>
                                             </td>
                                         </tr>
-                                        <% } %>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
