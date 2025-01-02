@@ -8,12 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.composant.Composant;
 import model.utils.Database;
 
 public class ElementStock {
     
-    private int idComposant;
-    private String nomComposant;
+    private Composant composant;
     private double total; 
     private double utilise;
     private double restant;
@@ -36,8 +36,7 @@ public class ElementStock {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ElementStock st = new ElementStock();
-                st.setIdComposant(rs.getInt("id_composant"));
-                st.setNomComposant(rs.getString("nom_composant"));
+                st.setComposantt(c, rs.getInt("id_composant"));
                 st.setTotal(rs.getDouble("total"));
                 st.setUtilise(rs.getDouble("utilise"));
                 st.setRestant(rs.getDouble("restant"));
@@ -54,11 +53,8 @@ public class ElementStock {
     }
 
     // GETTERS AND SETTERS
-    public int getIdComposant() {
-        return idComposant;
-    }
-    public String getNomComposant() {
-        return nomComposant;
+    public Composant getComposantt() {
+        return this.composant;
     }
     public double getTotal() {
         return total;
@@ -70,11 +66,8 @@ public class ElementStock {
         return restant;
     }
 
-    public void setIdComposant(int idComposant) {
-        this.idComposant = idComposant;
-    }
-    public void setNomComposant(String nomComposant) {
-        this.nomComposant = nomComposant;
+    public void setComposantt(Connection c, int composant) throws SQLException {
+        this.composant = new Composant().getById(c, composant);
     }
     public void setTotal(double total) {
         this.total = total;

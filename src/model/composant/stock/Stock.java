@@ -29,8 +29,7 @@ public class Stock {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ElementStock st = new ElementStock();
-                st.setIdComposant(rs.getInt("id_composant"));
-                st.setNomComposant(rs.getString("nom_composant"));
+                st.setComposantt(c, rs.getInt("id_composant"));
                 st.setTotal(rs.getDouble("total"));
                 st.setUtilise(rs.getDouble("utilise"));
                 st.setRestant(rs.getDouble("restant"));
@@ -59,7 +58,7 @@ public class Stock {
 
             prstm = c.prepareStatement(query);
             prstm.setDate(1, element.getDateMouvement());
-            prstm.setInt(2, element.getIdComposant());
+            prstm.setInt(2, element.getComposant().getIdComposant());
             prstm.setDouble(3, element.getQuantite());
             prstm.setBoolean(4, est_entree);
 

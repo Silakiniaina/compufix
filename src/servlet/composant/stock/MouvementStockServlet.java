@@ -12,10 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.composant.Composant;
-import model.composant.ram.RAM;
-import model.composant.ram.TypeRam;
 import model.composant.stock.ElementMouvementStock;
-import model.composant.stock.ElementStock;
 import model.composant.stock.Stock;
 
 @WebServlet("/composant/stock/mouvement/add")
@@ -49,7 +46,7 @@ public class MouvementStockServlet extends HttpServlet{
             boolean est_entree = Boolean.parseBoolean(req.getParameter("est_entree"));
 
             ElementMouvementStock element = new ElementMouvementStock();
-            element.setIdComposant(idComposant);
+            element.setComposant(c, idComposant);
             element.setDateMouvement(dt);
             element.setQuantite(quantite);
             

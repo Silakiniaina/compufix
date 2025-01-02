@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.composant.Composant;
 import model.composant.cm.CarteMere;
-import model.composant.disque.Disque;
 import model.composant.disque.TypeDisque;
 import model.composant.processeur.TypeProcesseur;
 import model.composant.ram.TypeRam;
