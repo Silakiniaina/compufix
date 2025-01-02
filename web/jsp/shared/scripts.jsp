@@ -30,3 +30,9 @@
 <script src="<%= request.getContextPath() %>/assets/js/dropzone.min.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/uppy.min.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/quill.min.js"></script>
+<% 
+    String jsFile = (String)request.getAttribute("jsFile");
+    if(jsFile != null){
+%>
+<script src="<%= request.getContextPath() %>/assets/js/<%= jsFile %>"></script>
+<% } %>

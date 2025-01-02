@@ -82,6 +82,7 @@ public class RAM extends Composant{
 
     @Override
     public void delete(Connection c) throws SQLException {
+        
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "DELETE FROM ram WHERE id_ram = ? ";
@@ -97,10 +98,9 @@ public class RAM extends Composant{
             prstm.setInt(1, this.getIdRam());
             
             prstm.executeUpdate();
-
-            this.deleteComposant(c);
-
             c.commit();
+            
+            super.delete(c);
         } catch (SQLException e) {
             if (c != null) {
                 c.rollback();
@@ -113,6 +113,8 @@ public class RAM extends Composant{
 
     @Override
     public void insert(Connection c) throws SQLException {
+        super.insert(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "INSERT INTO ram(est_portable, id_type_ram, id_composant) VALUES (?, ?, ?)";
@@ -123,8 +125,6 @@ public class RAM extends Composant{
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
-
-            this.insertComposant(c);
 
             prstm = c.prepareStatement(query);
             prstm.setBoolean(1, this.isPortable());
@@ -146,6 +146,8 @@ public class RAM extends Composant{
 
     @Override
     public void update(Connection c) throws SQLException {
+        super.update(c);
+
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "UPDATE ram SET est_portable = ?, id_type_ram = ?, id_composant = ? WHERE id_ram = ?";
@@ -157,8 +159,6 @@ public class RAM extends Composant{
             }
             c.setAutoCommit(false);
             
-            this.updateComposant(c);
-
             prstm = c.prepareStatement(query);
             prstm.setBoolean(1, this.isPortable());
             prstm.setInt(2, this.getTypeRam().getIdTypeRam());

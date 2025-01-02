@@ -1,3 +1,4 @@
+-- Composant--
 CREATE TABLE composant(
    id_composant SERIAL,
    nom_composant VARCHAR(250)  NOT NULL,
@@ -71,5 +72,16 @@ CREATE TABLE carte_mere(
    FOREIGN KEY(id_type_disque) REFERENCES type_disque(id_type_disque),
    FOREIGN KEY(id_type_processeur) REFERENCES type_processeur(id_type_processeur),
    FOREIGN KEY(id_type_ram) REFERENCES type_ram(id_type_ram),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);
+
+-- stock --
+CREATE TABLE mouvement_stock(
+   id_mouvement_stock SERIAL,
+   date_mouvement DATE DEFAULT NOW( ),
+   quantite_composant NUMERIC(15,2)   NOT NULL,
+   est_entree BOOLEAN DEFAULT true,
+   id_composant INTEGER NOT NULL,
+   PRIMARY KEY(id_mouvement_stock),
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );

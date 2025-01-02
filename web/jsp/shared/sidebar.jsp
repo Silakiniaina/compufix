@@ -16,7 +16,10 @@
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
                     <li class="nav-item active">
-                        <a class="nav-link pl-3" href="#"><span class="ml-1 item-text">Default</span></a>
+                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock"><span class="ml-1 item-text">Stock</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/statistique"><span class="ml-1 item-text">Mouvement</span></a>
                     </li>
                 </ul>
             </li>
@@ -101,6 +104,20 @@
                                     </li>
                                     <li class="nav-item active">
                                         <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/cm/add"><span class="ml-1 item-text">Ajouter</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#stock" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                                    <i class="fe fe-codepen fe-16"></i>
+                                    <span class="ml-3 item-text">Stock</span><span class="sr-only">(current)</span>
+                                </a>
+                                <ul class="collapse list-unstyled pl-4 w-100" id="stock">
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock/mouvement/list"><span class="ml-1 item-text">Mouvement Stock</span></a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock/mouvement/add"><span class="ml-1 item-text">Ajouter Mouvement</span></a>
                                     </li>
                                 </ul>
                             </li>
