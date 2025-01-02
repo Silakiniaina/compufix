@@ -1,11 +1,12 @@
 <%@ page import="java.util.List" %>
+<%@ page import="java.sql.Date" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="model.composant.stock.ElementStock" %>
 <%@ page import="model.composant.stock.Stock" %>
 
 <% 
     List<ElementStock> stocks = (List<ElementStock>)request.getAttribute("stocks");
-    String dateFilter = (String)request.getAttribute("date");
+    Date dateFilter = (Date)request.getAttribute("date");
 %>
 <main role="main" class="main-content">
     <div class="container-fluid">
@@ -18,7 +19,7 @@
                     <div class="col-auto">
                         <form class="form-inline" action="<%= request.getContextPath() %>/composant/stock" method="POST">
                             <div class="form-group col-md-8">
-                                <input type="date" name="date" class="form-control" id="dateFilter" placeholder="Date" value="<%= dateFilter != null ? LocalDate.parse(dateFilter) : LocalDate.now() %>">
+                                <input type="date" name="date" class="form-control" id="dateFilter" placeholder="Date" value="<%= dateFilter  %>">
                             </div>
                             <div class="form-group col-md-2">
                                 <button type="submit" class="btn btn-sm btn-outline-success">
@@ -45,7 +46,6 @@
                                 <tbody>
                                     <% for(ElementStock stock : stocks){ %>
                                         <tr class="<%= stock.isBesoinApprovisionnement() ? "bg-danger" : "" %>">
-                                            <%= stock.isBesoinApprovisionnement() %>
                                             <td class="text-center">
                                                 <%= stock.getComposant().getIdComposant() %>
                                             </td>

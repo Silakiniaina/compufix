@@ -18,6 +18,9 @@
                     <li class="nav-item active">
                         <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/stock"><span class="ml-1 item-text">Stock</span></a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link pl-3" href="<%= request.getContextPath() %>/composant/statistique"><span class="ml-1 item-text">Mouvement</span></a>
+                    </li>
                 </ul>
             </li>
         </ul>

@@ -29,6 +29,7 @@ public class StockServlet extends HttpServlet{
             List<ElementStock> stocks  = new Stock().getEtatStock(c, dt);
 
             req.setAttribute("stocks", stocks);
+            req.setAttribute("date", dt);
             req.setAttribute("pageUrl", "/WEB-INF/views/composant/stock/etat.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);
         } catch (Exception e) {
