@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.composant.statistique.StatistiqueComposant;
+import model.composant.statistique.StatistiqueSortieComposant;
 
 @WebServlet("/composant/statistique")
 public class StatistiqueComposantServlet extends HttpServlet{
@@ -28,10 +29,13 @@ public class StatistiqueComposantServlet extends HttpServlet{
             Date debut = dateDebutStr != null ? Date.valueOf(LocalDate.parse(dateDebutStr)) : Date.valueOf(LocalDate.now().minusMonths(1));
             Date fin = dateFinStr != null ? Date.valueOf(LocalDate.parse(dateFinStr)) : Date.valueOf(LocalDate.now());
             List<StatistiqueComposant> statistiques  = new StatistiqueComposant().getStatistique(c, debut, fin);
+            List<StatistiqueSortieComposant> sorties = new StatistiqueSortieComposant().getMoyenneSortie(c, debut, fin);
 
             req.setAttribute("statistiques", statistiques);
+            req.setAttribute("sorties", sorties);
             req.setAttribute("debut", debut);
             req.setAttribute("fin", fin);
+            req.setAttribute("jsFile", "statistiqueComposant.js");
             req.setAttribute("pageUrl", "/WEB-INF/views/composant/statistique/mouvement.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);
         } catch (Exception e) {

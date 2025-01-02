@@ -15,6 +15,7 @@ public class StatistiqueSortieComposant {
     
     private Composant composant; 
     private double moyenne;
+    private double actuelle;
 
     public List<StatistiqueSortieComposant> getMoyenneSortie(Connection c, Date debut, Date fin) throws SQLException{
         List<StatistiqueSortieComposant> results = new ArrayList<>();
@@ -36,7 +37,8 @@ public class StatistiqueSortieComposant {
             while (rs.next()) {
                 StatistiqueSortieComposant stat = new StatistiqueSortieComposant();
                 stat.setComposant(c, rs.getInt("id_composant"));
-                stat.setMoyenne(rs.getDouble("moyenne_sortie_par_mouvement"));
+                stat.setMoyenne(rs.getDouble("moyenne_sorties"));
+                stat.setActuelle(rs.getDouble("sortie_actuelle"));
 
                 results.add(stat);
             }
@@ -62,5 +64,13 @@ public class StatistiqueSortieComposant {
 
     public Composant getComposant(){
         return this.composant;
+    }
+
+    public double getActuelle() {
+        return actuelle;
+    }
+
+    public void setActuelle(double actuelle) {
+        this.actuelle = actuelle;
     }
 }

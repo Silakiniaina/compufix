@@ -109,18 +109,42 @@ ORDER BY
 
 CREATE
 OR REPLACE VIEW v_statistique_moyenne_sortie AS
+WITH
+    sorties_filtrees AS (
+        SELECT
+            id_composant,
+            SUM(quantite_composant) AS total_sorties_filtrees,
+            COUNT(*) AS nombre_sorties_filtrees
+        FROM
+            mouvement_stock
+        WHERE
+            est_entree = false
+        GROUP BY
+            id_composant
+    ),
+    sorties_actuelles AS (
+        SELECT
+            id_composant,
+            SUM(quantite_composant) AS total_sorties_actuelles
+        FROM
+            mouvement_stock
+        WHERE
+            est_entree = false
+        GROUP BY
+            id_composant
+    )
 SELECT
     c.id_composant,
     c.nom_composant,
-    ROUND(
-        SUM(ms.quantite_composant) / NULLIF(COUNT(ms.id_mouvement_stock), 0)::NUMERIC,
-        2
-    ) AS moyenne_sortie_par_mouvement
+    COALESCE(sa.total_sorties_actuelles, 0) AS sortie_actuelle,
+    CASE
+        WHEN sf.nombre_sorties_filtrees > 0 THEN ROUND(
+            COALESCE(sf.total_sorties_filtrees, 0) / sf.nombre_sorties_filtrees::NUMERIC,
+            2
+        )
+        ELSE 0
+    END AS moyenne_sorties
 FROM
     composant c
-    LEFT JOIN mouvement_stock ms ON c.id_composant = ms.id_composant
-WHERE
-    ms.est_entree = false
-GROUP BY
-    c.id_composant,
-    c.nom_composant;
+    LEFT JOIN sorties_filtrees sf ON c.id_composant = sf.id_composant
+    LEFT JOIN sorties_actuelles sa ON c.id_composant = sa.id_composant;
