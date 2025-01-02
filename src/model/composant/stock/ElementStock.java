@@ -17,6 +17,7 @@ public class ElementStock {
     private double total; 
     private double utilise;
     private double restant;
+    private boolean besoinApprovisionnement;
 
     // etat stock 
     public List<ElementStock> getEtatStock(Connection c, Date d) throws SQLException{
@@ -24,7 +25,7 @@ public class ElementStock {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM v_etat_stock WHERE id_composant IN (SELECT DISTINCT id_composant FROM mouvement_stock WHERE date_mouvement <= ?)";
+        String query = "SELECT * FROM v_etat_stock_approvisionnement WHERE id_composant IN (SELECT DISTINCT id_composant FROM mouvement_stock WHERE date_mouvement <= ?)";
         try {
             if(c == null){
                 c = Database.getConnection();
@@ -40,6 +41,7 @@ public class ElementStock {
                 st.setTotal(rs.getDouble("total"));
                 st.setUtilise(rs.getDouble("utilise"));
                 st.setRestant(rs.getDouble("restant"));
+                st.setBesoinApprovisionnement(rs.getBoolean("besoin_approvisionnement"));
 
                 results.add(st);
             }
@@ -77,5 +79,12 @@ public class ElementStock {
     }
     public void setRestant(double restant) {
         this.restant = restant;
+    }
+    public boolean isBesoinApprovisionnement() {
+        return this.besoinApprovisionnement;
+    }
+
+    public void setBesoinApprovisionnement(boolean besoinApprovisionnement) {
+        this.besoinApprovisionnement = besoinApprovisionnement;
     }
 }

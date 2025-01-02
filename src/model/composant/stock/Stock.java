@@ -17,7 +17,7 @@ public class Stock {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM v_etat_stock WHERE id_composant IN (SELECT DISTINCT id_composant FROM mouvement_stock WHERE date_mouvement <= ?)";
+        String query = "SELECT * FROM v_etat_stock_approvisionnement WHERE id_composant IN (SELECT DISTINCT id_composant FROM mouvement_stock WHERE date_mouvement <= ?)";
         try {
             if(c == null){
                 c = Database.getConnection();
@@ -33,6 +33,7 @@ public class Stock {
                 st.setTotal(rs.getDouble("total"));
                 st.setUtilise(rs.getDouble("utilise"));
                 st.setRestant(rs.getDouble("restant"));
+                st.setBesoinApprovisionnement(rs.getBoolean("besoin_approvisionnement"));
 
                 results.add(st);
             }
