@@ -85,3 +85,12 @@ CREATE TABLE mouvement_stock(
    PRIMARY KEY(id_mouvement_stock),
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
+
+
+-- ordinateur
+CREATE TABLE ordinateur(
+   id_ordinateur SERIAL,
+   nom_ordinateur VARCHAR(150)  NOT NULL,
+   description TEXT,
+   PRIMARY KEY(id_ordinateur)
+);
