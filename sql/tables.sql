@@ -83,6 +83,16 @@ CREATE TABLE carte_mere(
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
 
+CREATE TABLE carte_mere_utilisation(
+   id_composant INTEGER,
+   id_carte_mere INTEGER,
+   type_slot VARCHAR(20)  NOT NULL,
+   date_installation VARCHAR(50)  DEFAULT NOW( ) ,
+   PRIMARY KEY(id_composant, id_carte_mere),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
+   FOREIGN KEY(id_carte_mere) REFERENCES carte_mere(id_carte_mere)
+);
+
 -- stock --
 CREATE TABLE mouvement_stock(
    id_mouvement_stock SERIAL,

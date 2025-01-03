@@ -34,7 +34,7 @@ public class CarteMere extends Composant{
         this.setDisquesInstalles(new ArrayList<>());
     }
 
-    // CRUD Operation
+/// CRUD Operation
     @Override
     public List<Composant> getAll(Connection c) throws SQLException {
         List<Composant> results = new ArrayList<>();
@@ -269,6 +269,29 @@ public class CarteMere extends Composant{
 
     public void installerDisque(Disque disque){
         disquesInstalles.add(disque);
+    }
+
+/// UTILS 
+    // Méthodes utilitaires
+    public boolean hasSlotsRAMDisponibles() {
+        return ramsInstallees.size() < nombreSlotRam;
+    }
+    
+    public boolean hasSlotsDisqueDisponibles() {
+        return disquesInstalles.size() < nombreSlotDisque;
+    }
+    
+    public boolean hasProcesseurInstalle() {
+        return processeurInstalle != null;
+    }
+    
+    // Obtenir le nombre de slots disponibles
+    public int getNombreSlotsRAMDisponibles() {
+        return nombreSlotRam - ramsInstallees.size();
+    }
+    
+    public int getNombreSlotsDisqueDisponibles() {
+        return nombreSlotDisque - disquesInstalles.size();
     }
 
     public int getIdCarteMere() {
