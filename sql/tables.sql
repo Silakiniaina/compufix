@@ -93,3 +93,12 @@ CREATE TABLE ordinateur(
    description TEXT,
    PRIMARY KEY(id_ordinateur)
 );
+
+CREATE TABLE composant_ordinateur(
+   id_composant INTEGER,
+   id_ordinateur INTEGER,
+   quantite SMALLINT DEFAULT 1,
+   PRIMARY KEY(id_composant, id_ordinateur),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
+   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
+);
