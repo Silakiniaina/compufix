@@ -182,6 +182,15 @@ public class RAM extends Composant{
     public int getType() {
         return Composant.COMPOSANT_RAM;
     }
+
+    public List<RAM> getRamsInstallees(Connection c, int idcm) throws SQLException{
+        List<RAM> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql  = "SELECT * FROM composant, ram "
+    }
+
     // GETTERS AND SETTERS
     public int getIdRam() {
         return idRam;

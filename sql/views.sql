@@ -148,3 +148,18 @@ FROM
     composant c
     LEFT JOIN sorties_filtrees sf ON c.id_composant = sf.id_composant
     LEFT JOIN sorties_actuelles sa ON c.id_composant = sa.id_composant;
+
+CREATE
+OR REPLACE VIEW v_composant_installation AS
+SELECT
+    c.*,
+    r.id_ram,
+    r.est_portable,
+    r.id_type_ram,
+    cmu.id_carte_mere,
+    cmu.type_slot,
+    cmu.date_installation
+FROM
+    ram r
+    JOIN composant c ON r.id_composant = c.id_composant
+    JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant;
