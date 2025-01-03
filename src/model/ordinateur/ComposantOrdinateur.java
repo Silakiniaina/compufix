@@ -1,16 +1,53 @@
 package model.ordinateur;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.composant.Composant;
+import model.utils.Database;
 
 public class ComposantOrdinateur {
     
     private Composant composant; 
     private int quantite;
     
-    
+    public List<ComposantOrdinateur> getComposantParOrdinateur(Connection c, int id) throws SQLException{
+        List<ComposantOrdinateur> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT * FROM composant_ordinateur WHERE id_ordinateur = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, id);
+
+            rs = prstm.executeQuery();
+            while(rs.next()){
+                ComposantOrdinateur composant = new ComposantOrdinateur();
+                composant.setComposant(c, rs.getInt("id_ordinateur"));
+                composant.setQuantite(rs.getInt("quantite"));
+
+                results.add(composant);
+            }
+
+            return results;
+        } catch (Exception e) {
+            throw e;
+        } finally { 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    // GETTERS AND SETTERS
     public Composant getComposant() {
         return composant;
     }
