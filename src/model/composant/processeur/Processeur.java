@@ -183,6 +183,11 @@ public class Processeur extends Composant{
         } 
     }
 
+    @Override
+    public int getType() {
+        return Composant.COMPOSANT_PROCESSEUR;
+    }
+    
     // GETTERS AND SETTERS
     public int getIdProcesseur() {
         return idProcesseur;

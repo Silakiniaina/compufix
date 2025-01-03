@@ -178,6 +178,10 @@ public class RAM extends Composant{
         } 
     }
 
+    @Override
+    public int getType() {
+        return Composant.COMPOSANT_RAM;
+    }
     // GETTERS AND SETTERS
     public int getIdRam() {
         return idRam;

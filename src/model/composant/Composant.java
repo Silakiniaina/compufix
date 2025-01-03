@@ -15,7 +15,6 @@ public class Composant {
     private double capacite;
     private double prixUnitaire;
 
-
     // CRUD Composant
     public void insert(Connection c) throws SQLException {
         boolean isNewConnection = false;
@@ -171,6 +170,10 @@ public class Composant {
         }
     }
 
+    public int getType(){
+        return Composant.COMPOSANT_MERE;
+    }
+
     // GETTERS AND SETTERS
     public int getIdComposant() {
         return idComposant;
@@ -204,4 +207,9 @@ public class Composant {
         this.prixUnitaire = prixUnitaire;
     }
 
+    public static int COMPOSANT_MERE = 0;
+    public static int COMPOSANT_RAM = 1;
+    public static int COMPOSANT_CARTE_MERE = 2;
+    public static int COMPOSANT_PROCESSEUR = 3;
+    public static int COMPOSANT_DISQUE = 4;
 }

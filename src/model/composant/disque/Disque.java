@@ -177,7 +177,11 @@ public class Disque extends Composant{
         } 
     }
 
-
+    @Override
+    public int getType() {
+        return Composant.COMPOSANT_DISQUE;
+    }
+    
     public int getIdDisque() {
         return idDisque;
     }

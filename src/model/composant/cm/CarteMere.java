@@ -195,6 +195,11 @@ public class CarteMere extends Composant{
         } 
     }
 
+    @Override
+    public int getType() {
+        return Composant.COMPOSANT_CARTE_MERE;
+    }
+    
     public int getIdCarteMere() {
         return idCarteMere;
     }
