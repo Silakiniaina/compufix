@@ -212,6 +212,21 @@ public class CarteMere extends Composant{
         return Composant.COMPOSANT_CARTE_MERE;
     }
 
+/// COMPATIBILITY CHECK 
+    // Vérification RAM
+    public boolean isRAMCompatible(RAM ram) {
+        // Vérifier le type de RAM
+        if (ram.getTypeRam() != this.getTypeRam()) {
+            return false;
+        }
+        
+        // Vérifier si un slot est disponible
+        if (ramsInstallees.size() >= nombreSlotRam) {
+            return false;
+        }
+        
+        return true;
+    }
 
     public int getIdCarteMere() {
         return idCarteMere;
