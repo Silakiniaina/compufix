@@ -1,12 +1,18 @@
 package model.ordinateur;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ordinateur {
     
     private int idOrdinateur;
     private String nomOrdinateur; 
     private String description;
+    private List<ComposantOrdinateur> composants;
 
-    
+    public Ordinateur(){
+        this.setComposants(new ArrayList<>());
+    }
 
     // GETTERS AND SETTERS
     public int getIdOrdinateur() {
@@ -27,5 +33,12 @@ public class Ordinateur {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<ComposantOrdinateur> getComposants() {
+        return composants;
+    }
+    public void setComposants(List<ComposantOrdinateur> composants) {
+        this.composants = composants;
     }
 }
