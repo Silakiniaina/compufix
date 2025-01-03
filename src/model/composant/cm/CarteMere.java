@@ -228,6 +228,21 @@ public class CarteMere extends Composant{
         return true;
     }
 
+    // Vérification Processeur
+    public boolean isProcesseurCompatible(Processeur processeur) {
+        // Vérifier si le type de socket correspond
+        if (processeur.getTypeProcesseur() != this.getTypeProcesseur()) {
+            return false;
+        }
+        
+        // Vérifier si un processeur est déjà installé
+        if (processeurInstalle != null) {
+            return false;
+        }
+        
+        return true;
+    }
+
     public int getIdCarteMere() {
         return idCarteMere;
     }
