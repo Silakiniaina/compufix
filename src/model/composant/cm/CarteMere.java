@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.composant.Composant;
+import model.composant.disque.Disque;
 import model.composant.disque.TypeDisque;
+import model.composant.processeur.Processeur;
 import model.composant.processeur.TypeProcesseur;
+import model.composant.ram.RAM;
 import model.composant.ram.TypeRam;
 import model.utils.Database;
 
@@ -21,6 +24,15 @@ public class CarteMere extends Composant{
     private TypeRam typeRam;
     private TypeProcesseur typeProcesseur;
     private TypeDisque typeDisque;
+
+    private List<RAM> ramsInstallees;
+    private List<Disque> disquesInstalles;
+    private Processeur processeurInstalle;
+
+    public CarteMere(){
+        this.setRamsInstallees(new ArrayList<>());
+        this.setDisquesInstalles(new ArrayList<>());
+    }
 
     // CRUD Operation
     @Override
@@ -219,7 +231,19 @@ public class CarteMere extends Composant{
     public TypeDisque getTypeDisque() {
         return typeDisque;
     }
+    public List<RAM> getRamsInstallees() {
+        return ramsInstallees;
+    }
+    public List<Disque> getDisquesInstalles() {
+        return disquesInstalles;
+    }
+    public Processeur getProcesseurInstalle() {
+        return processeurInstalle;
+    }
 
+    public void setProcesseurInstalle(Processeur processeurInstalle) {
+        this.processeurInstalle = processeurInstalle;
+    }
     public void setIdCarteMere(int idCarteMere) {
         this.idCarteMere = idCarteMere;
     }
@@ -237,5 +261,11 @@ public class CarteMere extends Composant{
     }
     public void setTypeDisque(Connection c, int typeDisque) throws SQLException{
         this.typeDisque = new TypeDisque().getById(c, typeDisque);
+    }
+    public void setRamsInstallees(List<RAM> ramsInstallees) {
+        this.ramsInstallees = ramsInstallees;
+    }
+    public void setDisquesInstalles(List<Disque> disquesInstalles) {
+        this.disquesInstalles = disquesInstalles;
     }
 }
