@@ -33,7 +33,7 @@ public class ComposantOrdinateur {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ComposantOrdinateur composant = new ComposantOrdinateur();
-                composant.setComposant(c, rs.getInt("id_ordinateur"));
+                composant.setComposant(c, rs.getInt("id_composant"));
                 composant.setQuantite(rs.getInt("quantite"));
 
                 results.add(composant);

@@ -1,7 +1,13 @@
 package model.ordinateur;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.utils.Database;
 
 public class Ordinateur {
     
@@ -12,6 +18,38 @@ public class Ordinateur {
 
     public Ordinateur(){
         this.setComposants(new ArrayList<>());
+    }
+
+    public List<Ordinateur> getAll(Connection c) throws SQLException{
+        List<Ordinateur> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT * FROM ordinateur";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+
+            rs = prstm.executeQuery();
+            while(rs.next()){
+                Ordinateur ordi = new Ordinateur();
+                ordi.setIdOrdinateur(rs.getInt("id_ordinateur"));
+                ordi.setNomOrdinateur(rs.getString("nom_ordinateur"));
+                ordi.setDescription(rs.getString("description"));
+                ordi.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, ordi.getIdOrdinateur()));
+                results.add(ordi);
+            }
+
+            return results;
+        } catch (Exception e) {
+            throw e;
+        } finally { 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
     }
 
     // GETTERS AND SETTERS
