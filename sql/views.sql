@@ -163,3 +163,13 @@ FROM
     ram r
     JOIN composant c ON r.id_composant = c.id_composant
     JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant;
+
+
+CREATE
+OR REPLACE VIEW v_composant_ordinateur AS
+SELECT
+    co.*,
+    c.id_type_composant
+FROM
+    composant_ordinateur co
+    JOIN composant c ON co.id_composant = c.id_composant;

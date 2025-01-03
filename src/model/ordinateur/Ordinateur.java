@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.composant.Composant;
 import model.composant.cm.CarteMere;
+import model.composant.disque.Disque;
+import model.composant.processeur.Processeur;
+import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class Ordinateur {
@@ -62,6 +66,27 @@ public class Ordinateur {
             }
         }
         return result;
+    }
+
+    public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException{
+        // Si c'est un composant qui se branche sur la carte mère
+        if (composant instanceof RAM) {
+            this.getCarteMere().isRAMCompatible((RAM) composant);
+            this.getCarteMere().installerRAM(c,(RAM) composant);
+        } else if (composant instanceof Processeur) {
+            this.getCarteMere().isProcesseurCompatible((Processeur) composant);
+            this.getCarteMere().installerProcesseur(c,(Processeur) composant);
+        } else if (composant instanceof Disque) {
+            this.getCarteMere().isDisqueCompatible((Disque) composant);
+            this.getCarteMere().installerDisque(c,(Disque) composant);
+        }
+        
+        // Dans tous les cas, on ajoute à la liste des composants
+        ComposantOrdinateur comp = new ComposantOrdinateur();
+        comp.setComposant(c, composant.getIdComposant());
+        comp.setQuantite(quantite);
+
+        this.getComposants().add(comp);
     }
 
     // GETTERS AND SETTERS

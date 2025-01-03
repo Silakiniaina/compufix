@@ -265,16 +265,44 @@ public class CarteMere extends Composant{
     }
 
 /// INSTALLATION 
-    public void installerRAM(RAM ram) {
+    public void installComposant(Connection c, int idComposant, String typeSlot)throws SQLException {
+        boolean isNewConnection = false; 
+        PreparedStatement prstm = null; 
+        String sql = "INSERT INTO carte_mere_utilisation(id_composant,type_slot,id_carte_mere) VALUES (?, ?, ?)";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false);
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, idComposant);
+            prstm.setString(2, typeSlot);
+            prstm.setInt(3, this.getIdCarteMere());
+
+            prstm.executeUpdate();
+            c.commit();
+        } catch (Exception e) {
+            c.rollback();
+            throw e;
+        } finally{
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    public void installerRAM(Connection c, RAM ram) throws SQLException{
         ramsInstallees.add(ram);
+        this.installComposant(c, ram.getIdComposant(), "RAM");
     }
 
-    public void installerProcesseur(Processeur processeur){
+    public void installerProcesseur(Connection c, Processeur processeur)throws SQLException{
         this.processeurInstalle = processeur;
+        this.installComposant(c, processeur.getIdComposant(), "Processeur");
     }
 
-    public void installerDisque(Disque disque){
+    public void installerDisque(Connection c, Disque disque) throws SQLException{
         disquesInstalles.add(disque);
+        this.installComposant(c, disque.getIdComposant(), "Disque");
     }
 
 /// UTILS 
