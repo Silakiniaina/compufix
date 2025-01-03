@@ -62,6 +62,9 @@ public class CarteMere extends Composant{
                 r.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setRamsInstallees(RAM.getRamsInstallees(c, r.getIdCarteMere()));
+                r.setDisquesInstalles(Disque.getDisquesInstallees(c, r.getIdCarteMere()));
+                r.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, r.getIdCarteMere()));
                 results.add(r);
             }
             return results;
@@ -96,6 +99,9 @@ public class CarteMere extends Composant{
                 this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setRamsInstallees(RAM.getRamsInstallees(c, this.getIdCarteMere()));
+                this.setDisquesInstalles(Disque.getDisquesInstallees(c, this.getIdCarteMere()));
+                this.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, this.getIdCarteMere()));
                 return this;
             }
             return null;

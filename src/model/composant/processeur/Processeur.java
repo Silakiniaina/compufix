@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.composant.Composant;
+import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class Processeur extends Composant{
@@ -186,6 +187,43 @@ public class Processeur extends Composant{
     @Override
     public int getType() {
         return Composant.COMPOSANT_PROCESSEUR;
+    }
+
+    public static Processeur getProcesseurInstalle(Connection c, int idcm) throws SQLException{
+        Processeur result = null;
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql  = "SELECT * FROM v_composant_installation WHERE type_slot = ? AND id_carte_mere = ? ";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1,"Processeur");
+            prstm.setInt(2, idcm);
+
+            rs = prstm.executeQuery();
+            if(rs.next()) {
+                result = new Processeur();
+                result.setIdProcesseur(rs.getInt("id_processeur"));
+                result.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
+                result.setIdComposant(rs.getInt("id_composant"));
+                result.setNomComposant(rs.getString("nom_composant"));
+                result.setGeneration(rs.getInt("generation"));
+                result.setNombreCoeur(rs.getInt("nombre_coeur"));
+                result.setCapacite(rs.getDouble("capacite"));
+                result.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+            }
+
+            return result;
+        } catch (Exception e) {
+            throw e;
+        } finally{ 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
     }
     
     // GETTERS AND SETTERS

@@ -183,12 +183,41 @@ public class RAM extends Composant{
         return Composant.COMPOSANT_RAM;
     }
 
-    public List<RAM> getRamsInstallees(Connection c, int idcm) throws SQLException{
+    public static List<RAM> getRamsInstallees(Connection c, int idcm) throws SQLException{
         List<RAM> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql  = "SELECT * FROM composant, ram "
+        String sql  = "SELECT * FROM v_composant_installation WHERE type_slot = ? AND id_carte_mere = ? ";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1,"RAM");
+            prstm.setInt(2, idcm);
+
+            rs = prstm.executeQuery();
+            while (rs.next()) {
+                RAM r = new RAM();
+                r.setIdRam(rs.getInt("id_ram"));
+                r.setPortable(rs.getBoolean("est_portable"));
+                r.setTypeRam(c, rs.getInt("id_type_ram"));
+                r.setIdComposant(rs.getInt("id_composant"));
+                r.setNomComposant(rs.getString("nom_composant"));
+                r.setCapacite(rs.getDouble("capacite"));
+                r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                results.add(r);
+            }
+
+            return results;
+        } catch (Exception e) {
+            throw e;
+        } finally{ 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
     }
 
     // GETTERS AND SETTERS

@@ -181,6 +181,43 @@ public class Disque extends Composant{
     public int getType() {
         return Composant.COMPOSANT_DISQUE;
     }
+
+    public static List<Disque> getDisquesInstallees(Connection c, int idcm) throws SQLException{
+        List<Disque> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql  = "SELECT * FROM v_composant_installation WHERE type_slot = ? AND id_carte_mere = ? ";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1,"Disque");
+            prstm.setInt(2, idcm);
+
+            rs = prstm.executeQuery();
+            while (rs.next()) {
+                Disque r = new Disque();
+                r.setIdDisque(rs.getInt("id_disque_dur"));
+                r.setPortable(rs.getBoolean("est_portable"));
+                r.setTypeDisque(c, rs.getInt("id_type_disque"));
+                r.setIdComposant(rs.getInt("id_composant"));
+                r.setNomComposant(rs.getString("nom_composant"));
+                r.setCapacite(rs.getDouble("capacite"));
+                r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                results.add(r);
+            }
+
+            return results;
+        } catch (Exception e) {
+            throw e;
+        } finally{ 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
     
     public int getIdDisque() {
         return idDisque;
