@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.composant.Composant;
 import model.composant.cm.CarteMere;
 import model.utils.Database;
 
@@ -74,6 +73,15 @@ public class Ordinateur {
     }
     public String getDescription() {
         return description;
+    }
+    
+    public CarteMere getCarteMere(){
+        for(ComposantOrdinateur composant : this.getComposants()){
+            if(composant.getComposant().getTypeComposant().isCarteMere()){
+               return (CarteMere)composant.getComposant();
+            }
+        }
+        return null;
     }
 
     public void setIdOrdinateur(int idOrdinateur) {
