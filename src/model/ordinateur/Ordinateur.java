@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.composant.cm.CarteMere;
 import model.utils.Database;
 
 public class Ordinateur {
@@ -50,6 +51,17 @@ public class Ordinateur {
         } finally { 
             Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
         }
+    }
+
+    public boolean hasCarteMere(){
+        boolean result = false;
+        for(ComposantOrdinateur composant : this.getComposants()){
+            if(composant.getComposant() instanceof CarteMere){
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     // GETTERS AND SETTERS
