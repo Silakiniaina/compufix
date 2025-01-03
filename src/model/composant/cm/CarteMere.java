@@ -243,6 +243,21 @@ public class CarteMere extends Composant{
         return true;
     }
 
+    // Vérification Disque
+    public boolean isDisqueCompatible(Disque disque) {
+        // Vérifier le type de disque
+        if (disque.getTypeDisque() != this.getTypeDisque()) {
+            return false;
+        }
+        
+        // Vérifier si un slot est disponible
+        if (disquesInstalles.size() >= nombreSlotDisque) {
+            return false;
+        }
+        
+        return true;
+    }
+
     public int getIdCarteMere() {
         return idCarteMere;
     }
