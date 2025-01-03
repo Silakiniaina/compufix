@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.composant.Composant;
 import model.composant.cm.CarteMere;
 import model.utils.Database;
 
@@ -56,7 +57,7 @@ public class Ordinateur {
     public boolean hasCarteMere(){
         boolean result = false;
         for(ComposantOrdinateur composant : this.getComposants()){
-            if(composant.getComposant() instanceof CarteMere){
+            if(composant.getComposant().getTypeComposant().isCarteMere()){
                 result = true;
                 break;
             }

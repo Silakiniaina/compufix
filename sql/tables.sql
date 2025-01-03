@@ -1,13 +1,21 @@
 -- Composant--
+CREATE TABLE type_composant(
+   id_type_composant SERIAL,
+   nom_type_composant VARCHAR(150)  NOT NULL,
+   PRIMARY KEY(id_type_composant)
+);
+
 CREATE TABLE composant(
    id_composant SERIAL,
    nom_composant VARCHAR(250)  NOT NULL,
-   capacite NUMERIC(15,2) NOT NULL,
+   capacite NUMERIC(15,2)   NOT NULL,
    prix_unitaire NUMERIC(18,2)   NOT NULL,
+   id_type_composant INTEGER NOT NULL,
    PRIMARY KEY(id_composant),
    UNIQUE(nom_composant),
    CHECK(capacite >= 0),
-   CHECK(prix_unitaire >= 0)
+   CHECK(prix_unitaire >= 0),
+   FOREIGN KEY(id_type_composant) REFERENCES type_composant(id_type_composant)
 );
 
 CREATE TABLE type_ram(

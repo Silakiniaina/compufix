@@ -14,12 +14,13 @@ public class Composant {
     private String nomComposant;
     private double capacite;
     private double prixUnitaire;
+    private TypeComposant typeComposant;
 
     // CRUD Composant
     public void insert(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String sql = "INSERT INTO composant (nom_composant, capacite, prix_unitaire) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO composant (nom_composant, capacite, prix_unitaire, id_type_composant) VALUES (?, ?, ?, ?)";
         
         try{
             
@@ -33,6 +34,7 @@ public class Composant {
             prstm.setString(1, this.getNomComposant());
             prstm.setDouble(2, this.getCapacite());
             prstm.setDouble(3, this.getPrixUnitaire());
+            prstm.setInt(4, this.getType());
             
             prstm.executeUpdate();
             
@@ -59,7 +61,7 @@ public class Composant {
 
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String sql = "UPDATE composant SET nom_composant = ?, capacite = ?, prix_unitaire = ? WHERE id_composant = ?";
+        String sql = "UPDATE composant SET nom_composant = ?, capacite = ?, prix_unitaire = ?, id_type_composant = ? WHERE id_composant = ?";
 
         try{
             if(c == null){
@@ -72,7 +74,8 @@ public class Composant {
             prstm.setString(1, this.getNomComposant());
             prstm.setDouble(2, this.getCapacite());
             prstm.setDouble(3, this.getPrixUnitaire());
-            prstm.setInt(4, this.getIdComposant());
+            prstm.setInt(4, this.getType());
+            prstm.setInt(5, this.getIdComposant());
 
             int rowsAffected = prstm.executeUpdate();
             if (rowsAffected == 0) {
@@ -135,6 +138,7 @@ public class Composant {
                 r.setNomComposant(rs.getString("nom_composant"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;
@@ -162,6 +166,7 @@ public class Composant {
                 this.setNomComposant(rs.getString("nom_composant"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;
@@ -172,6 +177,14 @@ public class Composant {
 
     public int getType(){
         return Composant.COMPOSANT_MERE;
+    }
+
+    public TypeComposant getTypeComposant() {
+        return typeComposant;
+    }
+
+    public void setTypeComposant(Connection c, int typeComposant) throws SQLException{
+        this.typeComposant = new TypeComposant().getById(c, typeComposant);
     }
 
     // GETTERS AND SETTERS
@@ -207,9 +220,9 @@ public class Composant {
         this.prixUnitaire = prixUnitaire;
     }
 
-    public static int COMPOSANT_MERE = 0;
-    public static int COMPOSANT_RAM = 1;
-    public static int COMPOSANT_CARTE_MERE = 2;
+    public static int COMPOSANT_MERE = 1;
+    public static int COMPOSANT_DISQUE = 2;
     public static int COMPOSANT_PROCESSEUR = 3;
-    public static int COMPOSANT_DISQUE = 4;
+    public static int COMPOSANT_RAM = 4;
+    public static int COMPOSANT_CARTE_MERE = 5;
 }
