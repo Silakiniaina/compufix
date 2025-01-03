@@ -258,6 +258,19 @@ public class CarteMere extends Composant{
         return true;
     }
 
+/// INSTALLATION 
+    public void installerRAM(RAM ram) {
+        ramsInstallees.add(ram);
+    }
+
+    public void installerProcesseur(Processeur processeur){
+        this.processeurInstalle = processeur;
+    }
+
+    public void installerDisque(Disque disque){
+        disquesInstalles.add(disque);
+    }
+
     public int getIdCarteMere() {
         return idCarteMere;
     }
