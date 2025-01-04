@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.composant.Composant;
 import model.composant.cm.CarteMere;
+import model.composant.disque.Disque;
+import model.composant.processeur.Processeur;
+import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class Ordinateur {
@@ -62,6 +66,32 @@ public class Ordinateur {
             }
         }
         return result;
+    }
+
+    public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
+        // Si c'est un composant qui se branche sur la carte mère
+        if (composant instanceof RAM) {
+            this.getCarteMere().installerRAM(c,(RAM) composant);
+        } else if (composant instanceof Processeur) {
+            this.getCarteMere().installerProcesseur(c,(Processeur) composant);
+        } else if (composant instanceof Disque) {
+            this.getCarteMere().installerDisque(c,(Disque) composant);
+        }
+        
+        // Dans tous les cas, on ajoute à la liste des composants
+        ComposantOrdinateur comp = new ComposantOrdinateur();
+        comp.setComposant(c, composant.getIdComposant());
+        comp.setQuantite(quantite);
+        comp.insert(c, this);
+        
+        this.getComposants().add(comp);
+    }
+
+    public void describe(){
+        System.out.println("Nom : "+this.getNomOrdinateur());
+        System.out.println("Processeur slot : "+this.getCarteMere().hasProcesseurInstalle());
+        System.out.println("Slot ram disponible : "+this.getCarteMere().getNombreSlotsRAMDisponibles()+" / "+this.getCarteMere().getNombreSlotRam());
+        System.out.println("Slot disque disponible : "+this.getCarteMere().getNombreSlotsDisqueDisponibles()+" / "+this.getCarteMere().getNombreSlotDisque());
     }
 
     // GETTERS AND SETTERS

@@ -9,6 +9,7 @@ import java.util.List;
 
 import model.composant.Composant;
 import model.composant.disque.Disque;
+import model.ordinateur.Ordinateur;
 import model.utils.Database;
 
 public class Disque extends Composant{
@@ -41,6 +42,7 @@ public class Disque extends Composant{
                 r.setNomComposant(rs.getString("nom_composant"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;
@@ -72,6 +74,39 @@ public class Disque extends Composant{
                 this.setNomComposant(rs.getString("nom_composant"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
+                return this;
+            }
+            return null;
+        } finally {
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    @Override
+    public Composant getByIdComposant(Connection c, int id) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM disque_dur, composant WHERE disque_dur.id_composant = composant.id_composant AND disque_dur.id_composant = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, id);
+            
+            rs = prstm.executeQuery();
+            if (rs.next()) {
+                this.setIdDisque(rs.getInt("id_disque_dur"));
+                this.setPortable(rs.getBoolean("est_portable"));
+                this.setTypeDisque(c, rs.getInt("id_type_disque"));
+                this.setIdComposant(rs.getInt("id_composant"));
+                this.setNomComposant(rs.getString("nom_composant"));
+                this.setCapacite(rs.getDouble("capacite"));
+                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;
@@ -180,6 +215,43 @@ public class Disque extends Composant{
     @Override
     public int getType() {
         return Composant.COMPOSANT_DISQUE;
+    }
+
+    public static List<Disque> getDisquesInstallees(Connection c, int idcm) throws SQLException{
+        List<Disque> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql  = "SELECT * FROM v_installation_disque WHERE type_slot = ? AND id_carte_mere = ? ";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1,"Disque");
+            prstm.setInt(2, idcm);
+
+            rs = prstm.executeQuery();
+            while (rs.next()) {
+                Disque r = new Disque();
+                r.setIdDisque(rs.getInt("id_disque_dur"));
+                r.setPortable(rs.getBoolean("est_portable"));
+                r.setTypeDisque(c, rs.getInt("id_type_disque"));
+                r.setIdComposant(rs.getInt("id_composant"));
+                r.setNomComposant(rs.getString("nom_composant"));
+                r.setCapacite(rs.getDouble("capacite"));
+                r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                results.add(r);
+            }
+
+            return results;
+        } catch (Exception e) {
+            throw e;
+        } finally{ 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
     }
     
     public int getIdDisque() {
