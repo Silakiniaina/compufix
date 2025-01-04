@@ -9,6 +9,7 @@ import java.util.List;
 
 import model.composant.Composant;
 import model.composant.disque.Disque;
+import model.ordinateur.Ordinateur;
 import model.utils.Database;
 
 public class Disque extends Composant{
@@ -221,7 +222,7 @@ public class Disque extends Composant{
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql  = "SELECT * FROM v_composant_installation WHERE type_slot = ? AND id_carte_mere = ? ";
+        String sql  = "SELECT * FROM v_installation_disque WHERE type_slot = ? AND id_carte_mere = ? ";
         try {
             if( c == null){
                 c = Database.getConnection();

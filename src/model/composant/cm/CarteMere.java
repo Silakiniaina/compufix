@@ -260,48 +260,40 @@ public class CarteMere extends Composant{
 
 /// COMPATIBILITY CHECK 
     // Vérification RAM
-    public boolean isRAMCompatible(RAM ram) {
+    public void checkRamCompatibility(RAM ram)throws Exception {
         // Vérifier le type de RAM
-        if (ram.getTypeRam() != this.getTypeRam()) {
-            return false;
+        if (!ram.getTypeRam().getNomTypeRam().equals(this.getTypeRam().getNomTypeRam())) {
+            throw new Exception("Le type de ram : "+ram.getTypeRam().getNomTypeRam()+" est pas compatible a celui du carte mere : "+this.getTypeRam().getNomTypeRam());
         }
         
         // Vérifier si un slot est disponible
         if (ramsInstallees.size() >= nombreSlotRam) {
-            return false;
+            throw new Exception("Aucun slot disponible pour inserer le ram");
         }
-        
-        return true;
     }
 
     // Vérification Processeur
-    public boolean isProcesseurCompatible(Processeur processeur) {
+    public void checkProcesseurCompatibility(Processeur processeur) throws Exception{
         // Vérifier si le type de socket correspond
-        if (processeur.getTypeProcesseur() != this.getTypeProcesseur()) {
-            return false;
+        if (!processeur.getTypeProcesseur().getNomTypeProcesseur().equals(this.getTypeProcesseur().getNomTypeProcesseur())) {
+            throw new Exception("Le type de processeur : "+processeur.getTypeProcesseur().getNomTypeProcesseur()+" est pas compatible a celui du carte mere : "+this.getTypeProcesseur().getNomTypeProcesseur());
         }
         
         // Vérifier si un processeur est déjà installé
         if (processeurInstalle != null) {
-            return false;
-        }
-        
-        return true;
+            throw new Exception("Le slot pour le processeur est deja occupe");
+        };
     }
 
     // Vérification Disque
-    public boolean isDisqueCompatible(Disque disque) {
-        // Vérifier le type de disque
-        if (disque.getTypeDisque() != this.getTypeDisque()) {
-            return false;
+    public void checkDisqueCompatibility(Disque disque) throws Exception{
+        if (!disque.getTypeDisque().getNomTypeDisque().equals(this.getTypeDisque().getNomTypeDisque())) {
+            throw new Exception("Le type de disque : "+disque.getTypeDisque().getNomTypeDisque()+" est pas compatible a celui du carte mere : "+this.getTypeDisque().getNomTypeDisque());
         }
-        
-        // Vérifier si un slot est disponible
+
         if (disquesInstalles.size() >= nombreSlotDisque) {
-            return false;
+            throw new Exception("Aucun slot disponible pour inserer le disque");
         }
-        
-        return true;
     }
 
 /// INSTALLATION 
@@ -330,19 +322,22 @@ public class CarteMere extends Composant{
         }
     }
 
-    public void installerRAM(Connection c, RAM ram) throws SQLException{
-        ramsInstallees.add(ram);
+    public void installerRAM(Connection c, RAM ram) throws SQLException,Exception{
+        this.checkRamCompatibility(ram);
         this.installComposant(c, ram.getIdComposant(), "RAM");
+        this.getRamsInstallees().add(ram);
     }
 
-    public void installerProcesseur(Connection c, Processeur processeur)throws SQLException{
-        this.processeurInstalle = processeur;
+    public void installerProcesseur(Connection c, Processeur processeur)throws SQLException,Exception{
+        this.checkProcesseurCompatibility(processeur);
         this.installComposant(c, processeur.getIdComposant(), "Processeur");
+        this.setProcesseurInstalle(processeur);
     }
 
-    public void installerDisque(Connection c, Disque disque) throws SQLException{
-        disquesInstalles.add(disque);
+    public void installerDisque(Connection c, Disque disque) throws SQLException,Exception{
+        this.checkDisqueCompatibility(disque);
         this.installComposant(c, disque.getIdComposant(), "Disque");
+        this.getDisquesInstalles().add(disque);
     }
 
 /// UTILS 

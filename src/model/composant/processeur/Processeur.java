@@ -104,10 +104,10 @@ public class Processeur extends Composant{
             if (rs.next()) {
                 this.setIdProcesseur(rs.getInt("id_processeur"));
                 this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
-                this.setIdComposant(rs.getInt("id_composant"));
-                this.setNomComposant(rs.getString("nom_composant"));
                 this.setGeneration(rs.getInt("generation"));
                 this.setNombreCoeur(rs.getInt("nombre_coeur"));
+                this.setIdComposant(rs.getInt("id_composant"));
+                this.setNomComposant(rs.getString("nom_composant"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
                 this.setTypeComposant(c, rs.getInt("id_type_composant"));
@@ -229,7 +229,7 @@ public class Processeur extends Composant{
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql  = "SELECT * FROM v_composant_installation WHERE type_slot = ? AND id_carte_mere = ? ";
+        String sql  = "SELECT * FROM v_installation_processeur WHERE type_slot = ? AND id_carte_mere = ? ";
         try {
             if( c == null){
                 c = Database.getConnection();

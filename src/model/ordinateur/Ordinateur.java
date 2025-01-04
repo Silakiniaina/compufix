@@ -68,16 +68,13 @@ public class Ordinateur {
         return result;
     }
 
-    public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException{
+    public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
         // Si c'est un composant qui se branche sur la carte mère
         if (composant instanceof RAM) {
-            this.getCarteMere().isRAMCompatible((RAM) composant);
             this.getCarteMere().installerRAM(c,(RAM) composant);
         } else if (composant instanceof Processeur) {
-            this.getCarteMere().isProcesseurCompatible((Processeur) composant);
             this.getCarteMere().installerProcesseur(c,(Processeur) composant);
         } else if (composant instanceof Disque) {
-            this.getCarteMere().isDisqueCompatible((Disque) composant);
             this.getCarteMere().installerDisque(c,(Disque) composant);
         }
         
@@ -88,6 +85,13 @@ public class Ordinateur {
         comp.insert(c, this);
         
         this.getComposants().add(comp);
+    }
+
+    public void describe(){
+        System.out.println("Nom : "+this.getNomOrdinateur());
+        System.out.println("Processeur slot : "+this.getCarteMere().hasProcesseurInstalle());
+        System.out.println("Slot ram disponible : "+this.getCarteMere().getNombreSlotsRAMDisponibles()+" / "+this.getCarteMere().getNombreSlotRam());
+        System.out.println("Slot disque disponible : "+this.getCarteMere().getNombreSlotsDisqueDisponibles()+" / "+this.getCarteMere().getNombreSlotDisque());
     }
 
     // GETTERS AND SETTERS

@@ -222,7 +222,7 @@ public class RAM extends Composant{
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql  = "SELECT * FROM v_composant_installation WHERE type_slot = ? AND id_carte_mere = ? ";
+        String sql  = "SELECT * FROM v_installation_ram WHERE type_slot = ? AND id_carte_mere = ? ";
         try {
             if( c == null){
                 c = Database.getConnection();
