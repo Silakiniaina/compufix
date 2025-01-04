@@ -20,7 +20,7 @@ public class ComposantOrdinateur {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM composant_ordinateur WHERE id_ordinateur = ?";
+        String sql = "SELECT * FROM v_composant_ordinateur WHERE id_ordinateur = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -33,6 +33,23 @@ public class ComposantOrdinateur {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ComposantOrdinateur composant = new ComposantOrdinateur();
+                int type = rs.getInt("id_type_composant");
+                switch (type) {
+                    case 2:
+                        
+                        break;
+                    case 3:
+                        
+                        break;
+                    case 4:
+                        
+                        break;
+                    case 5:
+                        
+                        break;
+                    default:
+                        break;
+                }
                 composant.setComposant(c, rs.getInt("id_composant"));
                 composant.setQuantite(rs.getInt("quantite"));
 

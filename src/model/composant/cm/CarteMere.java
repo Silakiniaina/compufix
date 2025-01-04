@@ -111,6 +111,43 @@ public class CarteMere extends Composant{
     }
 
     @Override
+    public Composant getByIdComposant(Connection c, int id) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM carte_mere, composant WHERE carte_mere.id_composant = composant.id_composant AND id_composant = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, id);
+            
+            rs = prstm.executeQuery();
+            if (rs.next()) {
+                this.setIdCarteMere(rs.getInt("id_carte_mere"));
+                this.setIdComposant(rs.getInt("id_composant"));
+                this.setNomComposant(rs.getString("nom_composant"));
+                this.setNombreSlotRam(rs.getInt("nombre_slot_ram"));
+                this.setNombreSlotDisque(rs.getInt("nombre_slot_disque"));
+                this.setTypeDisque(c, rs.getInt("id_type_disque"));
+                this.setTypeRam(c, rs.getInt("id_type_ram"));
+                this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
+                this.setCapacite(rs.getDouble("capacite"));
+                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setRamsInstallees(RAM.getRamsInstallees(c, this.getIdCarteMere()));
+                this.setDisquesInstalles(Disque.getDisquesInstallees(c, this.getIdCarteMere()));
+                this.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, this.getIdCarteMere()));
+                return this;
+            }
+            return null;
+        } finally {
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    @Override
     public void delete(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
