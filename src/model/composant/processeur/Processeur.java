@@ -44,6 +44,7 @@ public class Processeur extends Composant{
                 r.setNombreCoeur(rs.getInt("nombre_coeur"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;
@@ -76,6 +77,7 @@ public class Processeur extends Composant{
                 this.setNombreCoeur(rs.getInt("nombre_coeur"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;
@@ -89,7 +91,7 @@ public class Processeur extends Composant{
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM processeur, composant WHERE processeur.id_composant = composant.id_composant AND id_composant = ?";
+        String query = "SELECT * FROM processeur, composant WHERE processeur.id_composant = composant.id_composant AND processeur.id_composant = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -108,6 +110,7 @@ public class Processeur extends Composant{
                 this.setNombreCoeur(rs.getInt("nombre_coeur"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;

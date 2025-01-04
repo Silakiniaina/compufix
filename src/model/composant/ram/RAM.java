@@ -41,6 +41,7 @@ public class RAM extends Composant{
                 r.setNomComposant(rs.getString("nom_composant"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;
@@ -72,6 +73,7 @@ public class RAM extends Composant{
                 this.setNomComposant(rs.getString("nom_composant"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;
@@ -85,7 +87,7 @@ public class RAM extends Composant{
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM ram, composant WHERE ram.id_composant = composant.id_composant AND id_composant = ?";
+        String query = "SELECT * FROM ram, composant WHERE ram.id_composant = composant.id_composant AND ram.id_composant = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -103,6 +105,7 @@ public class RAM extends Composant{
                 this.setNomComposant(rs.getString("nom_composant"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;

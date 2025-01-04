@@ -85,7 +85,8 @@ public class Ordinateur {
         ComposantOrdinateur comp = new ComposantOrdinateur();
         comp.setComposant(c, composant.getIdComposant());
         comp.setQuantite(quantite);
-
+        comp.insert(c, this);
+        
         this.getComposants().add(comp);
     }
 

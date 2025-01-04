@@ -62,6 +62,7 @@ public class CarteMere extends Composant{
                 r.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 r.setRamsInstallees(RAM.getRamsInstallees(c, r.getIdCarteMere()));
                 r.setDisquesInstalles(Disque.getDisquesInstallees(c, r.getIdCarteMere()));
                 r.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, r.getIdCarteMere()));
@@ -99,6 +100,7 @@ public class CarteMere extends Composant{
                 this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 this.setRamsInstallees(RAM.getRamsInstallees(c, this.getIdCarteMere()));
                 this.setDisquesInstalles(Disque.getDisquesInstallees(c, this.getIdCarteMere()));
                 this.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, this.getIdCarteMere()));
@@ -115,7 +117,7 @@ public class CarteMere extends Composant{
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM carte_mere, composant WHERE carte_mere.id_composant = composant.id_composant AND id_composant = ?";
+        String query = "SELECT * FROM carte_mere, composant WHERE carte_mere.id_composant = composant.id_composant AND carte_mere.id_composant = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -136,6 +138,7 @@ public class CarteMere extends Composant{
                 this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 this.setRamsInstallees(RAM.getRamsInstallees(c, this.getIdCarteMere()));
                 this.setDisquesInstalles(Disque.getDisquesInstallees(c, this.getIdCarteMere()));
                 this.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, this.getIdCarteMere()));
