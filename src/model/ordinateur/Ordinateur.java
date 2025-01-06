@@ -66,19 +66,40 @@ public class Ordinateur {
     }
 
     public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
-        // compatibility check 
-        this.getCarteMere().checkComposantCompatibility(composant);
+        // Verification des composants
+        this.checkCompatibility(composant);
 
-        // installation composant
-        this.getCarteMere().installerComposant(c, composant);
-        
         // Dans tous les cas, on ajoute à la liste des composants
         ComposantOrdinateur comp = new ComposantOrdinateur();
-        comp.setComposant(c, composant.getIdComposant());
+        comp.setComposant(composant);
         comp.setQuantite(quantite);
-        comp.insert(c, this);
         
         this.getComposants().add(comp);
+    }
+
+    public void installerComposant(Connection c, ComposantOrdinateur comp)throws SQLException{
+        comp.insert(c, this);
+    }
+
+    public void installerComposants(Connection c)throws SQLException{
+        for(ComposantOrdinateur composant : this.getComposants()){
+            composant.insert(c, this);
+        }
+    }
+
+    public void checkCompatibility(Composant c)throws Exception{
+        if(!this.hasCarteMere() && !(c instanceof CarteMere)){
+            throw new Exception("Aucune carte mere trouve dans l\'ordinateur pour ajouter le composant : "+c.getNomComposant());
+        }
+
+        if(this.hasCarteMere() && c instanceof CarteMere){
+            throw new Exception("Cette ordinateur a deja un carte mere : "+this.getCarteMere().getNomComposant());
+        }
+
+        // compatibility check 
+        if(this.hasCarteMere()){
+            this.getCarteMere().checkComposantCompatibility(c);
+        }
     }
 
     public void describe(){
@@ -99,14 +120,19 @@ public class Ordinateur {
         return description;
     }
     
-    public CarteMere getCarteMere(){
-        for(ComposantOrdinateur composant : this.getComposants()){
-            if(composant.getComposant().getTypeComposant().isCarteMere()){
-               return (CarteMere)composant.getComposant();
+    public CarteMere getCarteMere() {
+        for (ComposantOrdinateur composant : this.getComposants()) {
+            if (composant.getComposant().getTypeComposant().isCarteMere()) {
+                if (composant.getComposant() instanceof CarteMere) {
+                    return (CarteMere) composant.getComposant();
+                } else {
+                    throw new IllegalStateException("The component is marked as a CarteMere but is not an instance of CarteMere.");
+                }
             }
         }
         return null;
     }
+    
 
     public void setIdOrdinateur(int idOrdinateur) {
         this.idOrdinateur = idOrdinateur;

@@ -14,6 +14,7 @@ import model.composant.processeur.Processeur;
 import model.composant.processeur.TypeProcesseur;
 import model.composant.ram.RAM;
 import model.composant.ram.TypeRam;
+import model.ordinateur.Ordinateur;
 import model.utils.Database;
 
 public class CarteMere extends Composant{

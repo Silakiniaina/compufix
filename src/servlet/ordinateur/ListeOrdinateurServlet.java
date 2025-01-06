@@ -10,8 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.composant.Composant;
-import model.composant.ram.RAM;
 import model.ordinateur.Ordinateur;
 
 @WebServlet("/ordinateur/list")
