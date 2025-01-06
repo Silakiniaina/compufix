@@ -106,7 +106,7 @@
                 </a>
             </li>
             <li class="nav-item w-100">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="<%= request.getContextPath() %>/ordinateur/add">
                   <i class="fe fe-plus fe-16"></i>
                   <span class="ml-3 item-text">Ajouter</span>
                 </a>

@@ -97,6 +97,7 @@ public class ComposantOrdinateur {
            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
+    
     // GETTERS AND SETTERS
     public Composant getComposant() {
         return composant;
