@@ -22,6 +22,7 @@ public class Ordinateur {
         this.setComposants(new ArrayList<>());
     }
 
+/// CRUD Operation
     public List<Ordinateur> getAll(Connection c) throws SQLException{
         List<Ordinateur> results = new ArrayList<>();
         boolean isNewConnection = false;
@@ -54,6 +55,34 @@ public class Ordinateur {
         }
     }
 
+    public void insert(Connection c)throws SQLException{
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        String sql = "INSERT INTO ordinateur(nom_ordinateur, description) VALUES(?, ?)";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            
+            c.setAutoCommit(false);
+            
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1, this.getNomOrdinateur());
+            prstm.setString(2, this.getDescription());
+
+            prstm.executeUpdate();
+
+            c.commit();
+        } catch (SQLException e) {
+            c.rollback();
+            throw e;
+        }finally{
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+    
+/// Composant check
     public boolean hasCarteMere(){
         boolean result = false;
         for(ComposantOrdinateur composant : this.getComposants()){
@@ -65,6 +94,22 @@ public class Ordinateur {
         return result;
     }
 
+    public void checkCompatibility(Composant c)throws Exception{
+        if(!this.hasCarteMere() && !(c instanceof CarteMere)){
+            throw new Exception("Aucune carte mere trouve dans l\'ordinateur pour ajouter le composant : "+c.getNomComposant());
+        }
+
+        if(this.hasCarteMere() && c instanceof CarteMere){
+            throw new Exception("Cette ordinateur a deja un carte mere : "+this.getCarteMere().getNomComposant());
+        }
+
+        // compatibility check 
+        if(this.hasCarteMere()){
+            this.getCarteMere().checkComposantCompatibility(c);
+        }
+    }
+
+/// Installation composant
     public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
         // Verification des composants
         this.checkCompatibility(composant);
@@ -87,21 +132,7 @@ public class Ordinateur {
         }
     }
 
-    public void checkCompatibility(Composant c)throws Exception{
-        if(!this.hasCarteMere() && !(c instanceof CarteMere)){
-            throw new Exception("Aucune carte mere trouve dans l\'ordinateur pour ajouter le composant : "+c.getNomComposant());
-        }
-
-        if(this.hasCarteMere() && c instanceof CarteMere){
-            throw new Exception("Cette ordinateur a deja un carte mere : "+this.getCarteMere().getNomComposant());
-        }
-
-        // compatibility check 
-        if(this.hasCarteMere()){
-            this.getCarteMere().checkComposantCompatibility(c);
-        }
-    }
-
+/// Utils
     public void describe(){
         System.out.println("Nom : "+this.getNomOrdinateur());
         System.out.println("Processeur slot : "+this.getCarteMere().hasProcesseurInstalle());
