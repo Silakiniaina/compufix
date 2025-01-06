@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,11 +68,20 @@ public class Ordinateur {
             
             c.setAutoCommit(false);
             
-            prstm = c.prepareStatement(sql);
+            prstm = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             prstm.setString(1, this.getNomOrdinateur());
             prstm.setString(2, this.getDescription());
 
             prstm.executeUpdate();
+
+            // Récupération de l'I D généré
+            try (ResultSet generatedKeys = prstm.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    this.setIdOrdinateur(generatedKeys.getInt(1));
+                }
+            }
+
+            System.out.println(this.getIdOrdinateur());
 
             c.commit();
         } catch (SQLException e) {
@@ -81,7 +91,7 @@ public class Ordinateur {
             Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
-    
+
 /// Composant check
     public boolean hasCarteMere(){
         boolean result = false;
