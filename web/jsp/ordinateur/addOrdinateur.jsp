@@ -32,7 +32,7 @@
                                     <% for(Composant carteMere : carteMeres){ 
                                         CarteMere cm = (CarteMere)carteMere;
                                     %>
-                                        <option value="<%= cm.getIdComposant() %>">
+                                        <option value="<%= cm.getIdCarteMere() %>">
                                             <%= cm.getNomComposant() %>
                                         </option>
                                         <% } %>
@@ -44,7 +44,7 @@
                                     <% for(Composant ram : rams){ 
                                         RAM r = (RAM)ram;
                                     %>
-                                        <option value="<%= r.getIdComposant() %>">
+                                        <option value="<%= r.getIdRam() %>">
                                             <%= r.getNomComposant() %>
                                         </option>
                                         <% } %>
@@ -52,11 +52,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="processeur">Processeur</label>
-                                <select id="processeur" name="cpu" class="form-control">
+                                <select id="processeur" name="processeur" class="form-control">
                                     <% for(Composant processeur : processeurs){ 
                                         Processeur cpu = (Processeur)processeur;
                                     %>
-                                        <option value="<%= cpu.getIdComposant() %>">
+                                        <option value="<%= cpu.getIdProcesseur() %>">
                                             <%= cpu.getNomComposant() %>
                                         </option>
                                         <% } %>
@@ -68,7 +68,7 @@
                                     <% for(Composant disque : disques){ 
                                         Disque d = (Disque)disque;
                                     %>
-                                        <option value="<%= d.getIdComposant() %>">
+                                        <option value="<%= d.getIdDisque() %>">
                                             <%= d.getNomComposant() %>
                                         </option>
                                         <% } %>

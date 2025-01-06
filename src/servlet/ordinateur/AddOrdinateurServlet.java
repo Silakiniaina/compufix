@@ -3,6 +3,7 @@ package servlet.ordinateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import model.composant.cm.CarteMere;
 import model.composant.disque.Disque;
 import model.composant.processeur.Processeur;
 import model.composant.ram.RAM;
+import model.ordinateur.Ordinateur;
 
 @WebServlet("/ordinateur/add")
 public class AddOrdinateurServlet extends HttpServlet{
@@ -44,8 +46,37 @@ public class AddOrdinateurServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPost(req, resp);
+        PrintWriter out = resp.getWriter();
+        String nom = req.getParameter("nom");
+        String description = req.getParameter("description");
+        try {
+
+            Connection c = (Connection)req.getSession().getAttribute("connexion");
+            int idRam = Integer.parseInt(req.getParameter("ram"));
+            int idProcesseur = Integer.parseInt(req.getParameter("processeur"));
+            int idDisque = Integer.parseInt(req.getParameter("disque"));
+            int idCarteMere = Integer.parseInt(req.getParameter("cm"));
+
+            CarteMere cm = (CarteMere)new CarteMere().getById(c, idCarteMere);
+            RAM ram = (RAM)new RAM().getById(c, idRam);
+            Processeur cpu = (Processeur)new Processeur().getById(c, idProcesseur);
+            Disque disque = (Disque)new Disque().getById(c, idDisque);
+
+            Ordinateur o =  new Ordinateur();
+            o.setNomOrdinateur(nom);
+            o.setDescription(description);
+            o.ajouterComposant(c, cm, 1);
+            o.ajouterComposant(c, ram, 1);
+            o.ajouterComposant(c, disque, 1);
+            o.ajouterComposant(c, cpu, 1);
+
+            o.insert(c);
+            o.installerComposants(c);
+            
+            resp.sendRedirect(req.getContextPath()+"/ordinateur/add");
+        } catch (Exception e) {
+            e.printStackTrace(out);
+        }
     }
     
 }
