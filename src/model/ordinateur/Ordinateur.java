@@ -9,9 +9,6 @@ import java.util.List;
 
 import model.composant.Composant;
 import model.composant.cm.CarteMere;
-import model.composant.disque.Disque;
-import model.composant.processeur.Processeur;
-import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class Ordinateur {
@@ -69,14 +66,11 @@ public class Ordinateur {
     }
 
     public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
-        // Si c'est un composant qui se branche sur la carte mère
-        if (composant instanceof RAM) {
-            this.getCarteMere().installerRAM(c,(RAM) composant);
-        } else if (composant instanceof Processeur) {
-            this.getCarteMere().installerProcesseur(c,(Processeur) composant);
-        } else if (composant instanceof Disque) {
-            this.getCarteMere().installerDisque(c,(Disque) composant);
-        }
+        // compatibility check 
+        this.getCarteMere().checkComposantCompatibility(composant);
+
+        // installation composant
+        this.getCarteMere().installerComposant(c, composant);
         
         // Dans tous les cas, on ajoute à la liste des composants
         ComposantOrdinateur comp = new ComposantOrdinateur();
