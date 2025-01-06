@@ -3,9 +3,7 @@
 <%
     List<TypeDisque> types = (List<TypeDisque>)request.getAttribute("listes");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <!-- Bordered table -->
                 <div class="col-md-8 my-4">
@@ -44,6 +42,4 @@
                     </div>
                 </div>
             </div> <!-- .col-12 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  

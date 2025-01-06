@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import model.composant.Composant;
 import model.composant.disque.Disque;
 import model.composant.disque.TypeDisque;
@@ -64,9 +66,6 @@ public class CarteMere extends Composant{
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
                 r.setTypeComposant(c, rs.getInt("id_type_composant"));
-                r.setRamsInstallees(RAM.getRamsInstallees(c, r.getIdCarteMere()));
-                r.setDisquesInstalles(Disque.getDisquesInstallees(c, r.getIdCarteMere()));
-                r.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, r.getIdCarteMere()));
                 results.add(r);
             }
             return results;
@@ -91,6 +90,8 @@ public class CarteMere extends Composant{
             
             rs = prstm.executeQuery();
             if (rs.next()) {
+                this.setRamsInstallees(new ArrayList<>());
+                this.setDisquesInstalles(new ArrayList<>());
                 this.setIdCarteMere(rs.getInt("id_carte_mere"));
                 this.setIdComposant(rs.getInt("id_composant"));
                 this.setNomComposant(rs.getString("nom_composant"));
@@ -102,9 +103,6 @@ public class CarteMere extends Composant{
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
                 this.setTypeComposant(c, rs.getInt("id_type_composant"));
-                this.setRamsInstallees(RAM.getRamsInstallees(c, this.getIdCarteMere()));
-                this.setDisquesInstalles(Disque.getDisquesInstallees(c, this.getIdCarteMere()));
-                this.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, this.getIdCarteMere()));
                 return this;
             }
             return null;
@@ -140,9 +138,6 @@ public class CarteMere extends Composant{
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
                 this.setTypeComposant(c, rs.getInt("id_type_composant"));
-                this.setRamsInstallees(RAM.getRamsInstallees(c, this.getIdCarteMere()));
-                this.setDisquesInstalles(Disque.getDisquesInstallees(c, this.getIdCarteMere()));
-                this.setProcesseurInstalle(Processeur.getProcesseurInstalle(c, this.getIdCarteMere()));
                 return this;
             }
             return null;
@@ -269,7 +264,7 @@ public class CarteMere extends Composant{
         
         // Vérifier si un slot est disponible
         if (!this.hasSlotsRAMDisponibles()) {
-            throw new Exception("Aucun slot disponible pour inserer le ram");
+            throw new Exception("Aucun slot disponible pour inserer le ram , slot total "+this.getNombreSlotRam()+" slot dispo : "+this.getNombreSlotsRAMDisponibles() +" , installe : "+new Gson().toJson(this.getRamsInstallees()));
         }
     }
 

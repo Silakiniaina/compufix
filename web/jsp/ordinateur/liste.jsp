@@ -4,9 +4,7 @@
 <%
     List<Ordinateur> ordinateurs = (List<Ordinateur>)request.getAttribute("ordinateurs");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <!-- Bordered table -->
                 <div class="col-md-12 my-4">
@@ -49,6 +47,4 @@
                     </div>
                 </div>
             </div> <!-- .col-12 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  

@@ -80,9 +80,7 @@ public class Ordinateur {
                     this.setIdOrdinateur(generatedKeys.getInt(1));
                 }
             }
-
-            System.out.println(this.getIdOrdinateur());
-
+            
             c.commit();
         } catch (SQLException e) {
             c.rollback();

@@ -217,12 +217,12 @@ public class Disque extends Composant{
         return Composant.COMPOSANT_DISQUE;
     }
 
-    public static List<Disque> getDisquesInstallees(Connection c, int idcm) throws SQLException{
+    public static List<Disque> getDisquesInstallees(Connection c, int idcm, int ido) throws SQLException{
         List<Disque> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql  = "SELECT * FROM v_installation_disque WHERE type_slot = ? AND id_carte_mere = ? ";
+        String sql  = "SELECT * FROM v_installation_disque WHERE type_slot = ? AND id_carte_mere = ? AND id_ordinateur = ? ";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -232,6 +232,7 @@ public class Disque extends Composant{
             prstm = c.prepareStatement(sql);
             prstm.setString(1,"Disque");
             prstm.setInt(2, idcm);
+            prstm.setInt(3, ido);
 
             rs = prstm.executeQuery();
             while (rs.next()) {

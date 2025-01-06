@@ -8,9 +8,7 @@
     List<ElementMouvementStock> entrees = (List<ElementMouvementStock>)request.getAttribute("entrees");
     String dateFilter = (String)request.getAttribute("date");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <div class="row align-items-center mb-2">
                     <div class="col">
@@ -104,6 +102,4 @@
                     </div>
                 </div>
             </div> <!-- .col-12 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  

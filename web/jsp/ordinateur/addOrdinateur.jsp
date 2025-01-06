@@ -10,9 +10,7 @@
     List<Composant> processeurs = (List<Composant>)request.getAttribute("processeurs");
     List<Composant> disques = (List<Composant>)request.getAttribute("disques");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <h2 class="page-title">
                     Insertion Ordinateur
@@ -33,7 +31,7 @@
                                         CarteMere cm = (CarteMere)carteMere;
                                     %>
                                         <option value="<%= cm.getIdCarteMere() %>">
-                                            <%= cm.getNomComposant() %>
+                                            <%= cm.getNomComposant() %> [ <%= cm.getTypeRam().getNomTypeRam() %> - <%= cm.getTypeProcesseur().getNomTypeProcesseur() %> - <%= cm.getTypeDisque().getNomTypeDisque() %>]
                                         </option>
                                         <% } %>
                                 </select>
@@ -45,7 +43,7 @@
                                         RAM r = (RAM)ram;
                                     %>
                                         <option value="<%= r.getIdRam() %>">
-                                            <%= r.getNomComposant() %>
+                                            <%= r.getNomComposant() %> [ <%= r.getTypeRam().getNomTypeRam() %> ]
                                         </option>
                                         <% } %>
                                 </select>
@@ -57,7 +55,7 @@
                                         Processeur cpu = (Processeur)processeur;
                                     %>
                                         <option value="<%= cpu.getIdProcesseur() %>">
-                                            <%= cpu.getNomComposant() %>
+                                            <%= cpu.getNomComposant() %> [ <%= cpu.getTypeProcesseur().getNomTypeProcesseur() %> ]
                                         </option>
                                         <% } %>
                                 </select>
@@ -69,7 +67,7 @@
                                         Disque d = (Disque)disque;
                                     %>
                                         <option value="<%= d.getIdDisque() %>">
-                                            <%= d.getNomComposant() %>
+                                            <%= d.getNomComposant() %> [ <%= d.getTypeDisque().getNomTypeDisque() %> ]
                                         </option>
                                         <% } %>
                                 </select>
@@ -83,6 +81,4 @@
                     </div>
                 </div>
             </div> <!-- .col-22 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  

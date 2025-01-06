@@ -75,8 +75,9 @@ public class AddOrdinateurServlet extends HttpServlet{
             
             resp.sendRedirect(req.getContextPath()+"/ordinateur/add");
         } catch (Exception e) {
-            e.printStackTrace(out);
-        }
+            req.setAttribute("error", e.getMessage());
+            doGet(req, resp);
+        } 
     }
     
 }
