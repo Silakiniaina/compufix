@@ -264,7 +264,7 @@ public class CarteMere extends Composant{
         
         // Vérifier si un slot est disponible
         if (!this.hasSlotsRAMDisponibles()) {
-            throw new Exception("Aucun slot disponible pour inserer le ram , slot total "+this.getNombreSlotRam()+" slot dispo : "+this.getNombreSlotsRAMDisponibles() +" , installe : "+new Gson().toJson(this.getRamsInstallees()));
+            throw new Exception("Aucun slot disponible pour inserer le ram");
         }
     }
 
