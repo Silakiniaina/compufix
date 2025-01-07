@@ -120,3 +120,11 @@ CREATE TABLE composant_ordinateur(
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );
+
+CREATE TABLE reparation(
+   id_reparation SERIAL,
+   id_ordinateur INTEGER NOT NULL,
+   date_reparation DATE DEFAULT NOW(),
+   PRIMARY KEY(id_reparation),
+   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
+);
