@@ -1,13 +1,21 @@
 -- Composant--
+CREATE TABLE type_composant(
+   id_type_composant SERIAL,
+   nom_type_composant VARCHAR(150)  NOT NULL,
+   PRIMARY KEY(id_type_composant)
+);
+
 CREATE TABLE composant(
    id_composant SERIAL,
    nom_composant VARCHAR(250)  NOT NULL,
-   capacite NUMERIC(15,2) NOT NULL,
+   capacite NUMERIC(15,2)   NOT NULL,
    prix_unitaire NUMERIC(18,2)   NOT NULL,
+   id_type_composant INTEGER NOT NULL,
    PRIMARY KEY(id_composant),
    UNIQUE(nom_composant),
    CHECK(capacite >= 0),
-   CHECK(prix_unitaire >= 0)
+   CHECK(prix_unitaire >= 0),
+   FOREIGN KEY(id_type_composant) REFERENCES type_composant(id_type_composant)
 );
 
 CREATE TABLE type_ram(
@@ -75,6 +83,16 @@ CREATE TABLE carte_mere(
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
 
+CREATE TABLE carte_mere_utilisation(
+   id_composant INTEGER,
+   id_carte_mere INTEGER,
+   type_slot VARCHAR(20)  NOT NULL,
+   date_installation VARCHAR(50)  DEFAULT NOW( ) ,
+   PRIMARY KEY(id_composant, id_carte_mere),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
+   FOREIGN KEY(id_carte_mere) REFERENCES carte_mere(id_carte_mere)
+);
+
 -- stock --
 CREATE TABLE mouvement_stock(
    id_mouvement_stock SERIAL,
@@ -84,4 +102,21 @@ CREATE TABLE mouvement_stock(
    id_composant INTEGER NOT NULL,
    PRIMARY KEY(id_mouvement_stock),
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);
+
+-- ordinateur
+CREATE TABLE ordinateur(
+   id_ordinateur SERIAL,
+   nom_ordinateur VARCHAR(150)  NOT NULL,
+   description TEXT,
+   PRIMARY KEY(id_ordinateur)
+);
+
+CREATE TABLE composant_ordinateur(
+   id_composant INTEGER,
+   id_ordinateur INTEGER,
+   quantite SMALLINT DEFAULT 1,
+   PRIMARY KEY(id_composant, id_ordinateur),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
+   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );

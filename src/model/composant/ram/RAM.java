@@ -41,6 +41,7 @@ public class RAM extends Composant{
                 r.setNomComposant(rs.getString("nom_composant"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;
@@ -72,6 +73,39 @@ public class RAM extends Composant{
                 this.setNomComposant(rs.getString("nom_composant"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
+                return this;
+            }
+            return null;
+        } finally {
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    @Override
+    public Composant getByIdComposant(Connection c, int id) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM ram, composant WHERE ram.id_composant = composant.id_composant AND ram.id_composant = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, id);
+            
+            rs = prstm.executeQuery();
+            if (rs.next()) {
+                this.setIdRam(rs.getInt("id_ram"));
+                this.setPortable(rs.getBoolean("est_portable"));
+                this.setTypeRam(c, rs.getInt("id_type_ram"));
+                this.setIdComposant(rs.getInt("id_composant"));
+                this.setNomComposant(rs.getString("nom_composant"));
+                this.setCapacite(rs.getDouble("capacite"));
+                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;
@@ -176,6 +210,49 @@ public class RAM extends Composant{
         } finally {
            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         } 
+    }
+
+    @Override
+    public int getType() {
+        return Composant.COMPOSANT_RAM;
+    }
+
+    public static List<RAM> getRamsInstallees(Connection c, int idcm, int ido) throws SQLException{
+        List<RAM> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql  = "SELECT * FROM v_installation_ram WHERE type_slot = ? AND id_carte_mere = ? AND id_ordinateur = ? ";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1,"RAM");
+            prstm.setInt(2, idcm);
+            prstm.setInt(3, ido);
+
+            rs = prstm.executeQuery();
+            while (rs.next()) {
+                RAM r = new RAM();
+                r.setIdRam(rs.getInt("id_ram"));
+                r.setPortable(rs.getBoolean("est_portable"));
+                r.setTypeRam(c, rs.getInt("id_type_ram"));
+                r.setIdComposant(rs.getInt("id_composant"));
+                r.setNomComposant(rs.getString("nom_composant"));
+                r.setCapacite(rs.getDouble("capacite"));
+                r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                results.add(r);
+            }
+
+            return results;
+        } catch (Exception e) {
+            throw e;
+        } finally{ 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
     }
 
     // GETTERS AND SETTERS

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.composant.Composant;
+import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class Processeur extends Composant{
@@ -43,6 +44,7 @@ public class Processeur extends Composant{
                 r.setNombreCoeur(rs.getInt("nombre_coeur"));
                 r.setCapacite(rs.getDouble("capacite"));
                 r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;
@@ -75,6 +77,40 @@ public class Processeur extends Composant{
                 this.setNombreCoeur(rs.getInt("nombre_coeur"));
                 this.setCapacite(rs.getDouble("capacite"));
                 this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
+                return this;
+            }
+            return null;
+        } finally {
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    @Override
+    public Composant getByIdComposant(Connection c, int id) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM processeur, composant WHERE processeur.id_composant = composant.id_composant AND processeur.id_composant = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, id);
+            
+            rs = prstm.executeQuery();
+            if (rs.next()) {
+                this.setIdProcesseur(rs.getInt("id_processeur"));
+                this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
+                this.setGeneration(rs.getInt("generation"));
+                this.setNombreCoeur(rs.getInt("nombre_coeur"));
+                this.setIdComposant(rs.getInt("id_composant"));
+                this.setNomComposant(rs.getString("nom_composant"));
+                this.setCapacite(rs.getDouble("capacite"));
+                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
             return null;
@@ -183,6 +219,49 @@ public class Processeur extends Composant{
         } 
     }
 
+    @Override
+    public int getType() {
+        return Composant.COMPOSANT_PROCESSEUR;
+    }
+
+    public static Processeur getProcesseurInstalle(Connection c, int idcm, int ido) throws SQLException{
+        Processeur result = null;
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql  = "SELECT * FROM v_installation_processeur WHERE type_slot = ? AND id_carte_mere = ? AND id_ordinateur = ? ";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1,"Processeur");
+            prstm.setInt(2, idcm);
+            prstm.setInt(3, ido);
+
+            rs = prstm.executeQuery();
+            if(rs.next()) {
+                result = new Processeur();
+                result.setIdProcesseur(rs.getInt("id_processeur"));
+                result.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
+                result.setIdComposant(rs.getInt("id_composant"));
+                result.setNomComposant(rs.getString("nom_composant"));
+                result.setGeneration(rs.getInt("generation"));
+                result.setNombreCoeur(rs.getInt("nombre_coeur"));
+                result.setCapacite(rs.getDouble("capacite"));
+                result.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+            }
+
+            return result;
+        } catch (Exception e) {
+            throw e;
+        } finally{ 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+    
     // GETTERS AND SETTERS
     public int getIdProcesseur() {
         return idProcesseur;

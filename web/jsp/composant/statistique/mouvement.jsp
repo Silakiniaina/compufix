@@ -10,9 +10,7 @@
     Date debut = (Date)request.getAttribute("debut");
     Date fin = (Date)request.getAttribute("fin");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <div class="row align-items-center mb-2">
                     <div class="col">
@@ -87,9 +85,7 @@
                     </div>
                 </div>
             </div> <!-- .col-12 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  
 <script>
     const statistiquesData = [
         <% for(int i = 0; i < sorties.size(); i++) { %>

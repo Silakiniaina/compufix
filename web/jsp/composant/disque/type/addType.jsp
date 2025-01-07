@@ -2,9 +2,7 @@
 <%
     TypeDisque type = (TypeDisque)request.getAttribute("updated");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <h2 class="page-title"><%= type != null ? "Update" : "Add" %> Type Disque</h2>
                 <div class="col-md-6 card shadow mb-4">
@@ -21,6 +19,4 @@
                     </div>
                 </div>
             </div> <!-- .col-22 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  

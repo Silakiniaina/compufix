@@ -3,9 +3,7 @@
 <%
     List<Composant> composants = (List<Composant>)request.getAttribute("composants");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <h2 class="page-title">
                     Ajouter Mouvement Stock
@@ -55,6 +53,4 @@
                     </div>
                 </div>
             </div> <!-- .col-22 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  

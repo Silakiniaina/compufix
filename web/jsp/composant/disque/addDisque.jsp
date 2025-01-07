@@ -6,9 +6,7 @@
     List<TypeDisque> types = (List<TypeDisque>)request.getAttribute("types");
     Composant updated = (Composant)request.getAttribute("updated");
 %>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
+ 
             <div class="col-12">
                 <h2 class="page-title">
                     <%= updated !=null ? "Mise a jour" : "Insertion" %> Disque
@@ -68,6 +66,4 @@
                     </div>
                 </div>
             </div> <!-- .col-22 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  
