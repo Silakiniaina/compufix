@@ -28,7 +28,7 @@
                                         <td class="text-center"><%= ordinateur.getIdOrdinateur() %></td>
                                         <td><%= ordinateur.getNomOrdinateur() %></td>
                                         <td><%= ordinateur.getDescription() %></td>
-                                        <td>0</td>
+                                        <td><%= ordinateur.getPrix() %></td>
                                         <td class="text-center"> 
                                             <a href="<%= request.getContextPath() %>/ordinateur/add?mode=u&id=<%= ordinateur.getIdOrdinateur() %>" type="button" class="btn btn-sm btn-primary mx-1"> 
                                                 <span class="fe fe-tool fe-16"></span>

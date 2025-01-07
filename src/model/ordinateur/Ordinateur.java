@@ -17,6 +17,7 @@ public class Ordinateur {
     private int idOrdinateur;
     private String nomOrdinateur; 
     private String description;
+    private Double prix;
     private List<ComposantOrdinateur> composants;
 
     public Ordinateur(){
@@ -29,7 +30,7 @@ public class Ordinateur {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM ordinateur";
+        String sql = "SELECT * FROM v_ordinateur";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -44,6 +45,7 @@ public class Ordinateur {
                 ordi.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 ordi.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 ordi.setDescription(rs.getString("description"));
+                ordi.setPrix(rs.getDouble("prix"));
                 ordi.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, ordi.getIdOrdinateur()));
                 results.add(ordi);
             }
@@ -181,6 +183,14 @@ public class Ordinateur {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(Double prix) {
+        this.prix = prix;
     }
 
     public List<ComposantOrdinateur> getComposants() {
