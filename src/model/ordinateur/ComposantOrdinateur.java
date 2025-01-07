@@ -78,6 +78,8 @@ public class ComposantOrdinateur {
                 isNewConnection = true;
             }
             c.setAutoCommit(false);
+
+            System.out.println(o.getIdOrdinateur());
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getComposant().getIdComposant());
             prstm.setInt(2, o.getIdOrdinateur());
@@ -95,6 +97,7 @@ public class ComposantOrdinateur {
            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
+    
     // GETTERS AND SETTERS
     public Composant getComposant() {
         return composant;

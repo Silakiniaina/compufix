@@ -217,12 +217,12 @@ public class RAM extends Composant{
         return Composant.COMPOSANT_RAM;
     }
 
-    public static List<RAM> getRamsInstallees(Connection c, int idcm) throws SQLException{
+    public static List<RAM> getRamsInstallees(Connection c, int idcm, int ido) throws SQLException{
         List<RAM> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql  = "SELECT * FROM v_installation_ram WHERE type_slot = ? AND id_carte_mere = ? ";
+        String sql  = "SELECT * FROM v_installation_ram WHERE type_slot = ? AND id_carte_mere = ? AND id_ordinateur = ? ";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -232,6 +232,7 @@ public class RAM extends Composant{
             prstm = c.prepareStatement(sql);
             prstm.setString(1,"RAM");
             prstm.setInt(2, idcm);
+            prstm.setInt(3, ido);
 
             rs = prstm.executeQuery();
             while (rs.next()) {

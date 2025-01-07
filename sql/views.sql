@@ -158,11 +158,13 @@ SELECT
     r.id_type_ram,
     cmu.id_carte_mere,
     cmu.type_slot,
-    cmu.date_installation
+    cmu.date_installation,
+    co.id_ordinateur
 FROM
     ram r
-JOIN composant c ON r.id_composant = c.id_composant
-JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant;
+    JOIN composant c ON r.id_composant = c.id_composant
+    JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
+    JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
 
 CREATE
 OR REPLACE VIEW v_installation_processeur AS
@@ -174,12 +176,13 @@ SELECT
     p.generation,
     cmu.id_carte_mere,
     cmu.type_slot,
-    cmu.date_installation
+    cmu.date_installation,
+    co.id_ordinateur
 FROM
     processeur p
-JOIN composant c ON p.id_composant = c.id_composant
-JOIN carte_mere_utilisation cmu ON p.id_composant = cmu.id_composant;
-
+    JOIN composant c ON p.id_composant = c.id_composant
+    JOIN carte_mere_utilisation cmu ON p.id_composant = cmu.id_composant
+    JOIN composant_ordinateur co ON c.id_composant = co.id_composant;
 
 CREATE
 OR REPLACE VIEW v_installation_disque AS
@@ -190,13 +193,13 @@ SELECT
     r.id_type_disque,
     cmu.id_carte_mere,
     cmu.type_slot,
-    cmu.date_installation
+    cmu.date_installation,
+    co.id_ordinateur
 FROM
     disque_dur r
-JOIN composant c ON r.id_composant = c.id_composant
-JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant;
-
-
+    JOIN composant c ON r.id_composant = c.id_composant
+    JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
+    JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
 
 CREATE
 OR REPLACE VIEW v_composant_ordinateur AS
@@ -206,3 +209,15 @@ SELECT
 FROM
     composant_ordinateur co
     JOIN composant c ON co.id_composant = c.id_composant;
+
+CREATE
+OR REPLACE VIEW v_ordinateur AS
+SELECT
+    o.*,
+    SUM(c.prix_unitaire) AS prix
+FROM
+    ordinateur o
+    JOIN composant_ordinateur co ON o.id_ordinateur = co.id_ordinateur
+    JOIN composant c ON co.id_composant = c.id_composant
+GROUP BY
+    o.id_ordinateur;

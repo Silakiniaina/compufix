@@ -54,6 +54,4 @@
                     </div>
                 </div>
             </div> <!-- .col-12 -->
-        </div> <!-- .row -->
-    </div> <!-- .container-fluid -->
-</main>
+  

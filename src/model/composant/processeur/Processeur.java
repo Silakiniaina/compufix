@@ -224,12 +224,12 @@ public class Processeur extends Composant{
         return Composant.COMPOSANT_PROCESSEUR;
     }
 
-    public static Processeur getProcesseurInstalle(Connection c, int idcm) throws SQLException{
+    public static Processeur getProcesseurInstalle(Connection c, int idcm, int ido) throws SQLException{
         Processeur result = null;
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql  = "SELECT * FROM v_installation_processeur WHERE type_slot = ? AND id_carte_mere = ? ";
+        String sql  = "SELECT * FROM v_installation_processeur WHERE type_slot = ? AND id_carte_mere = ? AND id_ordinateur = ? ";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -239,6 +239,7 @@ public class Processeur extends Composant{
             prstm = c.prepareStatement(sql);
             prstm.setString(1,"Processeur");
             prstm.setInt(2, idcm);
+            prstm.setInt(3, ido);
 
             rs = prstm.executeQuery();
             if(rs.next()) {
