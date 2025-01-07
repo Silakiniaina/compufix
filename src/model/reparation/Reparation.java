@@ -18,7 +18,8 @@ public class Reparation {
     private int idReparation;
     private Date dateReparation;
     private Ordinateur ordinateur;
-    private List<TypeComposant> typeComposant;
+    // private List<TypeComposant> typeComposant;
+    private TypeComposant typeComposant;
 
 /// CRUD Operation
     public List<Reparation> getAll(Connection c)throws SQLException{
@@ -26,7 +27,7 @@ public class Reparation {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM reparation";
+        String sql = "SELECT * FROM v_filtre_reparation";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -42,6 +43,7 @@ public class Reparation {
                 r.setIdReparation(rs.getInt("id_reparation"));
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;   
@@ -74,6 +76,7 @@ public class Reparation {
                 r.setIdReparation(rs.getInt("id_reparation"));
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;   
@@ -102,11 +105,11 @@ public class Reparation {
     public void setOrdinateur(Connection c, int ordinateur)throws SQLException {
         this.ordinateur = new Ordinateur().getById(c, ordinateur);
     }
-    public List<TypeComposant> getTypeComposant() {
+    public TypeComposant getTypeComposant() {
         return typeComposant;
     }
-    public void setTypeComposant(List<TypeComposant> typeComposant) {
-        this.typeComposant = typeComposant;
+    public void setTypeComposant(Connection c, int typeComposant) throws SQLException{
+        this.typeComposant = new TypeComposant().getById(c, typeComposant);
     }
 
     

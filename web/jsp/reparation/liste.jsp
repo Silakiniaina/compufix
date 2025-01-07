@@ -17,8 +17,8 @@
                     <div class="col-auto">
                         <form class="form-inline" action="<%= request.getContextPath() %>/reparations" method="POST">
                             <div class="form-group">
-                                <label for="type">Type Composant</label>
                                 <select id="type" name="type" class="form-control">
+                                    <option value="">All</option>
                                     <% for(TypeComposant type : types){ %>
                                         <option value="<%= type.getIdTypeComposant() %>">
                                             <%= type.getNomTypeComposant() %> 
@@ -44,6 +44,7 @@
                                         <th style="width: 120px;">ID</th>
                                         <th>Date</th>
                                         <th>Ordinateur</th>
+                                        <th>Probleme</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,6 +58,9 @@
                                             </td>
                                             <td>
                                                 <%= reparation.getOrdinateur().getNomOrdinateur() %>
+                                            </td>
+                                            <td>
+                                                <%= reparation.getTypeComposant().getNomTypeComposant() %>
                                             </td>
                                         </tr>
                                     <% } %>
