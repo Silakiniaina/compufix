@@ -128,3 +128,11 @@ CREATE TABLE reparation(
    PRIMARY KEY(id_reparation),
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );
+
+CREATE TABLE type_composant_reparation(
+   id_type_composant INT NOT NULL, 
+   id_reparation INT NOT NULL,
+   PRIMARY KEY(id_type_composant,id_reparation),
+   FOREIGN KEY(id_type_composant) REFERENCES type_composant(id_type_composant),
+   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation)
+);
