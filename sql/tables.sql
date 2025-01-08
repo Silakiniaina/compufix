@@ -121,6 +121,9 @@ CREATE TABLE composant_ordinateur(
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );
 
+
+
+-- liste reparation par type composant
 CREATE TABLE reparation(
    id_reparation SERIAL,
    id_ordinateur INTEGER NOT NULL,
