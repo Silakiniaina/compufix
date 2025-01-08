@@ -58,6 +58,37 @@ public class Ordinateur {
         }
     }
 
+    public Ordinateur getById(Connection c, int id) throws SQLException{
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT * FROM v_ordinateur WHERE id_ordinateur = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, id);
+
+            rs = prstm.executeQuery();
+            if(rs.next()){
+                this.setIdOrdinateur(rs.getInt("id_ordinateur"));
+                this.setNomOrdinateur(rs.getString("nom_ordinateur"));
+                this.setDescription(rs.getString("description"));
+                this.setPrix(rs.getDouble("prix"));
+                this.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, this.getIdOrdinateur()));
+            }
+
+            return this;
+        } catch (Exception e) {
+            throw e;
+        } finally { 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
     public void insert(Connection c)throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 

@@ -221,3 +221,14 @@ FROM
     JOIN composant c ON co.id_composant = c.id_composant
 GROUP BY
     o.id_ordinateur;
+
+-- view pour la liste de reparation par  type composant
+CREATE
+OR REPLACE VIEW v_filtre_reparation AS
+SELECT
+    r.*,
+    tcr.id_type_composant
+FROM
+    reparation r
+    JOIN type_composant_reparation tcr ON r.id_reparation = tcr.id_reparation
+;

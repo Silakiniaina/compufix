@@ -120,3 +120,22 @@ CREATE TABLE composant_ordinateur(
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );
+
+
+
+-- liste reparation par type composant
+CREATE TABLE reparation(
+   id_reparation SERIAL,
+   id_ordinateur INTEGER NOT NULL,
+   date_reparation DATE DEFAULT NOW(),
+   PRIMARY KEY(id_reparation),
+   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
+);
+
+CREATE TABLE type_composant_reparation(
+   id_type_composant INT NOT NULL, 
+   id_reparation INT NOT NULL,
+   PRIMARY KEY(id_type_composant,id_reparation),
+   FOREIGN KEY(id_type_composant) REFERENCES type_composant(id_type_composant),
+   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation)
+);
