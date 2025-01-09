@@ -132,7 +132,7 @@ CREATE TABLE reparation(
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );
 
-CREATE TABLE type_composant_reparation(
+CREATE TABLE composant_reparation(
    id_type_composant INT NOT NULL, 
    id_reparation INT NOT NULL,
    PRIMARY KEY(id_type_composant,id_reparation),

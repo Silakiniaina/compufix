@@ -15,7 +15,8 @@ import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class ComposantOrdinateur {
-    
+
+    private int idComposantOrdinateur;
     private Composant composant; 
     private int quantite;
     
@@ -24,7 +25,7 @@ public class ComposantOrdinateur {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM v_composant_ordinateur WHERE id_ordinateur = ?";
+        String sql = "SELECT * FROM composant_ordinateur WHERE id_ordinateur = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -37,25 +38,9 @@ public class ComposantOrdinateur {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ComposantOrdinateur composant = new ComposantOrdinateur();
-                int type = rs.getInt("id_type_composant");
-                switch (type) {
-                    case 2:
-                        composant.setComposant(new Disque().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    case 3:
-                        composant.setComposant(new Processeur().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    case 4:
-                        composant.setComposant(new RAM().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    case 5:
-                        composant.setComposant(new CarteMere().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    default:
-                        break;
-                }
+                composant.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
+                composant.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
                 composant.setQuantite(rs.getInt("quantite"));
-
                 results.add(composant);
             }
 
@@ -113,5 +98,12 @@ public class ComposantOrdinateur {
     }
     public void setQuantite(int quantite) {
         this.quantite = quantite;
+    }
+    public int getIdComposantOrdinateur() {
+        return idComposantOrdinateur;
+    }
+
+    public void setIdComposantOrdinateur(int idComposantOrdinateur) {
+        this.idComposantOrdinateur = idComposantOrdinateur;
     }
 }
