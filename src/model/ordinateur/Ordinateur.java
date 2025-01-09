@@ -18,6 +18,7 @@ public class Ordinateur {
     private String nomOrdinateur; 
     private String description;
     private Double prix;
+    private TypeOrdinateur typeOrdinateur;
     private List<ComposantOrdinateur> composants;
 
     public Ordinateur(){
@@ -45,6 +46,7 @@ public class Ordinateur {
                 ordi.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 ordi.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 ordi.setDescription(rs.getString("description"));
+                ordi.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 ordi.setPrix(rs.getDouble("prix"));
                 ordi.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, ordi.getIdOrdinateur()));
                 results.add(ordi);
@@ -77,6 +79,7 @@ public class Ordinateur {
                 this.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 this.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 this.setDescription(rs.getString("description"));
+                this.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 this.setPrix(rs.getDouble("prix"));
                 this.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, this.getIdOrdinateur()));
             }
@@ -229,5 +232,13 @@ public class Ordinateur {
     }
     public void setComposants(List<ComposantOrdinateur> composants) {
         this.composants = composants;
+    }
+
+    public TypeOrdinateur getTypeOrdinateur() {
+        return typeOrdinateur;
+    }
+
+    public void setTypeOrdinateur(Connection c, int typeOrdinateur) throws SQLException{
+        this.typeOrdinateur = new TypeOrdinateur().getById(c, typeOrdinateur);
     }
 }

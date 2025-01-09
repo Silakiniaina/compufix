@@ -104,20 +104,28 @@ CREATE TABLE mouvement_stock(
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
 
-CREATE TABLE composant_reparation(
-   id_type_composant INT NOT NULL, 
-   id_reparation INT NOT NULL,
-   PRIMARY KEY(id_type_composant,id_reparation),
-   FOREIGN KEY(id_type_composant) REFERENCES type_composant(id_type_composant),
-   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation)
+-- ordinateur
+CREATE TABLE client(
+   id_client VARCHAR(50) ,
+   nom_client VARCHAR(250)  NOT NULL,
+   PRIMARY KEY(id_client)
 );
 
--- ordinateur
+CREATE TABLE type_ordinateur(
+   id_type_ordinateur SERIAL,
+   nom_type_ordinateur VARCHAR(150)  NOT NULL,
+   PRIMARY KEY(id_type_ordinateur)
+);
+
 CREATE TABLE ordinateur(
    id_ordinateur SERIAL,
    nom_ordinateur VARCHAR(150)  NOT NULL,
    description TEXT,
-   PRIMARY KEY(id_ordinateur)
+   id_client VARCHAR(50)  NOT NULL,
+   id_type_ordinateur INTEGER NOT NULL,
+   PRIMARY KEY(id_ordinateur),
+   FOREIGN KEY(id_client) REFERENCES client(id_client),
+   FOREIGN KEY(id_type_ordinateur) REFERENCES type_ordinateur(id_type_ordinateur)
 );
 
 CREATE TABLE composant_ordinateur(
@@ -131,17 +139,6 @@ CREATE TABLE composant_ordinateur(
 );
 
 -- REPARATION
-CREATE TABLE composant_reparation(
-   id_reparation INTEGER,
-   id_composant_ordinateur INTEGER,
-   cout_reparation NUMERIC(18,2)   DEFAULT 0,
-   PRIMARY KEY(id_reparation, id_composant_ordinateur),
-   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation),
-   FOREIGN KEY(id_composant_ordinateur) REFERENCES composant_ordinateur(id_composant_ordinateur)
-);
-
-
-
 -- liste reparation par type composant
 CREATE TABLE reparation(
    id_reparation SERIAL,
@@ -149,4 +146,13 @@ CREATE TABLE reparation(
    date_reparation DATE DEFAULT NOW(),
    PRIMARY KEY(id_reparation),
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
+);
+
+CREATE TABLE composant_reparation(
+   id_reparation INTEGER,
+   id_composant_ordinateur INTEGER,
+   cout_reparation NUMERIC(18,2)   DEFAULT 0,
+   PRIMARY KEY(id_reparation, id_composant_ordinateur),
+   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation),
+   FOREIGN KEY(id_composant_ordinateur) REFERENCES composant_ordinateur(id_composant_ordinateur)
 );
