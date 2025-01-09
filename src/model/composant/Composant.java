@@ -36,7 +36,7 @@ public class Composant {
             prstm.setDouble(3, this.getPrixUnitaire());
             prstm.setInt(4, this.getType());
             
-            prstm.executeUpdate();composant
+            prstm.executeUpdate();
             
             // Récupération de l'I D généré
             try (ResultSet generatedKeys = prstm.getGeneratedKeys()) {

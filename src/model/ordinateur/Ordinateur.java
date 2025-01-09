@@ -153,7 +153,7 @@ public class Ordinateur {
 /// Installation composant
     public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
         // Verification des composants
-        this.checkCompatibility(composant);
+        // this.checkCompatibility(composant);
 
         // Dans tous les cas, on ajoute à la liste des composants
         ComposantOrdinateur comp = new ComposantOrdinateur();

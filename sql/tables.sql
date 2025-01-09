@@ -104,6 +104,14 @@ CREATE TABLE mouvement_stock(
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
 );
 
+CREATE TABLE composant_reparation(
+   id_type_composant INT NOT NULL, 
+   id_reparation INT NOT NULL,
+   PRIMARY KEY(id_type_composant,id_reparation),
+   FOREIGN KEY(id_type_composant) REFERENCES type_composant(id_type_composant),
+   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation)
+);
+
 -- ordinateur
 CREATE TABLE ordinateur(
    id_ordinateur SERIAL,
@@ -113,12 +121,23 @@ CREATE TABLE ordinateur(
 );
 
 CREATE TABLE composant_ordinateur(
-   id_composant INTEGER,
-   id_ordinateur INTEGER,
+   id_composant_ordinateur SERIAL,
    quantite SMALLINT DEFAULT 1,
-   PRIMARY KEY(id_composant, id_ordinateur),
-   FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
-   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
+   id_ordinateur INTEGER NOT NULL,
+   id_composant INTEGER NOT NULL,
+   PRIMARY KEY(id_composant_ordinateur),
+   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);
+
+-- REPARATION
+CREATE TABLE composant_reparation(
+   id_reparation INTEGER,
+   id_composant_ordinateur INTEGER,
+   cout_reparation NUMERIC(18,2)   DEFAULT 0,
+   PRIMARY KEY(id_reparation, id_composant_ordinateur),
+   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation),
+   FOREIGN KEY(id_composant_ordinateur) REFERENCES composant_ordinateur(id_composant_ordinateur)
 );
 
 
@@ -130,12 +149,4 @@ CREATE TABLE reparation(
    date_reparation DATE DEFAULT NOW(),
    PRIMARY KEY(id_reparation),
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
-);
-
-CREATE TABLE composant_reparation(
-   id_type_composant INT NOT NULL, 
-   id_reparation INT NOT NULL,
-   PRIMARY KEY(id_type_composant,id_reparation),
-   FOREIGN KEY(id_type_composant) REFERENCES type_composant(id_type_composant),
-   FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation)
 );
