@@ -53,6 +53,38 @@ public class Reparation {
         }
     }
 
+    public Reparation getById(Connection c, int id)throws SQLException{
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT * FROM v_filtre_reparation WHERE id_reparation = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, id);
+            
+            rs = prstm.executeQuery();
+
+            if(rs.next()){
+                this.setIdReparation(rs.getInt("id_reparation"));
+                this.setDateReparation(rs.getDate("date_reparation"));
+                this.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                this.setTypeComposant(c, rs.getInt("id_type_composant"));
+                return this;
+            }
+            
+            return null;   
+        } catch (Exception e) {
+            throw e;
+        } finally{
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
     public List<Reparation> getAllByTypeComposant(Connection c, int id)throws SQLException{
         List<Reparation> results = new ArrayList<>();
         boolean isNewConnection = false;

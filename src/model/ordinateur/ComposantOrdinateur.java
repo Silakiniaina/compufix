@@ -36,11 +36,41 @@ public class ComposantOrdinateur {
                 ComposantOrdinateur composant = new ComposantOrdinateur();
                 composant.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
                 composant.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
-                composant.setOrdinateur(c, rs.getInt("id_composant"));
+                composant.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 results.add(composant);
             }
 
             return results;
+        } catch (Exception e) {
+            throw e;
+        } finally { 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    public ComposantOrdinateur getById(Connection c, int id) throws SQLException{
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT * FROM composant_ordinateur WHERE id_composant_ordinateur = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, id);
+
+            rs = prstm.executeQuery();
+            if(rs.next()){
+               this.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
+               this.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
+               this.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                return this;
+            }
+
+            return null;
         } catch (Exception e) {
             throw e;
         } finally { 
