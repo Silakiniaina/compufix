@@ -94,7 +94,7 @@ public class Ordinateur {
     public void insert(Connection c)throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
-        String sql = "INSERT INTO ordinateur(nom_ordinateur, description) VALUES(?, ?)";
+        String sql = "INSERT INTO ordinateur(nom_ordinateur, description,id_type_ordinateur) VALUES(?, ?, ?)";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -106,6 +106,7 @@ public class Ordinateur {
             prstm = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             prstm.setString(1, this.getNomOrdinateur());
             prstm.setString(2, this.getDescription());
+            prstm.setInt(3, this.getTypeOrdinateur().getIdTypeOrdinateur());
 
             prstm.executeUpdate();
 
@@ -153,7 +154,7 @@ public class Ordinateur {
     }
 
 /// Installation composant
-    public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
+    public void ajouterComposant(Connection c, Composant composant) throws SQLException,Exception{
         // Verification des composants
         // this.checkCompatibility(composant);
 

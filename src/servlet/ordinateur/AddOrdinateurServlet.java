@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,6 +19,7 @@ import model.composant.disque.Disque;
 import model.composant.processeur.Processeur;
 import model.composant.ram.RAM;
 import model.ordinateur.Ordinateur;
+import model.ordinateur.TypeOrdinateur;
 
 @WebServlet("/ordinateur/add")
 public class AddOrdinateurServlet extends HttpServlet{
@@ -26,16 +29,13 @@ public class AddOrdinateurServlet extends HttpServlet{
         PrintWriter out = resp.getWriter();
         try {
             Connection c = (Connection)req.getSession().getAttribute("connexion");
-
-            List<Composant> carteMeres = new CarteMere().getAll(c);
-            List<Composant> rams = new RAM().getAll(c);
-            List<Composant> disques = new Disque().getAll(c);
-            List<Composant> processeurs = new Processeur().getAll(c);
             
-            req.setAttribute("carteMeres", carteMeres);
-            req.setAttribute("rams", rams);
-            req.setAttribute("disques", disques);
-            req.setAttribute("processeurs", processeurs);
+            List<Composant> composants = new Composant().getAll(c);
+            List<TypeOrdinateur> types = new TypeOrdinateur().getAll(c);
+
+            req.setAttribute("composants", composants);
+            req.setAttribute("types", types);
+            req.setAttribute("jsFile", "addOrdinateur.js");
             req.setAttribute("pageUrl", "/WEB-INF/views/ordinateur/addOrdinateur.jsp");
 
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);
@@ -52,24 +52,23 @@ public class AddOrdinateurServlet extends HttpServlet{
         try {
 
             Connection c = (Connection)req.getSession().getAttribute("connexion");
-            int idRam = Integer.parseInt(req.getParameter("ram"));
-            int idProcesseur = Integer.parseInt(req.getParameter("processeur"));
-            int idDisque = Integer.parseInt(req.getParameter("disque"));
-            int idCarteMere = Integer.parseInt(req.getParameter("cm"));
-
-            CarteMere cm = (CarteMere)new CarteMere().getById(c, idCarteMere);
-            RAM ram = (RAM)new RAM().getById(c, idRam);
-            Processeur cpu = (Processeur)new Processeur().getById(c, idProcesseur);
-            Disque disque = (Disque)new Disque().getById(c, idDisque);
-
             Ordinateur o =  new Ordinateur();
             o.setNomOrdinateur(nom);
             o.setDescription(description);
-            o.ajouterComposant(c, cm, 1);
-            o.ajouterComposant(c, ram, 1);
-            o.ajouterComposant(c, disque, 1);
-            o.ajouterComposant(c, cpu, 1);
+            o.setTypeOrdinateur(c, Integer.parseInt(req.getParameter("type")));
 
+            String[] composantsId = req.getParameterValues("composant");
+            if(composantsId != null && composantsId.length > 1){
+                int id = 0;
+                for(String st : composantsId){
+                    id = Integer.parseInt(st);
+                    Composant comp = new Composant().getById(c, id);
+                    o.ajouterComposant(c, comp);
+                }
+            }else{
+                throw new Exception("Nombre de composant insuffisant pour un ordinateur");
+            }
+            
             o.insert(c);
             o.installerComposants(c);
             
