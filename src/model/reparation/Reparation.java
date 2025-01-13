@@ -42,6 +42,7 @@ public class Reparation {
                 r.setIdReparation(rs.getInt("id_reparation"));
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                r.setComposants(r.getComposants(c));
                 results.add(r);
             }
             return results;   
@@ -72,6 +73,7 @@ public class Reparation {
                 this.setIdReparation(rs.getInt("id_reparation"));
                 this.setDateReparation(rs.getDate("date_reparation"));
                 this.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                this.setComposants(this.getComposants(c));
                 return this;
             }
 
@@ -105,6 +107,7 @@ public class Reparation {
                 r.setIdReparation(rs.getInt("id_reparation"));
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                r.setComposants(r.getComposants(c));
                 results.add(r);
             }
             return results;   
@@ -115,9 +118,8 @@ public class Reparation {
         }
     }
 
-    public List<ComposantReparation> getComposants()throws SQLException{
+    public List<ComposantReparation> getComposants(Connection c)throws SQLException{
         List<ComposantReparation> results = new ArrayList<>();
-        Connection c = null;
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
@@ -150,12 +152,11 @@ public class Reparation {
     }
 
     public List<TypeComposant> getTypeComposants() throws SQLException{
-        List<ComposantReparation> composants = this.getComposants();
-        if (composants == null || composants.isEmpty()) {
+        if (this.getComposants() == null || this.getComposants().isEmpty()) {
             return List.of(); // Retourne une liste vide si aucun composant
         }
-        // Récupère les types des composants
-        return composants.stream()
+        // Récupère les types des this.getComposants()
+        return this.getComposants().stream()
                          .map(ComposantReparation::getTypeComposant) 
                          .distinct() 
                          .collect(Collectors.toList());
@@ -178,5 +179,13 @@ public class Reparation {
     }
     public void setOrdinateur(Connection c, int ordinateur)throws SQLException {
         this.ordinateur = new Ordinateur().getById(c, ordinateur);
+    }
+
+    public List<ComposantReparation> getComposants() {
+        return composants;
+    }
+
+    public void setComposants(List<ComposantReparation> composants) {
+        this.composants = composants;
     }
 }
