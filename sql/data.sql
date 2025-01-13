@@ -1,12 +1,7 @@
 INSERT INTO type_composant(nom_type_composant) VALUES
-    ('composant'),
-    ('disque dur'),
-    ('processeur'),
-    ('ram'),
-    ('carte mere')
-;
-
-INSERT INTO type_composant(nom_type_composant) VALUES
+    ('Disque'),
+    ('CPU'),
+    ('RAM'),
     ('Ecran')
 ;
 

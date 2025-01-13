@@ -73,7 +73,8 @@ public class AddOrdinateurServlet extends HttpServlet{
             o.insert(c);
             o.installerComposants(c);
             
-            resp.sendRedirect(req.getContextPath()+"/ordinateur/add");
+            String success = "Composant ajouter avec succes";
+            resp.sendRedirect(req.getContextPath()+"/ordinateur/add?success="+success);
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);

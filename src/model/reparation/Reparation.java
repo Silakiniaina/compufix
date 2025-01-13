@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.composant.TypeComposant;
-import model.ordinateur.ComposantOrdinateur;
 import model.ordinateur.Ordinateur;
 import model.utils.Database;
 

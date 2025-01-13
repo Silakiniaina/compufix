@@ -86,38 +86,38 @@ public class Processeur extends Composant{
         }
     }
 
-    @Override
-    public Composant getByIdComposant(Connection c, int id) throws SQLException {
-        boolean isNewConnection = false;
-        PreparedStatement prstm = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM processeur, composant WHERE processeur.id_composant = composant.id_composant AND processeur.id_composant = ?";
-        try {
-            if( c == null){
-                c = Database.getConnection();
-                isNewConnection = true;
-            }
-            prstm = c.prepareStatement(query);
-            prstm.setInt(1, id);
+    // @Override
+    // public Composant getByIdComposant(Connection c, int id) throws SQLException {
+    //     boolean isNewConnection = false;
+    //     PreparedStatement prstm = null;
+    //     ResultSet rs = null;
+    //     String query = "SELECT * FROM processeur, composant WHERE processeur.id_composant = composant.id_composant AND processeur.id_composant = ?";
+    //     try {
+    //         if( c == null){
+    //             c = Database.getConnection();
+    //             isNewConnection = true;
+    //         }
+    //         prstm = c.prepareStatement(query);
+    //         prstm.setInt(1, id);
             
-            rs = prstm.executeQuery();
-            if (rs.next()) {
-                this.setIdProcesseur(rs.getInt("id_processeur"));
-                this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
-                this.setGeneration(rs.getInt("generation"));
-                this.setNombreCoeur(rs.getInt("nombre_coeur"));
-                this.setIdComposant(rs.getInt("id_composant"));
-                this.setNomComposant(rs.getString("nom_composant"));
-                this.setCapacite(rs.getDouble("capacite"));
-                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
-                this.setTypeComposant(c, rs.getInt("id_type_composant"));
-                return this;
-            }
-            return null;
-        } finally {
-            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
-        }
-    }
+    //         rs = prstm.executeQuery();
+    //         if (rs.next()) {
+    //             this.setIdProcesseur(rs.getInt("id_processeur"));
+    //             this.setTypeProcesseur(c, rs.getInt("id_type_processeur"));
+    //             this.setGeneration(rs.getInt("generation"));
+    //             this.setNombreCoeur(rs.getInt("nombre_coeur"));
+    //             this.setIdComposant(rs.getInt("id_composant"));
+    //             this.setNomComposant(rs.getString("nom_composant"));
+    //             this.setCapacite(rs.getDouble("capacite"));
+    //             this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+    //             this.setTypeComposant(c, rs.getInt("id_type_composant"));
+    //             return this;
+    //         }
+    //         return null;
+    //     } finally {
+    //         Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+    //     }
+    // }
 
     @Override
     public void delete(Connection c) throws SQLException {

@@ -149,57 +149,57 @@ FROM
     LEFT JOIN sorties_filtrees sf ON c.id_composant = sf.id_composant
     LEFT JOIN sorties_actuelles sa ON c.id_composant = sa.id_composant;
 
-CREATE
-OR REPLACE VIEW v_installation_ram AS
-SELECT
-    c.*,
-    r.id_ram,
-    r.est_portable,
-    r.id_type_ram,
-    cmu.id_carte_mere,
-    cmu.type_slot,
-    cmu.date_installation,
-    co.id_ordinateur
-FROM
-    ram r
-    JOIN composant c ON r.id_composant = c.id_composant
-    JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
-    JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
+-- CREATE
+-- OR REPLACE VIEW v_installation_ram AS
+-- SELECT
+--     c.*,
+--     r.id_ram,
+--     r.est_portable,
+--     r.id_type_ram,
+--     cmu.id_carte_mere,
+--     cmu.type_slot,
+--     cmu.date_installation,
+--     co.id_ordinateur
+-- FROM
+--     ram r
+--     JOIN composant c ON r.id_composant = c.id_composant
+--     JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
+--     JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
 
-CREATE
-OR REPLACE VIEW v_installation_processeur AS
-SELECT
-    c.*,
-    p.id_processeur,
-    p.id_type_processeur,
-    p.nombre_coeur,
-    p.generation,
-    cmu.id_carte_mere,
-    cmu.type_slot,
-    cmu.date_installation,
-    co.id_ordinateur
-FROM
-    processeur p
-    JOIN composant c ON p.id_composant = c.id_composant
-    JOIN carte_mere_utilisation cmu ON p.id_composant = cmu.id_composant
-    JOIN composant_ordinateur co ON c.id_composant = co.id_composant;
+-- CREATE
+-- OR REPLACE VIEW v_installation_processeur AS
+-- SELECT
+--     c.*,
+--     p.id_processeur,
+--     p.id_type_processeur,
+--     p.nombre_coeur,
+--     p.generation,
+--     cmu.id_carte_mere,
+--     cmu.type_slot,
+--     cmu.date_installation,
+--     co.id_ordinateur
+-- FROM
+--     processeur p
+--     JOIN composant c ON p.id_composant = c.id_composant
+--     JOIN carte_mere_utilisation cmu ON p.id_composant = cmu.id_composant
+--     JOIN composant_ordinateur co ON c.id_composant = co.id_composant;
 
-CREATE
-OR REPLACE VIEW v_installation_disque AS
-SELECT
-    c.*,
-    r.id_disque_dur,
-    r.est_portable,
-    r.id_type_disque,
-    cmu.id_carte_mere,
-    cmu.type_slot,
-    cmu.date_installation,
-    co.id_ordinateur
-FROM
-    disque_dur r
-    JOIN composant c ON r.id_composant = c.id_composant
-    JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
-    JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
+-- CREATE
+-- OR REPLACE VIEW v_installation_disque AS
+-- SELECT
+--     c.*,
+--     r.id_disque_dur,
+--     r.est_portable,
+--     r.id_type_disque,
+--     cmu.id_carte_mere,
+--     cmu.type_slot,
+--     cmu.date_installation,
+--     co.id_ordinateur
+-- FROM
+--     disque_dur r
+--     JOIN composant c ON r.id_composant = c.id_composant
+--     JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
+--     JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
 
 CREATE
 OR REPLACE VIEW v_composant_ordinateur AS
@@ -232,3 +232,36 @@ GROUP BY
 --     reparation r
 --     JOIN type_composant_reparation tcr ON r.id_reparation = tcr.id_reparation
 -- ;
+
+-- liste retour
+CREATE VIEW v_retour_reparation AS
+SELECT
+    r.id_retour,
+    r.prix AS prix_retour,
+    r.date_retour,
+    rep.id_reparation,
+    rep.date_reparation,
+    o.id_ordinateur,
+    o.nom_ordinateur,
+    o.description AS description_ordinateur,
+    c.id_client,
+    t.nom_type_ordinateur,
+    tr.nom_type_reparation,
+    co.nom_composant,
+    cr.cout_reparation
+FROM 
+    retour r
+JOIN 
+    reparation rep ON r.id_reparation = rep.id_reparation
+JOIN 
+    ordinateur o ON rep.id_ordinateur = o.id_ordinateur
+JOIN 
+    client c ON o.id_client = c.id_client
+JOIN 
+    type_ordinateur t ON o.id_type_ordinateur = t.id_type_ordinateur
+JOIN 
+    composant_reparation cr ON rep.id_reparation = cr.id_reparation
+JOIN 
+    composant_ordinateur co ON cr.id_composant_ordinateur = co.id_composant_ordinateur
+JOIN 
+    type_reparation tr ON cr.id_type_reparation = tr.id_type_reparation;
