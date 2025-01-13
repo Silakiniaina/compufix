@@ -57,7 +57,7 @@ public class Reparation {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECTSELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation WHERE id_reparation = ?";
+        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation WHERE id_reparation = ?";
         try {
             if( c == null){
                 c = Database.getConnection();

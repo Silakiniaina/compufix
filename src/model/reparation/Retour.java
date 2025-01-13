@@ -1,6 +1,7 @@
 package model.reparation;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import model.utils.Database;
 public class Retour {
     
     private int idRetour;
+    private Date dateRetour;
     private Reparation reparation; 
     private double prixTotal;
 
@@ -46,9 +48,10 @@ public class Retour {
             rs = prstm.executeQuery();
             while(rs.next()){
                 Retour r = new Retour(); 
-                r.setIdRetour(rs.getInt("id_retour"));
+                r.setIdRetour(rs.getInt("id_retour_reparation"));
                 r.setReparation(c, rs.getInt("id_reparation"));
                 r.setPrixTotal(rs.getDouble("prix_total"));
+                r.setDateRetour(rs.getDate("date_retour"));
 
                 results.add(r);
             }
@@ -71,7 +74,13 @@ public class Retour {
     public double getPrixTotal() {
         return prixTotal;
     }
+    public Date getDateRetour() {
+        return dateRetour;
+    }
 
+    public void setDateRetour(Date dateRetour) {
+        this.dateRetour = dateRetour;
+    }
     public void setIdRetour(int idRetour) {
         this.idRetour = idRetour;
     }

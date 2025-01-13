@@ -20,7 +20,7 @@ public class RetourFilter {
 
 /// Operations 
     public String generateQuery(){
-        String sql  = "SELECT * FROM retour WHERE 1 = 1";
+        String sql  = "SELECT * FROM v_retour_reparation WHERE 1 = 1";
         if(this.getTypeOrdinateur() != null){
             sql += "AND id_type_ordinateur  = ?";
         }

@@ -64,3 +64,6 @@ INSERT INTO composant_reparation (id_reparation, id_technicien, id_type_reparati
 (2, 4, 4, 4),
 (2, 4, 4, 5);
 
+INSERT INTO retour_reparation(date_retour, prix_total, id_reparation) VALUES 
+    ('2025-01-12',120000,1)
+;

@@ -242,6 +242,10 @@ JOIN type_composant tc ON c.id_type_composant = tc.id_type_composant
 CREATE OR REPLACE VIEW v_retour_reparation AS
 SELECT DISTINCT
     rr.id_retour_reparation,
+    rr.date_retour,
+    rr.id_reparation,
+    rr.prix_total,
+    o.id_ordinateur,
     o.id_type_ordinateur,
     cr.id_type_reparation,
     c.id_type_composant
