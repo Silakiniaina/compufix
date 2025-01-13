@@ -110,7 +110,4 @@ public class Reparation {
     public void setTypeComposant(Connection c, int typeComposant) throws SQLException{
         this.typeComposant = new TypeComposant().getById(c, typeComposant);
     }
-
-    
-    
 }

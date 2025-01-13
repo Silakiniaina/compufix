@@ -164,18 +164,18 @@ public class Ordinateur {
         // Dans tous les cas, on ajoute à la liste des composants
         ComposantOrdinateur comp = new ComposantOrdinateur();
         comp.setComposant(composant);
-        comp.setQuantite(quantite);
+        comp.setOrdinateur(this);
         
         this.getComposants().add(comp);
     }
 
     public void installerComposant(Connection c, ComposantOrdinateur comp)throws SQLException{
-        comp.insert(c, this);
+        comp.insert(c);
     }
 
     public void installerComposants(Connection c)throws SQLException{
         for(ComposantOrdinateur composant : this.getComposants()){
-            composant.insert(c, this);
+            composant.insert(c);
         }
     }
 

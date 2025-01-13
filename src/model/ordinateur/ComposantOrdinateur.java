@@ -8,18 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.composant.Composant;
-import model.composant.cm.CarteMere;
-import model.composant.disque.Disque;
-import model.composant.processeur.Processeur;
-import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class ComposantOrdinateur {
 
     private int idComposantOrdinateur;
     private Composant composant; 
-    private int quantite;
-    
+    private Ordinateur ordinateur;
+
     public List<ComposantOrdinateur> getComposantParOrdinateur(Connection c, int id) throws SQLException{
         List<ComposantOrdinateur> results = new ArrayList<>();
         boolean isNewConnection = false;
@@ -40,7 +36,7 @@ public class ComposantOrdinateur {
                 ComposantOrdinateur composant = new ComposantOrdinateur();
                 composant.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
                 composant.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
-                composant.setQuantite(rs.getInt("quantite"));
+                composant.setOrdinateur(c, rs.getInt("id_composant"));
                 results.add(composant);
             }
 
@@ -52,10 +48,10 @@ public class ComposantOrdinateur {
         }
     }
 
-    public void insert(Connection c, Ordinateur o) throws SQLException {
+    public void insert(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String query = "INSERT INTO composant_ordinateur(id_composant,id_ordinateur,quantite) VALUES (?, ?, ?)";
+        String query = "INSERT INTO composant_ordinateur(id_composant,id_ordinateur) VALUES (?, ?)";
         
         try {
             if(c == null){
@@ -64,11 +60,9 @@ public class ComposantOrdinateur {
             }
             c.setAutoCommit(false);
 
-            System.out.println(o.getIdOrdinateur());
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getComposant().getIdComposant());
-            prstm.setInt(2, o.getIdOrdinateur());
-            prstm.setInt(3, this.getQuantite());
+            prstm.setInt(2, this.getOrdinateur().getIdOrdinateur());
             
             prstm.executeUpdate();
 
@@ -87,17 +81,11 @@ public class ComposantOrdinateur {
     public Composant getComposant() {
         return composant;
     }
-    public int getQuantite() {
-        return quantite;
-    }
     public void setComposant(Connection c, int composant)throws SQLException {
         this.composant = new Composant().getById(c, composant);
     }
     public void setComposant(Composant c){
         this.composant  = c;
-    }
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
     }
     public int getIdComposantOrdinateur() {
         return idComposantOrdinateur;
@@ -105,5 +93,16 @@ public class ComposantOrdinateur {
 
     public void setIdComposantOrdinateur(int idComposantOrdinateur) {
         this.idComposantOrdinateur = idComposantOrdinateur;
+    }
+    public Ordinateur getOrdinateur() {
+        return ordinateur;
+    }
+
+    public void setOrdinateur(Connection c,int ordinateur) throws SQLException{
+        this.ordinateur = new Ordinateur().getById(c, ordinateur);
+    }
+
+    public void setOrdinateur(Ordinateur o){
+        this.ordinateur = o;
     }
 }

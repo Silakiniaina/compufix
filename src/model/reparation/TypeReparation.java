@@ -1,4 +1,4 @@
-package model.ordinateur;
+package model.reparation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,37 +6,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.utils.Database;
 
-public class TypeOrdinateur {
-    private int idTypeOrdinateur;
-    private String nomTypeOrdinateur;
+public class TypeReparation {
+    private int idTypeReparation;
+    private String nomTypeReparation;
 
 
-    public int getIdTypeOrdinateur() {
-        return idTypeOrdinateur;
+    public int getIdTypeReparation() {
+        return idTypeReparation;
     }
 
-    public void setIdTypeOrdinateur(int idTypeOrdinateur) {
-        this.idTypeOrdinateur = idTypeOrdinateur;
+    public void setIdTypeReparation(int idTypeReparation) {
+        this.idTypeReparation = idTypeReparation;
     }
 
-    public String getNomTypeOrdinateur() {
-        return nomTypeOrdinateur;
+    public String getNomTypeReparation() {
+        return nomTypeReparation;
     }
 
-    public void setNomTypeOrdinateur(String nomTypeOrdinateur) {
-        this.nomTypeOrdinateur = nomTypeOrdinateur;
+    public void setNomTypeReparation(String nomTypeReparation) {
+        this.nomTypeReparation = nomTypeReparation;
     }
 
 
-     public List<TypeOrdinateur> getAll(Connection c)throws SQLException{  
+     public List<TypeReparation> getAll(Connection c)throws SQLException{  
         boolean isNewConnection = false;
         PreparedStatement pr = null;
         ResultSet rs = null;
-        List<TypeOrdinateur> result = new ArrayList<>();
-        String query= "SELECT * FROM type_ordinateur ";
+        List<TypeReparation> result = new ArrayList<>();
+        String query= "SELECT * FROM type_reparation ";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -46,9 +45,9 @@ public class TypeOrdinateur {
             rs= pr.executeQuery();
 
             while (rs.next()) {
-                TypeOrdinateur g = new TypeOrdinateur();
-                g.setIdTypeOrdinateur(rs.getInt("id_type_ordinateur"));
-                g.setNomTypeOrdinateur(rs.getString("nom_type_ordinateur"));
+                TypeReparation g = new TypeReparation();
+                g.setIdTypeReparation(rs.getInt("id_type_reparation"));
+                g.setNomTypeReparation(rs.getString("nom_type_reparation"));
                 result.add(g);
 
             }
@@ -60,11 +59,11 @@ public class TypeOrdinateur {
         }
     }
 
-    public TypeOrdinateur getById(Connection c,int id)throws SQLException{
+    public TypeReparation getById(Connection c,int id)throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement pr = null;
         ResultSet rs = null;
-        String query= "SELECT * FROM type_ordinateur WHERE id_type_ordinateur=?";
+        String query= "SELECT * FROM type_reparation WHERE id_type_reparation=?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -75,8 +74,8 @@ public class TypeOrdinateur {
             rs= pr.executeQuery();
 
             if(rs.next()) {
-                this.setIdTypeOrdinateur(rs.getInt("id_type_ordinateur"));
-                this.setNomTypeOrdinateur(rs.getString("nom_type_ordinateur"));
+                this.setIdTypeReparation(rs.getInt("id_type_reparation"));
+                this.setNomTypeReparation(rs.getString("nom_type_reparation"));
             }
             return this;
         } catch (SQLException e) {
