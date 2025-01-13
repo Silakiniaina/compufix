@@ -13,18 +13,12 @@ public class RetourFilter {
     private TypeComposant typeComposant;
 
     public RetourFilter(Connection c, String typeOrdinateur, String typeReparation, String typeComposant)throws SQLException{
-        if(typeOrdinateur != null && !typeOrdinateur.trim().equals("")){
-            this.setTypeOrdinateur(new TypeOrdinateur().getById(c, 0));
-        }
-        if(typeReparation != null && !typeReparation.trim().equals("")){
-            this.setTypeReparation(new TypeReparation().getById(c, 0));
-        }
-        if(typeComposant != null && !typeComposant.trim().equals("")){
-            this.setTypeComposant(new TypeComposant().getById(c, 0));
-        }
+        this.setTypeOrdinateur(c, typeOrdinateur);
+        this.setTypeReparation(c, typeReparation);
+        this.setTypeComposant(c, typeComposant);
     }
 
-    
+
 /// GETTERS AND SETTERS
     public TypeOrdinateur getTypeOrdinateur() {
         return typeOrdinateur;
@@ -53,5 +47,20 @@ public class RetourFilter {
     }
     public void setTypeComposant(Connection c, int typeComposant) throws SQLException{
         this.typeComposant = new TypeComposant().getById(c, typeComposant);
+    }
+    public void setTypeOrdinateur(Connection c,String str)throws SQLException{
+        if(str != null && !str.trim().equals("")){
+            this.typeOrdinateur = new TypeOrdinateur().getById(c, Integer.parseInt(str));
+        }
+    }
+    public void setTypeReparation(Connection c,String str)throws SQLException{
+        if(str != null && !str.trim().equals("")){
+            this.typeReparation = new TypeReparation().getById(c, Integer.parseInt(str));
+        }
+    }
+    public void setTypeComposant(Connection c,String str)throws SQLException{
+        if(str != null && !str.trim().equals("")){
+            this.typeComposant = new TypeComposant().getById(c, Integer.parseInt(str));
+        }
     }
 }

@@ -239,34 +239,15 @@ JOIN type_composant tc ON c.id_type_composant = tc.id_type_composant
 ;
 
 -- liste retour
-CREATE VIEW v_retour_reparation AS
-SELECT
-    r.id_retour,
-    r.prix AS prix_retour,
-    r.date_retour,
-    rep.id_reparation,
-    rep.date_reparation,
-    o.id_ordinateur,
-    o.nom_ordinateur,
-    o.description AS description_ordinateur,
-    c.id_client,
-    t.nom_type_ordinateur,
-    tr.nom_type_reparation,
-    co.nom_composant,
-    cr.cout_reparation
-FROM 
-    retour r
-JOIN 
-    reparation rep ON r.id_reparation = rep.id_reparation
-JOIN 
-    ordinateur o ON rep.id_ordinateur = o.id_ordinateur
-JOIN 
-    client c ON o.id_client = c.id_client
-JOIN 
-    type_ordinateur t ON o.id_type_ordinateur = t.id_type_ordinateur
-JOIN 
-    composant_reparation cr ON rep.id_reparation = cr.id_reparation
-JOIN 
-    composant_ordinateur co ON cr.id_composant_ordinateur = co.id_composant_ordinateur
-JOIN 
-    type_reparation tr ON cr.id_type_reparation = tr.id_type_reparation;
+CREATE OR REPLACE VIEW v_retour_reparation AS
+SELECT DISTINCT
+    rr.id_retour_reparation,
+    o.id_type_ordinateur,
+    cr.id_type_reparation,
+    c.id_type_composant
+FROM retour_reparation rr
+JOIN reparation r ON r.id_reparation = rr.id_reparation
+JOIN ordinateur o ON o.id_ordinateur = r.id_ordinateur
+JOIN composant_reparation cr ON cr.id_reparation = r.id_reparation
+JOIN composant_ordinateur co ON co.id_composant_ordinateur = cr.id_composant_ordinateur
+JOIN composant c ON c.id_composant = co.id_composant;
