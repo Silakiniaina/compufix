@@ -16,12 +16,12 @@ public class Retour {
     private double prixTotal;
 
 /// CRUD Operation
-    public List<Retour> getAll(Connection c) throws SQLException{
+    public List<Retour> getAllWithFilter(Connection c, RetourFilter filter) throws SQLException{
         List<Retour> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM retour_reparation";
+        String sql = filter != null ? filter.generateQuery() : "SELECT * FROM v_retour_reparation";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -29,7 +29,20 @@ public class Retour {
             }
 
             prstm = c.prepareStatement(sql);
-            
+            int idArg = 1;
+            if(filter.getTypeOrdinateur() != null){
+                prstm.setInt( idArg, filter.getTypeOrdinateur().getIdTypeOrdinateur());
+                idArg++;
+            }
+            if(filter.getTypeReparation() != null){
+                prstm.setInt( idArg, filter.getTypeReparation().getIdTypeReparation());
+                idArg++;
+            }
+            if(filter.getTypeComposant() != null){
+                prstm.setInt( idArg, filter.getTypeComposant().getIdTypeComposant());
+                idArg++;
+            }
+
             rs = prstm.executeQuery();
             while(rs.next()){
                 Retour r = new Retour(); 

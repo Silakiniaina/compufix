@@ -18,6 +18,20 @@ public class RetourFilter {
         this.setTypeComposant(c, typeComposant);
     }
 
+/// Operations 
+    public String generateQuery(){
+        String sql  = "SELECT * FROM retour WHERE 1 = 1";
+        if(this.getTypeOrdinateur() != null){
+            sql += "AND id_type_ordinateur  = ?";
+        }
+        if(this.getTypeReparation() != null){
+            sql += "AND id_type_reparation  = ?";
+        }
+        if(this.getTypeComposant() != null){
+            sql += "AND id_type_composant = ?";
+        }
+        return sql;
+    }
 
 /// GETTERS AND SETTERS
     public TypeOrdinateur getTypeOrdinateur() {
