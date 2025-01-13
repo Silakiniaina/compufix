@@ -59,20 +59,20 @@ CREATE TABLE mouvement_stock(
 );
 
 CREATE TABLE reparation(
-   id_reparation SERIAL,
-   date_reparation DATE DEFAULT NOW(),
-   id_ordinateur INTEGER NOT NULL,
-   PRIMARY KEY(id_reparation),
-   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
+    id_reparation SERIAL,
+    date_reparation DATE DEFAULT NOW(),
+    id_ordinateur INTEGER NOT NULL,
+    PRIMARY KEY(id_reparation),
+    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );
 
 CREATE TABLE composant_ordinateur(
-   id_composant_ordinateur SERIAL,
-   id_composant INTEGER NOT NULL,
-   id_ordinateur INTEGER NOT NULL,
-   PRIMARY KEY(id_composant_ordinateur),
-   FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
-   FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
+    id_composant_ordinateur SERIAL,
+    id_composant INTEGER NOT NULL,
+    id_ordinateur INTEGER NOT NULL,
+    PRIMARY KEY(id_composant_ordinateur),
+    FOREIGN KEY(id_composant) REFERENCES composant(id_composant),
+    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur)
 );
 
 CREATE TABLE retour_reparation(

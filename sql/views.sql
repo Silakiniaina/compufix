@@ -223,15 +223,20 @@ GROUP BY
     o.id_ordinateur;
 
 -- view pour la liste de reparation par  type composant
--- CREATE
--- OR REPLACE VIEW v_filtre_reparation AS
--- SELECT
---     r.*,
---     tcr.id_type_composant
--- FROM
---     reparation r
---     JOIN type_composant_reparation tcr ON r.id_reparation = tcr.id_reparation
--- ;
+CREATE OR REPLACE VIEW v_reparation AS 
+SELECT
+    r.id_reparation,
+    r.date_reparation,
+    tc.id_type_composant,
+    c.id_composant,
+    co.id_ordinateur
+FROM
+    reparation r
+JOIN composant_reparation cr ON r.id_reparation = cr.id_reparation
+JOIN composant_ordinateur co ON cr.id_composant_ordinateur = co.id_composant_ordinateur
+JOIN composant c ON co.id_composant = c.id_composant
+JOIN type_composant tc ON c.id_type_composant = tc.id_type_composant
+;
 
 -- liste retour
 CREATE VIEW v_retour_reparation AS

@@ -48,9 +48,7 @@ public class Ordinateur {
                 ordi.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 ordi.setDescription(rs.getString("description"));
                 ordi.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
-                ordi.setClient(c, rs.getInt("id_client"));
                 ordi.setPrix(rs.getDouble("prix"));
-                ordi.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, ordi.getIdOrdinateur()));
                 results.add(ordi);
             }
 
@@ -81,10 +79,8 @@ public class Ordinateur {
                 this.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 this.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 this.setDescription(rs.getString("description"));
-                this.setClient(c, rs.getInt("id_client"));
                 this.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 this.setPrix(rs.getDouble("prix"));
-                this.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, this.getIdOrdinateur()));
             }
 
             return this;

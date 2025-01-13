@@ -44,7 +44,7 @@
                                         <th style="width: 120px;">ID</th>
                                         <th>Date</th>
                                         <th>Ordinateur</th>
-                                        <th>Probleme</th>
+                                        <th>Problemes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +60,9 @@
                                                 <%= reparation.getOrdinateur().getNomOrdinateur() %>
                                             </td>
                                             <td>
-                                                <%= reparation.getTypeComposant().getNomTypeComposant() %>
+                                                <% for(TypeComposant t : reparation.getTypeComposants()){ %>
+                                                <%= t.getNomTypeComposant() %> ,   
+                                                <% } %>
                                             </td>
                                         </tr>
                                     <% } %>

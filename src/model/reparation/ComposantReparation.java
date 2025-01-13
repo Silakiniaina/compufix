@@ -3,6 +3,7 @@ package model.reparation;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import model.composant.TypeComposant;
 import model.ordinateur.ComposantOrdinateur;
 import model.technicien.Technicien;
 
@@ -25,6 +26,9 @@ public class ComposantReparation {
     }
     public ComposantOrdinateur getComposantOrdinateur() {
         return composantOrdinateur;
+    }
+    public TypeComposant getTypeComposant(){
+        return this.getComposantOrdinateur().getComposant().getTypeComposant();
     }
 
     public void setReparation(Reparation reparation) {

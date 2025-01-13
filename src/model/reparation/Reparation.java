@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.composant.TypeComposant;
 import model.ordinateur.Ordinateur;
@@ -17,16 +18,15 @@ public class Reparation {
     private int idReparation;
     private Date dateReparation;
     private Ordinateur ordinateur;
-    // private List<TypeComposant> typeComposant;
-    private TypeComposant typeComposant;
+    private List<ComposantReparation> composants;
 
-/// CRUD Operation
+    /// CRUD Operation
     public List<Reparation> getAll(Connection c)throws SQLException{
         List<Reparation> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM v_filtre_reparation";
+        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -42,11 +42,10 @@ public class Reparation {
                 r.setIdReparation(rs.getInt("id_reparation"));
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
-                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;   
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         } finally{
             Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
@@ -57,7 +56,7 @@ public class Reparation {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM v_filtre_reparation WHERE id_reparation = ?";
+        String sql = "SELECTSELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation WHERE id_reparation = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -73,12 +72,11 @@ public class Reparation {
                 this.setIdReparation(rs.getInt("id_reparation"));
                 this.setDateReparation(rs.getDate("date_reparation"));
                 this.setOrdinateur(c, rs.getInt("id_ordinateur"));
-                this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
-            
+
             return null;   
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         } finally{
             Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
@@ -90,7 +88,7 @@ public class Reparation {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM v_filtre_reparation WHERE id_type_composant = ?";
+        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation WHERE id_type_composant = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -107,15 +105,60 @@ public class Reparation {
                 r.setIdReparation(rs.getInt("id_reparation"));
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
-                r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
             return results;   
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         } finally{
             Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
         }
+    }
+
+    public List<ComposantReparation> getComposants()throws SQLException{
+        List<ComposantReparation> results = new ArrayList<>();
+        Connection c = null;
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT * FROM composant_reparation WHERE id_reparation = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, this.getIdReparation());
+            
+            rs = prstm.executeQuery();
+
+            while(rs.next()){
+                ComposantReparation r = new ComposantReparation();
+                r.setReparation(this);
+                r.setTechnicien(c, rs.getInt("id_technicien"));
+                r.setTypeReparation(c, rs.getInt("id_type_reparation"));
+                r.setComposantOrdinateur(c, rs.getInt("id_composant_ordinateur"));
+                results.add(r);
+            }
+            return results;   
+        } catch (SQLException e) {
+            throw e;
+        } finally{
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    public List<TypeComposant> getTypeComposants() throws SQLException{
+        List<ComposantReparation> composants = this.getComposants();
+        if (composants == null || composants.isEmpty()) {
+            return List.of(); // Retourne une liste vide si aucun composant
+        }
+        // Récupère les types des composants
+        return composants.stream()
+                         .map(ComposantReparation::getTypeComposant) 
+                         .distinct() 
+                         .collect(Collectors.toList());
     }
 
     public int getIdReparation() {
@@ -135,11 +178,5 @@ public class Reparation {
     }
     public void setOrdinateur(Connection c, int ordinateur)throws SQLException {
         this.ordinateur = new Ordinateur().getById(c, ordinateur);
-    }
-    public TypeComposant getTypeComposant() {
-        return typeComposant;
-    }
-    public void setTypeComposant(Connection c, int typeComposant) throws SQLException{
-        this.typeComposant = new TypeComposant().getById(c, typeComposant);
     }
 }

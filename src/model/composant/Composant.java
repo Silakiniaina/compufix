@@ -178,9 +178,9 @@ public class Composant {
 /// Utils
     public String getUnite(){
         String result = null; 
-        if(this.getTypeComposant().getNomTypeComposant().equalsIgnoreCase("RAM") || this.getTypeComposant().getNomTypeComposant().equalsIgnoreCase("Disque")){
+        if(this.getTypeComposant().getNomTypeComposant().contains("Disque") || this.getTypeComposant().getNomTypeComposant().contains("RAM")){
             result = "Go";
-        }else if(this.getTypeComposant().getNomTypeComposant().equalsIgnoreCase("CPU") || this.getTypeComposant().getNomTypeComposant().equalsIgnoreCase("Ecran")){
+        }else if(this.getTypeComposant().getNomTypeComposant().contains("Processeur") || this.getTypeComposant().getNomTypeComposant().contains("Ecran")){
             result = "Hz";
         }
         return result;
