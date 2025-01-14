@@ -19,11 +19,12 @@
         <div class="col">
             <h2 class="h3 page-title">Liste Retours</h2>
         </div>
-        <div class="col-auto">
+        <div class="col-auto d-flex" style="gap:10px;">
             <form class="form-inline" action="<%= request.getContextPath() %>/reparation/retour" method="POST">
-                <div class="col-md-6 d-flex">
-                    <div class="form-group">
-                        <select id="type" name="typeOrdinateur" class="form-control">
+                <div class="row">
+                    <div class="col-md-3 form-group mb-3">
+                        <label for="typeOrdinateur">Type Ordinateur</label>
+                        <select id="typeOrdinateur" name="typeOrdinateur" class="form-control w-100">
                             <option value="">All</option>
                             <% for(TypeOrdinateur type : typeOrdinateurs){ %>
                                 <option value="<%= type.getIdTypeOrdinateur() %>">
@@ -32,8 +33,9 @@
                             <% } %>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <select id="type" name="typeReparation" class="form-control">
+                    <div class="col-md-3 form-group mb-3">
+                        <label for="typeReparation">Type Reparation</label>
+                        <select id="typeReparation" name="typeReparation" class="form-control w-100">
                             <option value="">All</option>
                             <% for(TypeReparation type : typeReparations){ %>
                                 <option value="<%= type.getIdTypeReparation() %>">
@@ -42,8 +44,9 @@
                             <% } %>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <select id="type" name="typeComposant" class="form-control">
+                    <div class="col-md-3 form-group mb-3">
+                        <label for="typeComposant">Type Composant</label>
+                        <select id="typeComposant" name="typeComposant" class="form-control w-100">
                             <option value="">All</option>
                             <% for(TypeComposant type : typeComposants){ %>
                                 <option value="<%= type.getIdTypeComposant() %>">
@@ -52,9 +55,9 @@
                             <% } %>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
-                        <button type="submit" class="btn btn-sm btn-outline-success">
-                            <span class="fe fe-upload-cloud fe-16"></span>
+                    <div class="col-md-3 form-group">
+                        <button type="submit" class="btn btn-md btn-outline-success w-100">
+                            Filtrer
                         </button>
                     </div>
                 </div>

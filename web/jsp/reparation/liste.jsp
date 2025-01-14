@@ -15,9 +15,10 @@
                         <h2 class="h3 page-title">Liste Reparations</h2>
                     </div>
                     <div class="col-auto">
-                        <form class="form-inline" action="<%= request.getContextPath() %>/reparations" method="POST">
-                            <div class="form-group">
-                                <select id="type" name="type" class="form-control">
+                        <form class="form-inline row" action="<%= request.getContextPath() %>/reparations" method="POST">
+                            <div class="form-group col-md-8 mb-3">
+                            <label for="type">Type Composant</label>
+                                <select id="type" name="type" class="form-control w-100">
                                     <option value="">All</option>
                                     <% for(TypeComposant type : types){ %>
                                         <option value="<%= type.getIdTypeComposant() %>">
@@ -26,9 +27,9 @@
                                     <% } %>
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
-                                <button type="submit" class="btn btn-sm btn-outline-success">
-                                    <span class="fe fe-upload-cloud fe-16"></span>
+                            <div class="form-group col-md-4">
+                                <button type="submit" class="btn btn-md btn-outline-success w-100">
+                                    Filter
                                 </button>
                             </div>
                         </form>
