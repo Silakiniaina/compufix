@@ -46,6 +46,7 @@
                                         <th>Date</th>
                                         <th>Ordinateur</th>
                                         <th>Problemes</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,6 +65,14 @@
                                                 <% for(TypeComposant t : reparation.getTypeComposants()){ %>
                                                 <%= t.getNomTypeComposant() %> ,   
                                                 <% } %>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <a href="<%= request.getContextPath() %>/reparation/retour/add?reparation=<%= reparation.getIdReparation() %>" 
+                                                type="button" 
+                                                class="btn btn-sm btn-<%= reparation.isReturned() ? "secondary" : "primary" %> mx-1 <%= reparation.isReturned() ? "disabled" : "" %>" 
+                                                <%= reparation.isReturned() ? "aria-disabled='true' tabindex='-1'" : "" %>> 
+                                                    Retourner
+                                                </a>
                                             </td>
                                         </tr>
                                     <% } %>

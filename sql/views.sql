@@ -229,14 +229,18 @@ SELECT
     r.date_reparation,
     tc.id_type_composant,
     c.id_composant,
-    co.id_ordinateur
+    co.id_ordinateur,
+    CASE 
+        WHEN r.id_reparation IN (SELECT id_reparation FROM retour) THEN true
+        ELSE false
+    END AS est_retourne
 FROM
     reparation r
 JOIN composant_reparation cr ON r.id_reparation = cr.id_reparation
 JOIN composant_ordinateur co ON cr.id_composant_ordinateur = co.id_composant_ordinateur
 JOIN composant c ON co.id_composant = c.id_composant
-JOIN type_composant tc ON c.id_type_composant = tc.id_type_composant
-;
+JOIN type_composant tc ON c.id_type_composant = tc.id_type_composant;
+
 
 -- liste retour
 CREATE OR REPLACE VIEW v_retour_reparation AS

@@ -19,6 +19,7 @@ public class Reparation {
     private Date dateReparation;
     private Ordinateur ordinateur;
     private List<ComposantReparation> composants;
+    private boolean returned;
 
     /// CRUD Operation
     public List<Reparation> getAll(Connection c)throws SQLException{
@@ -26,7 +27,7 @@ public class Reparation {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation";
+        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur,est_retourne FROM v_reparation";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -43,6 +44,7 @@ public class Reparation {
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 r.setComposants(r.getComposants(c));
+                r.setReturned(rs.getBoolean("est_retourne"));
                 results.add(r);
             }
             return results;   
@@ -57,7 +59,7 @@ public class Reparation {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation WHERE id_reparation = ?";
+        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur, est_retourne FROM v_reparation WHERE id_reparation = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -73,6 +75,7 @@ public class Reparation {
                 this.setIdReparation(rs.getInt("id_reparation"));
                 this.setDateReparation(rs.getDate("date_reparation"));
                 this.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                this.setReturned(rs.getBoolean("est_retourne"));
                 this.setComposants(this.getComposants(c));
                 return this;
             }
@@ -90,7 +93,7 @@ public class Reparation {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur FROM v_reparation WHERE id_type_composant = ?";
+        String sql = "SELECT DISTINCT id_reparation, date_reparation, id_ordinateur, est_retourne FROM v_reparation WHERE id_type_composant = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -107,6 +110,7 @@ public class Reparation {
                 r.setIdReparation(rs.getInt("id_reparation"));
                 r.setDateReparation(rs.getDate("date_reparation"));
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                r.setReturned(rs.getBoolean("est_retourne"));
                 r.setComposants(r.getComposants(c));
                 results.add(r);
             }
@@ -187,5 +191,13 @@ public class Reparation {
 
     public void setComposants(List<ComposantReparation> composants) {
         this.composants = composants;
+    }
+
+    public boolean isReturned() {
+        return returned;
+    }
+
+    public void setReturned(boolean returned) {
+        this.returned = returned;
     }
 }
