@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ordinateur.Mois;
 import model.utils.Database;
 
 public class Mois {
