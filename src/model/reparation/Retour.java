@@ -64,6 +64,33 @@ public class Retour {
         }
     }
 
+    public void insert(Connection c)throws SQLException{
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String sql = "INSERT INTO retour_reparation (id_reparation, date_retour, prix_total) VALUES(?, ?, ?)";
+        try {
+            if ( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            c.setAutoCommit(false);
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, this.getReparation().getIdReparation());
+            prstm.setDate(2, this.getDateRetour());
+            prstm.setDouble(3, this.getPrixTotal());
+
+            prstm.executeUpdate();
+            c.commit();
+        } catch (SQLException e) {
+           c.rollback();
+           throw e;
+        } finally{
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+    
 /// GETTERS AND SETTERS
     public int getIdRetour() {
         return idRetour;
