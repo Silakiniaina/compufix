@@ -25,10 +25,10 @@ public class RetourFilter {
             sql += "AND id_type_ordinateur  = ?";
         }
         if(this.getTypeReparation() != null){
-            sql += "AND id_type_reparation  = ?";
+            sql += "AND ? = ANY(types_reparation)";
         }
         if(this.getTypeComposant() != null){
-            sql += "AND id_type_composant = ?";
+            sql += "AND ? = ANY(types_composant)";
         }
         return sql;
     }
