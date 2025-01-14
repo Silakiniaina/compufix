@@ -67,3 +67,17 @@ INSERT INTO composant_reparation (id_reparation, id_technicien, id_type_reparati
 INSERT INTO retour_reparation(date_retour, prix_total, id_reparation) VALUES 
     ('2025-01-12',120000,1)
 ;
+
+INSERT INTO mois (nom_mois) VALUES
+('Janvier'),
+('Fevrier'),
+('Mars'),
+('Avril'),
+('Mai'),
+('Juin'),
+('Juillet'),
+('Aout'),
+('Septembre'),
+('Octobre'),
+('Novembre'),
+('Decembre');

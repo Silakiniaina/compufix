@@ -103,3 +103,22 @@ CREATE TABLE ordinateur_client(
    FOREIGN KEY(id_ordinateur) REFERENCES ordinateur(id_ordinateur),
    FOREIGN KEY(id_client) REFERENCES client(id_client)
 );
+
+
+CREATE TABLE mois(
+   id_mois SERIAL,
+   nom_mois VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id_mois)
+);
+
+CREATE TABLE composant_recommande(
+   id_composant_recommande SERIAL,
+   annee INTEGER NOT NULL CHECK(annee >= 1980 ),
+   description TEXT,
+   id_mois INTEGER NOT NULL,
+   id_composant INTEGER NOT NULL,
+   UNIQUE(annee, id_mois, id_composant),
+   PRIMARY KEY(id_composant_recommande),
+   FOREIGN KEY(id_mois) REFERENCES mois(id_mois),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);
