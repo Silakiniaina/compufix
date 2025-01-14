@@ -8,23 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.composant.Composant;
-import model.composant.cm.CarteMere;
-import model.composant.disque.Disque;
-import model.composant.processeur.Processeur;
-import model.composant.ram.RAM;
 import model.utils.Database;
 
 public class ComposantOrdinateur {
-    
+
+    private int idComposantOrdinateur;
     private Composant composant; 
-    private int quantite;
-    
+    private Ordinateur ordinateur;
+
     public List<ComposantOrdinateur> getComposantParOrdinateur(Connection c, int id) throws SQLException{
         List<ComposantOrdinateur> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM v_composant_ordinateur WHERE id_ordinateur = ?";
+        String sql = "SELECT * FROM composant_ordinateur WHERE id_ordinateur = ?";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -37,25 +34,9 @@ public class ComposantOrdinateur {
             rs = prstm.executeQuery();
             while(rs.next()){
                 ComposantOrdinateur composant = new ComposantOrdinateur();
-                int type = rs.getInt("id_type_composant");
-                switch (type) {
-                    case 2:
-                        composant.setComposant(new Disque().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    case 3:
-                        composant.setComposant(new Processeur().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    case 4:
-                        composant.setComposant(new RAM().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    case 5:
-                        composant.setComposant(new CarteMere().getByIdComposant(c,rs.getInt("id_composant")));
-                        break;
-                    default:
-                        break;
-                }
-                composant.setQuantite(rs.getInt("quantite"));
-
+                composant.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
+                composant.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
+                composant.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 results.add(composant);
             }
 
@@ -67,10 +48,40 @@ public class ComposantOrdinateur {
         }
     }
 
-    public void insert(Connection c, Ordinateur o) throws SQLException {
+    public ComposantOrdinateur getById(Connection c, int id) throws SQLException{
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT * FROM composant_ordinateur WHERE id_composant_ordinateur = ?";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, id);
+
+            rs = prstm.executeQuery();
+            if(rs.next()){
+               this.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
+               this.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
+               this.setOrdinateur(c, rs.getInt("id_ordinateur"));
+                return this;
+            }
+
+            return null;
+        } catch (Exception e) {
+            throw e;
+        } finally { 
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    public void insert(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String query = "INSERT INTO composant_ordinateur(id_composant,id_ordinateur,quantite) VALUES (?, ?, ?)";
+        String query = "INSERT INTO composant_ordinateur(id_composant,id_ordinateur) VALUES (?, ?)";
         
         try {
             if(c == null){
@@ -79,11 +90,9 @@ public class ComposantOrdinateur {
             }
             c.setAutoCommit(false);
 
-            System.out.println(o.getIdOrdinateur());
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getComposant().getIdComposant());
-            prstm.setInt(2, o.getIdOrdinateur());
-            prstm.setInt(3, this.getQuantite());
+            prstm.setInt(2, this.getOrdinateur().getIdOrdinateur());
             
             prstm.executeUpdate();
 
@@ -102,16 +111,28 @@ public class ComposantOrdinateur {
     public Composant getComposant() {
         return composant;
     }
-    public int getQuantite() {
-        return quantite;
-    }
     public void setComposant(Connection c, int composant)throws SQLException {
         this.composant = new Composant().getById(c, composant);
     }
     public void setComposant(Composant c){
         this.composant  = c;
     }
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
+    public int getIdComposantOrdinateur() {
+        return idComposantOrdinateur;
+    }
+
+    public void setIdComposantOrdinateur(int idComposantOrdinateur) {
+        this.idComposantOrdinateur = idComposantOrdinateur;
+    }
+    public Ordinateur getOrdinateur() {
+        return ordinateur;
+    }
+
+    public void setOrdinateur(Connection c,int ordinateur) throws SQLException{
+        this.ordinateur = new Ordinateur().getById(c, ordinateur);
+    }
+
+    public void setOrdinateur(Ordinateur o){
+        this.ordinateur = o;
     }
 }

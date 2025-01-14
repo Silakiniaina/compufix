@@ -18,6 +18,8 @@ public class Ordinateur {
     private String nomOrdinateur; 
     private String description;
     private Double prix;
+    private TypeOrdinateur typeOrdinateur;
+    private Client client;
     private List<ComposantOrdinateur> composants;
 
     public Ordinateur(){
@@ -45,8 +47,8 @@ public class Ordinateur {
                 ordi.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 ordi.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 ordi.setDescription(rs.getString("description"));
+                ordi.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 ordi.setPrix(rs.getDouble("prix"));
-                ordi.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, ordi.getIdOrdinateur()));
                 results.add(ordi);
             }
 
@@ -77,8 +79,8 @@ public class Ordinateur {
                 this.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 this.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 this.setDescription(rs.getString("description"));
+                this.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 this.setPrix(rs.getDouble("prix"));
-                this.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, this.getIdOrdinateur()));
             }
 
             return this;
@@ -92,7 +94,7 @@ public class Ordinateur {
     public void insert(Connection c)throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
-        String sql = "INSERT INTO ordinateur(nom_ordinateur, description) VALUES(?, ?)";
+        String sql = "INSERT INTO ordinateur(nom_ordinateur, description,id_type_ordinateur) VALUES(?, ?, ?)";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -104,6 +106,7 @@ public class Ordinateur {
             prstm = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             prstm.setString(1, this.getNomOrdinateur());
             prstm.setString(2, this.getDescription());
+            prstm.setInt(3, this.getTypeOrdinateur().getIdTypeOrdinateur());
 
             prstm.executeUpdate();
 
@@ -151,25 +154,25 @@ public class Ordinateur {
     }
 
 /// Installation composant
-    public void ajouterComposant(Connection c, Composant composant, int quantite) throws SQLException,Exception{
+    public void ajouterComposant(Connection c, Composant composant) throws SQLException,Exception{
         // Verification des composants
-        this.checkCompatibility(composant);
+        // this.checkCompatibility(composant);
 
         // Dans tous les cas, on ajoute à la liste des composants
         ComposantOrdinateur comp = new ComposantOrdinateur();
         comp.setComposant(composant);
-        comp.setQuantite(quantite);
+        comp.setOrdinateur(this);
         
         this.getComposants().add(comp);
     }
 
     public void installerComposant(Connection c, ComposantOrdinateur comp)throws SQLException{
-        comp.insert(c, this);
+        comp.insert(c);
     }
 
     public void installerComposants(Connection c)throws SQLException{
         for(ComposantOrdinateur composant : this.getComposants()){
-            composant.insert(c, this);
+            composant.insert(c);
         }
     }
 
@@ -229,5 +232,21 @@ public class Ordinateur {
     }
     public void setComposants(List<ComposantOrdinateur> composants) {
         this.composants = composants;
+    }
+
+    public TypeOrdinateur getTypeOrdinateur() {
+        return typeOrdinateur;
+    }
+
+    public void setTypeOrdinateur(Connection c, int typeOrdinateur) throws SQLException{
+        this.typeOrdinateur = new TypeOrdinateur().getById(c, typeOrdinateur);
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Connection c, int client) throws SQLException{
+        this.client = new Client().getById(c, client);
     }
 }

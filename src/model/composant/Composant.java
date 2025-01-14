@@ -16,7 +16,7 @@ public class Composant {
     private double prixUnitaire;
     private TypeComposant typeComposant;
 
-    // CRUD Composant
+/// CRUD Composant
     public void insert(Connection c) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
@@ -34,7 +34,7 @@ public class Composant {
             prstm.setString(1, this.getNomComposant());
             prstm.setDouble(2, this.getCapacite());
             prstm.setDouble(3, this.getPrixUnitaire());
-            prstm.setInt(4, this.getType());
+            prstm.setInt(4, this.getTypeComposant().getIdTypeComposant());
             
             prstm.executeUpdate();
             
@@ -175,38 +175,23 @@ public class Composant {
         }
     }
 
-    public Composant getByIdComposant(Connection c, int id) throws SQLException{
-        boolean isNewConnection = false;
-        PreparedStatement prstm = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM composant WHERE id_composant = ?";
-        try {
-            if( c == null){
-                c = Database.getConnection();
-                isNewConnection = true;
-            }
-            prstm = c.prepareStatement(query);
-            prstm.setInt(1, id);
-            
-            rs = prstm.executeQuery();
-            if (rs.next()) {
-                this.setIdComposant(rs.getInt("id_composant"));
-                this.setNomComposant(rs.getString("nom_composant"));
-                this.setCapacite(rs.getDouble("capacite"));
-                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
-                this.setTypeComposant(c, rs.getInt("id_type_composant"));
-                return this;
-            }
-            return null;
-        } finally {
-            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+/// Utils
+    public String getUnite(){
+        String result = null; 
+        if(this.getTypeComposant().getNomTypeComposant().contains("Disque") || this.getTypeComposant().getNomTypeComposant().contains("RAM")){
+            result = "Go";
+        }else if(this.getTypeComposant().getNomTypeComposant().contains("Processeur") || this.getTypeComposant().getNomTypeComposant().contains("Ecran")){
+            result = "Hz";
         }
+        return result;
     }
-
+    
     public int getType(){
         return Composant.COMPOSANT_MERE;
     }
 
+    
+/// GETTERS AND SETTERS
     public TypeComposant getTypeComposant() {
         return typeComposant;
     }
@@ -214,8 +199,6 @@ public class Composant {
     public void setTypeComposant(Connection c, int typeComposant) throws SQLException{
         this.typeComposant = new TypeComposant().getById(c, typeComposant);
     }
-
-    // GETTERS AND SETTERS
     public int getIdComposant() {
         return idComposant;
     }

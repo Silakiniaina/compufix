@@ -13,9 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.composant.stock.ElementMouvementStock;
-import model.composant.stock.ElementStock;
 import model.composant.stock.MouvementStock;
-import model.composant.stock.Stock;
 
 @WebServlet("/composant/stock/mouvement/list")
 public class ListMouvementStockServlet extends HttpServlet{

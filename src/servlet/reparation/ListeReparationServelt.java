@@ -29,7 +29,7 @@ public class ListeReparationServelt extends HttpServlet{
             List<TypeComposant> types = new TypeComposant().getAll(c);
             List<Reparation> reparations = new Reparation().getAll(c);
 
-            if(typeComposant != null){
+            if(typeComposant != null && !typeComposant.equals("")){
                 int idTypeComposant = Integer.parseInt(typeComposant);
 
                 reparations = new Reparation().getAllByTypeComposant(c, idTypeComposant);

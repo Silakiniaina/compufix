@@ -20,6 +20,27 @@
             <span>Composants</span>
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/composant/list">
+                  <i class="fe fe-package fe-16"></i>
+                  <span class="ml-3 item-text">Liste</span>
+                </a>
+            </li>
+            <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/composant/add">
+                  <i class="fe fe-plus fe-16"></i>
+                  <span class="ml-3 item-text">Ajouter</span>
+                </a>
+            </li>
+            <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/composant/recommandations">
+                  <i class="fe fe-cpu fe-16"></i>
+                  <span class="ml-3 item-text">Recommandation</span>
+                  <span class="badge badge-pill badge-primary">New</span>
+                </a>
+            </li>
+        </ul>
+        <%-- <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
                 <a href="#ram" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                     <i class="fe fe-package fe-16"></i>
@@ -94,7 +115,7 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul> --%>
         <p class="text-muted nav-heading mt-4 mb-1">
             <span>Ordinateur</span>
         </p>
@@ -128,6 +149,17 @@
                   <i class="fe fe-trending-up fe-16"></i>
                   <span class="ml-3 item-text">Liste</span>
                   <span class="badge badge-pill badge-primary">New</span>
+                </a>
+            </li>
+        </ul>
+        <p class="text-muted nav-heading mt-4 mb-1">
+            <span>Retour</span>
+        </p>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/reparation/retour">
+                  <i class="fe fe-trending-up fe-16"></i>
+                  <span class="ml-3 item-text">Liste</span>
                 </a>
             </li>
         </ul>

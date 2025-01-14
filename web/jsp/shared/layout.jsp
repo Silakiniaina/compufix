@@ -7,6 +7,7 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <%@ include file="error.jsp" %>
+                    <%@ include file="success.jsp" %>
                     <% 
                         String pageurl = (String) request.getAttribute("pageUrl");
                         if (pageurl == null || pageurl.isEmpty()) {
