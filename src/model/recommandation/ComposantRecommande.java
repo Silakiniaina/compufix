@@ -56,7 +56,7 @@ public class ComposantRecommande {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM composant_recommande WHERE id_mois = ? AND annee = ?";
+        String sql = "SELECT * FROM composant_recommande WHERE EXTRACT(MONTH FROM date_recommandation) = ? AND EXTRACT(YEAR FROM date_recommandation) = ? GROUP BY id_composant_recommande,EXTRACT(MONTH FROM date_recommandation),EXTRACT(YEAR FROM date_recommandation)";
         try {
             if( c == null ){
                 c = Database.getConnection();
@@ -91,7 +91,7 @@ public class ComposantRecommande {
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT MIN(annee) as min_annee FROM composant_recommande";
+        String sql = "SELECT MIN(EXTRACT(YEAR FROM date_recommandation)) as min_annee FROM composant_recommande";
         try {
             if( c == null ){
                 c = Database.getConnection();

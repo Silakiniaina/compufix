@@ -110,7 +110,7 @@ CREATE TABLE composant_recommande(
    description TEXT,
    date_recommandation DATE DEFAULT NOW(),
    id_composant INTEGER NOT NULL,
-   UNIQUE(annee, id_mois, id_composant),
+   UNIQUE(date_recommandation, id_composant),
    PRIMARY KEY(id_composant_recommande),
    FOREIGN KEY(id_mois) REFERENCES mois(id_mois),
    FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
