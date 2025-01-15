@@ -10,13 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.composant.TypeComposant;
-import model.ordinateur.TypeOrdinateur;
 import model.recommandation.ComposantRecommande;
-import model.recommandation.Mois;
-import model.reparation.Retour;
-import model.reparation.RetourFilter;
-import model.reparation.TypeReparation;
 
 @WebServlet("/composant/recommandations")
 public class ListeComposantRecommandeServlet extends HttpServlet{
@@ -28,7 +22,6 @@ PrintWriter out = resp.getWriter();
         String anneeStr = (String)req.getAttribute("annee");
         try {
             Connection c = (Connection)req.getSession().getAttribute("connection");
-            List<Mois> mois = new Mois().getAll(c);
 
             List<ComposantRecommande> composants = new ComposantRecommande().getAll(c);
 
@@ -39,7 +32,6 @@ PrintWriter out = resp.getWriter();
             }
 
             req.setAttribute("composants", composants);
-            req.setAttribute("mois", mois);
             req.setAttribute("pageUrl", "/WEB-INF/views/composant/listeRecommandation.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);;
         } catch (Exception e) {
