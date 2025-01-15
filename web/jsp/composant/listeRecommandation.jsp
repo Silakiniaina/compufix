@@ -19,7 +19,7 @@
                     <div class="col-md-4 form-group mb-3">
                         <label for="mois">Mois</label>
                         <select id="mois" name="mois" class="form-control w-100">
-                            <option value="">All</option>
+                            <option value="0">All</option>
                             <option value="1">Janvier </option>
                             <option value="2">Fevrier </option>
                             <option value="3">Mars </option>

@@ -51,21 +51,27 @@ public class ComposantRecommande {
         }
     }
 
-    public List<ComposantRecommande> getAllByMois(Connection c, int mois, int annee) throws SQLException,Exception{
+    public List<ComposantRecommande> getAllByMois(Connection c, RecommandationFilterArg arg) throws SQLException,Exception{
         List<ComposantRecommande> results = new ArrayList<>();
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
         ResultSet rs = null; 
-        String sql = "SELECT * FROM composant_recommande WHERE EXTRACT(MONTH FROM date_recommandation) = ? AND EXTRACT(YEAR FROM date_recommandation) = ? GROUP BY id_composant_recommande,EXTRACT(MONTH FROM date_recommandation),EXTRACT(YEAR FROM date_recommandation)";
+        String sql = arg.getQuery();
         try {
             if( c == null ){
                 c = Database.getConnection();
                 isNewConnection = true;
             }
-
+            int paramId = 1;
             prstm = c.prepareStatement(sql);
-            prstm.setInt(1,mois);
-            prstm.setInt(2,annee);
+            if(arg.getMois() != 0){
+                prstm.setInt(paramId,arg.getMois());
+                paramId++;
+            }
+            if(arg.getAnnee() != 0){
+                prstm.setInt(paramId,arg.getAnnee());
+                paramId++;
+            }
             rs = prstm.executeQuery();
 
             while (rs.next()) {
