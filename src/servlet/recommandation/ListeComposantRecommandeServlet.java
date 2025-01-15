@@ -10,36 +10,28 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.composant.TypeComposant;
-import model.ordinateur.TypeOrdinateur;
 import model.recommandation.ComposantRecommande;
-import model.recommandation.Mois;
-import model.reparation.Retour;
-import model.reparation.RetourFilter;
-import model.reparation.TypeReparation;
+import model.recommandation.RecommandationFilterArg;
 
 @WebServlet("/composant/recommandations")
 public class ListeComposantRecommandeServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-PrintWriter out = resp.getWriter();
+        PrintWriter out = resp.getWriter();
         String moisStr = (String)req.getAttribute("mois");
         String anneeStr = (String)req.getAttribute("annee");
         try {
             Connection c = (Connection)req.getSession().getAttribute("connection");
-            List<Mois> mois = new Mois().getAll(c);
+            List<ComposantRecommande> composants = null;
 
-            List<ComposantRecommande> composants = new ComposantRecommande().getAll(c);
-
-            if(moisStr != null){
-                int idMois = Integer.parseInt(moisStr);
-                int annee = anneeStr != null ? Integer.parseInt(anneeStr) : 2025;
-                composants = new ComposantRecommande().getAllByMois(c, idMois,annee );
-            }
-
+            int idMois = moisStr != null ? Integer.parseInt(moisStr) : 0;
+            int annee = anneeStr != null ? Integer.parseInt(anneeStr) : 0;
+            RecommandationFilterArg filter = new RecommandationFilterArg();
+            filter.setMois(idMois);
+            filter.setAnnee(annee);
+            composants = new ComposantRecommande().getAllByMois(c, filter);
             req.setAttribute("composants", composants);
-            req.setAttribute("mois", mois);
             req.setAttribute("pageUrl", "/WEB-INF/views/composant/listeRecommandation.jsp");
             req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);;
         } catch (Exception e) {

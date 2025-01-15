@@ -2,11 +2,9 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="model.utils.GeneralUtils" %>
-<%@ page import="model.recommandation.Mois" %>
 <%@ page import="model.recommandation.ComposantRecommande" %>
 
 <% 
-    List<Mois>  mois = (List<Mois>)request.getAttribute("mois");
     List<ComposantRecommande>  composants = (List<ComposantRecommande>)request.getAttribute("composants");
 %>
  
@@ -21,12 +19,19 @@
                     <div class="col-md-4 form-group mb-3">
                         <label for="mois">Mois</label>
                         <select id="mois" name="mois" class="form-control w-100">
-                            <option value="">All</option>
-                            <% for(Mois m : mois){ %>
-                                <option value="<%= m.getIdMois() %>">
-                                    <%= m.getNomMois() %> 
-                                </option>
-                            <% } %>
+                            <option value="0">All</option>
+                            <option value="1">Janvier </option>
+                            <option value="2">Fevrier </option>
+                            <option value="3">Mars </option>
+                            <option value="4">Avril </option>
+                            <option value="5">Mai </option>
+                            <option value="6">Juin </option>
+                            <option value="7">Juillet </option>
+                            <option value="8">Aout </option>
+                            <option value="9">Septembre </option>
+                            <option value="10">Octobre </option>
+                            <option value="11">Novembre </option>
+                            <option value="12">Decembre </option>  
                         </select>
                     </div>
                     <%= GeneralUtils.generateSelectYearRecommandation() %>
@@ -49,8 +54,8 @@
                             <th style="width: 120px;">ID</th>
                             <th>Composant</th>
                             <th>Description</th>
-                            <th>Mois</th>
-                            <th>Annee</th>
+                            <th>Date</th>
+                            <th>Prix Unitaire</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,10 +71,10 @@
                                     <%= composant.getDescription() %>
                                 </td>
                                 <td>
-                                    <%= composant.getMois().getNomMois() %>
+                                    <%= composant.getDateRecommandation() %>
                                 </td>
                                 <td>
-                                    <%= composant.getAnnee() %>
+                                    <%= composant.getComposant().getPrixUnitaire() %>
                                 </td>
                             </tr>
                         <% } %>

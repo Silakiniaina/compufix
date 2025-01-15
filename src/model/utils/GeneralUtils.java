@@ -25,9 +25,9 @@ public class GeneralUtils {
         // Construire le HTML en utilisant StringBuilder
         StringBuilder html = new StringBuilder();
         html.append("<div class=\"col-md-4 form-group mb-3\">\n")
-            .append("    <label for=\"typeComposant\">Anee</label>\n")
-            .append("    <select id=\"typeComposant\" name=\"typeComposant\" class=\"form-control w-100\">\n")
-            .append("        <option value=\"\">All</option>\n");
+            .append("    <label for=\"Annee\">Annee</label>\n")
+            .append("    <select id=\"Annee\" name=\"annee\" class=\"form-control w-100\">\n")
+            .append("        <option value=\"0\">All</option>\n");
     
         for (int year : years) {
             html.append("        <option value=\"").append(year).append("\">").append(year).append("</option>\n");

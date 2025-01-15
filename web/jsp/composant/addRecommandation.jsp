@@ -1,9 +1,5 @@
-<%@ page import="model.recommandation.Mois" %>
-<%@ page import="java.util.List" %>
-
 <%
     String composant = (String)request.getAttribute("composant");
-    List<Mois>  mois = (List<Mois>)request.getAttribute("mois");
 %>
 
 <div class="col-12">
@@ -13,18 +9,8 @@
             <form action="<%= request.getContextPath() %>/composant/recommandations/add" method="POST" id="computerForm">
                 <input type="hidden" name="composant" value="<%= composant != null ? composant : "" %>">
                 <div class="form-group">
-                    <label for="mois">Mois</label>
-                    <select id="mois" name="mois" class="form-control">
-                        <% for(Mois m : mois){ %>
-                            <option value="<%= m.getIdMois() %>">
-                                <%= m.getNomMois() %> 
-                            </option>
-                        <% } %>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="annee">Annee</label>
-                    <input type="number" name="annee" min="1" value="2025" class="form-control" id="annee" placeholder="Annee" required>
+                    <label for="nomComposant">Date</label>
+                    <input type="date" name="date" class="form-control" id="nomComposant" placeholder="Date Recommandation" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="description">Description</label>
