@@ -12,39 +12,45 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.composant.TypeComposant;
-import model.reparation.Reparation;
 import model.technicien.CommissionPeriodFilter;
 import model.technicien.CommissionTechnicien;
 
 @WebServlet("/techniciens/commission")
-public class CommissionTechnicienServlet extends HttpServlet{
+public class CommissionTechnicienServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
-        String debutStr = (String)req.getAttribute("debut");
-        String finStr = (String)req.getAttribute("fin");
+        String debutStr = req.getParameter("debut"); // Use getParameter to retrieve form values
+        String finStr = req.getParameter("fin");
+
         try {
-            Connection c = (Connection)req.getSession().getAttribute("connexion");
+            Connection c = (Connection) req.getSession().getAttribute("connexion");
 
             CommissionPeriodFilter filter = null;
 
-            if(debutStr != null || finStr != null){
+            // Check if filtering parameters are provided
+            if ((debutStr != null && !debutStr.isEmpty()) || (finStr != null && !finStr.isEmpty())) {
                 filter = new CommissionPeriodFilter();
-                if(debutStr != null){
-                    filter.setDebut(Date.valueOf(LocalDate.parse(debutStr)));
+
+                if (debutStr != null && !debutStr.isEmpty()) {
+                    filter.setDebut(Date.valueOf(LocalDate.parse(debutStr))); // Parse and set start date
                 }
-                if(finStr != null){
-                    filter.setDebut(Date.valueOf(LocalDate.parse(finStr)));
+
+                if (finStr != null && !finStr.isEmpty()) {
+                    filter.setFin(Date.valueOf(LocalDate.parse(finStr))); // Parse and set end date
                 }
             }
 
+            // Fetch commissions with or without filters
             List<CommissionTechnicien> commissions = new CommissionTechnicien().getAllCommissions(c, filter);
 
+            // Set attributes for the JSP
             req.setAttribute("commissions", commissions);
             req.setAttribute("pageUrl", "/WEB-INF/views/technicien/listeCommissions.jsp");
-            req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);;
+
+            // Forward to layout.jsp
+            req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace(out);
         }
@@ -52,9 +58,7 @@ public class CommissionTechnicienServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("debut", req.getParameter("debut"));
-        req.setAttribute("fin", req.getParameter("fin"));
+        // Directly forward the parameters to doGet
         doGet(req, resp);
     }
-    
 }
