@@ -1,7 +1,9 @@
 package model.reparation;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import model.composant.TypeComposant;
 import model.ordinateur.TypeOrdinateur;
@@ -11,11 +13,13 @@ public class RetourFilter {
     private TypeOrdinateur typeOrdinateur;
     private TypeReparation typeReparation;
     private TypeComposant typeComposant;
+    private Date dateRetour;
 
-    public RetourFilter(Connection c, String typeOrdinateur, String typeReparation, String typeComposant)throws SQLException{
+    public RetourFilter(Connection c, String typeOrdinateur, String typeReparation, String typeComposant, String date)throws SQLException{
         this.setTypeOrdinateur(c, typeOrdinateur);
         this.setTypeReparation(c, typeReparation);
         this.setTypeComposant(c, typeComposant);
+        this.setDateRetour(date);
     }
 
 /// Operations 
@@ -29,6 +33,9 @@ public class RetourFilter {
         }
         if(this.getTypeComposant() != null){
             sql += "AND ? = ANY(types_composant)";
+        }
+        if(this.getDateRetour() != null){
+            sql += "AND date_retour = ?";
         }
         return sql;
     }
@@ -75,6 +82,21 @@ public class RetourFilter {
     public void setTypeComposant(Connection c,String str)throws SQLException{
         if(str != null && !str.trim().equals("")){
             this.typeComposant = new TypeComposant().getById(c, Integer.parseInt(str));
+        }
+    }
+
+    public Date getDateRetour() {
+        return dateRetour;
+    }
+
+    public void setDateRetour(Date dateRetour) {
+        this.dateRetour = dateRetour;
+    }
+    public void setDateRetour(String dateRetour) {
+        if(dateRetour != null){
+            this.dateRetour = Date.valueOf(LocalDate.parse(dateRetour));
+        }else{
+            this.dateRetour = null;
         }
     }
 }

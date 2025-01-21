@@ -44,6 +44,10 @@ public class Retour {
                 prstm.setInt( idArg, filter.getTypeComposant().getIdTypeComposant());
                 idArg++;
             }
+            if(filter.getDateRetour() != null){
+                prstm.setDate(idArg, filter.getDateRetour());
+                idArg++;
+            }
 
             rs = prstm.executeQuery();
             while(rs.next()){

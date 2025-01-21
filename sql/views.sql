@@ -231,7 +231,7 @@ SELECT
     c.id_composant,
     co.id_ordinateur,
     CASE 
-        WHEN r.id_reparation IN (SELECT id_reparation FROM retour) THEN true
+        WHEN r.id_reparation IN (SELECT id_reparation FROM retour_reparation) THEN true
         ELSE false
     END AS est_retourne
 FROM
@@ -244,18 +244,26 @@ JOIN type_composant tc ON c.id_type_composant = tc.id_type_composant;
 
 -- liste retour
 CREATE OR REPLACE VIEW v_retour_reparation AS
-SELECT DISTINCT
+SELECT 
     rr.id_retour_reparation,
     rr.date_retour,
     rr.id_reparation,
     rr.prix_total,
     o.id_ordinateur,
-    o.id_type_ordinateur,
-    cr.id_type_reparation,
-    c.id_type_composant
+    o.id_client,
+    ARRAY_AGG(DISTINCT o.id_type_ordinateur) as types_ordinateur,
+    ARRAY_AGG(DISTINCT cr.id_type_reparation) as types_reparation,
+    ARRAY_AGG(DISTINCT c.id_type_composant) as types_composant
 FROM retour_reparation rr
 JOIN reparation r ON r.id_reparation = rr.id_reparation
 JOIN ordinateur o ON o.id_ordinateur = r.id_ordinateur
 JOIN composant_reparation cr ON cr.id_reparation = r.id_reparation
 JOIN composant_ordinateur co ON co.id_composant_ordinateur = cr.id_composant_ordinateur
-JOIN composant c ON c.id_composant = co.id_composant;
+JOIN composant c ON c.id_composant = co.id_composant
+GROUP BY 
+    rr.id_retour_reparation,
+    rr.date_retour,
+    rr.id_reparation,
+    rr.prix_total,
+    o.id_ordinateur,
+    o.id_client;

@@ -80,4 +80,11 @@ INSERT INTO mois (nom_mois) VALUES
 ('Septembre'),
 ('Octobre'),
 ('Novembre'),
-('Decembre');
+('Decembre'); 
+
+INSERT INTO client(nom_client) VALUES 
+    ('Kiady'),
+    ('Sanda'),
+    ('Carole'),
+    ('Aro')
+;

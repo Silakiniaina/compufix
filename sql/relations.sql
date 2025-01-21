@@ -17,7 +17,7 @@ CREATE TABLE type_reparation(
 );
 
 CREATE TABLE client(
-   id_client VARCHAR(50) ,
+   id_client SERIAL,
    nom_client VARCHAR(150)  NOT NULL,
    PRIMARY KEY(id_client)
 );

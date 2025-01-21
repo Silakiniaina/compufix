@@ -25,6 +25,7 @@ public class ListRetourServlet extends HttpServlet{
         String typeOrdinateurStr = (String)req.getAttribute("typeOrdinateur");
         String typeReparationStr = (String)req.getAttribute("typeReparation");
         String typeComposantStr = (String)req.getAttribute("typeComposant");
+        String dateRetourStr = (String)req.getAttribute("date");
         try {
             Connection c = (Connection)req.getSession().getAttribute("connection");
 
@@ -32,7 +33,7 @@ public class ListRetourServlet extends HttpServlet{
             List<TypeOrdinateur> typeOrdinateurs = new TypeOrdinateur().getAll(c);
             List<TypeReparation> typeReparations = new TypeReparation().getAll(c);
             
-            RetourFilter filter = new RetourFilter(c, typeOrdinateurStr, typeReparationStr, typeComposantStr);
+            RetourFilter filter = new RetourFilter(c, typeOrdinateurStr, typeReparationStr, typeComposantStr,dateRetourStr);
             List<Retour> retours = new Retour().getAllWithFilter(c, filter);
             req.setAttribute("typeComposants", typeComposants);
             req.setAttribute("typeReparations", typeReparations);
@@ -50,6 +51,7 @@ public class ListRetourServlet extends HttpServlet{
         req.setAttribute("typeOrdinateur", req.getParameter("typeOrdinateur"));
         req.setAttribute("typeReparation", req.getParameter("typeReparation"));
         req.setAttribute("typeComposant", req.getParameter("typeComposant"));
+        req.setAttribute("date", req.getParameter("date"));
         doGet(req, resp);
     }
     
