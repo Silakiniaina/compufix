@@ -15,17 +15,17 @@
     
     <div class="col-md-10 card shadow mb-4">
         <div class="card-body">
-            <form action="<%= request.getContextPath() %>/reparation/add" method="POST" id="reparationForm">
+            <form action="<%= request.getContextPath() %>/reparations/add" method="POST" id="reparationForm">
                 <input type="hidden" name="ordinateur" value="<%= ordinateur.getIdOrdinateur() %>">
                 
                 <div class="form-group">
                     <label>Ordinateur</label>
                     <input type="text" class="form-control" value="<%= ordinateur.getNomOrdinateur() %>" disabled>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="dateReparation">Date de reparation</label>
-                    <input type="date" name="dateReparation" class="form-control" id="dateReparation" required>
+                    <input type="date" name="date" class="form-control" id="dateReparation" required>
                 </div>
                 
 
@@ -37,7 +37,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Type de reparation</label>
-                                <select id="typeReparation" class="form-control" required>
+                                <select id="typeReparation" class="form-control">
                                     <option value="">Selectionner le type de reparation</option>
                                     <% for(TypeReparation type : types) { %>
                                         <option value="<%= type.getIdTypeReparation() %>"><%= type.getNomTypeReparation() %></option>
@@ -47,7 +47,7 @@
                             
                             <div class="form-group col-md-4">
                                 <label>Technicien</label>
-                                <select id="technicien" class="form-control" required>
+                                <select id="technicien" class="form-control">
                                     <option value="">Selectionner un technicien</option>
                                     <% for(Technicien tech : techniciens) { %>
                                         <option value="<%= tech.getIdTechnicien() %>"><%= tech.getNomTechnicien() %></option>
@@ -57,7 +57,7 @@
                             
                             <div class="form-group col-md-4">
                                 <label>Composant</label>
-                                <select id="composant" class="form-control" required>
+                                <select id="composant" class="form-control">
                                     <option value="">Selectionner un composant</option>
                                     <% for(ComposantOrdinateur comp : ordinateur.getComposants()) { %>
                                         <option value="<%= comp.getIdComposantOrdinateur() %>">
