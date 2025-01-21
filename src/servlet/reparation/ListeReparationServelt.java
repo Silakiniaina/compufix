@@ -10,10 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.composant.Composant;
 import model.composant.TypeComposant;
-import model.composant.ram.RAM;
-import model.composant.ram.TypeRam;
 import model.reparation.Reparation;
 
 @WebServlet("/reparations")

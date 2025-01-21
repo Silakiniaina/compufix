@@ -1,14 +1,34 @@
 let composantCounter = 0;
 
+// Validation function for selects
+function validateSelects() {
+    const typeReparationSelect = document.getElementById('typeReparation');
+    const technicienSelect = document.getElementById('technicien');
+    const composantSelect = document.getElementById('composant');
+    
+    if (!typeReparationSelect.value) {
+        alert('Veuillez sélectionner un type de réparation');
+        return false;
+    }
+    if (!technicienSelect.value) {
+        alert('Veuillez sélectionner un technicien');
+        return false;
+    }
+    if (!composantSelect.value) {
+        alert('Veuillez sélectionner un composant');
+        return false;
+    }
+    return true;
+}
+
 // Ajout d'un composant
 document.getElementById('addComposant').addEventListener('click', function() {
     const typeReparationSelect = document.getElementById('typeReparation');
     const technicienSelect = document.getElementById('technicien');
     const composantSelect = document.getElementById('composant');
     
-    // Validation
-    if (!typeReparationSelect.value || !technicienSelect.value || !composantSelect.value) {
-        alert('Veuillez remplir tous les champs');
+    // Validate selects before adding
+    if (!validateSelects()) {
         return;
     }
 
@@ -36,12 +56,10 @@ document.getElementById('addComposant').addEventListener('click', function() {
     `;
     composantsList.appendChild(listItem);
 
-    // Add hidden inputs
+    // Add hidden input
     const hiddenInputs = document.getElementById('hiddenInputs');
     hiddenInputs.innerHTML += `
-        <input type="hidden" name="typeReparation[]" value="${typeReparationSelect.value}" data-index="${composantCounter}">
-        <input type="hidden" name="technicien[]" value="${technicienSelect.value}" data-index="${composantCounter}">
-        <input type="hidden" name="composant[]" value="${composantSelect.value}" data-index="${composantCounter}">
+        <input type="hidden" name="composantReparation" value="${typeReparationSelect.value},${technicienSelect.value},${composantSelect.value}" data-index="${composantCounter}">
     `;
 
     // Show preview if hidden
@@ -74,7 +92,7 @@ document.getElementById('closePreview').addEventListener('click', function() {
     document.getElementById('composantsPreview').style.display = 'none';
 });
 
-// Form submission validation
+// Form submission validation - only check if components exist
 document.getElementById('reparationForm').addEventListener('submit', function(e) {
     if (composantCounter === 0) {
         e.preventDefault();

@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +23,12 @@ public class Reparation {
     private List<ComposantReparation> composants;
     private boolean returned;
 
-    /// CRUD Operation
+/// Constructor
+    public Reparation(){
+        this.setComposants(new ArrayList<ComposantReparation>());
+    }
+
+/// CRUD Operation
     public List<Reparation> getAll(Connection c)throws SQLException{
         List<Reparation> results = new ArrayList<>();
         boolean isNewConnection = false;
@@ -166,6 +173,46 @@ public class Reparation {
                          .collect(Collectors.toList());
     }
 
+    public void insert(Connection c)throws SQLException{
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        String sql = "INSERT INTO reparation(id_ordinateur,date_reparation) VALUES(?, ?)";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            
+            c.setAutoCommit(false);
+            
+            prstm = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            prstm.setInt(1, this.getOrdinateur().getIdOrdinateur());
+            prstm.setDate(2, this.getDateReparation());
+
+            prstm.executeUpdate();
+
+            // Récupération de l'I D généré
+            try (ResultSet generatedKeys = prstm.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    this.setIdReparation(generatedKeys.getInt(1));
+                }
+            }
+            
+            c.commit();
+        } catch (SQLException e) {
+            c.rollback();
+            throw e;
+        }finally{
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
+    public void insererComposantReparations(Connection c)throws SQLException{
+        for(ComposantReparation composant : this.getComposants()){
+            composant.insert(c,this);
+        }
+    }
+
     public int getIdReparation() {
         return idReparation;
     }
@@ -178,6 +225,14 @@ public class Reparation {
     public void setDateReparation(Date dateReparation) {
         this.dateReparation = dateReparation;
     }
+
+    public void setDateReparation(String dateReparationStr) throws Exception{
+        if(dateReparationStr == null || dateReparationStr.trim().equals("")){
+            throw new Exception("Le champ date est obligatoire");
+        }
+        this.dateReparation = Date.valueOf(LocalDate.parse(dateReparationStr));
+    }
+
     public Ordinateur getOrdinateur() {
         return ordinateur;
     }
@@ -185,6 +240,9 @@ public class Reparation {
         this.ordinateur = new Ordinateur().getById(c, ordinateur);
     }
 
+    public void setOrdinateur(Ordinateur o)throws SQLException {
+        this.ordinateur = o;
+    }
     public List<ComposantReparation> getComposants() {
         return composants;
     }

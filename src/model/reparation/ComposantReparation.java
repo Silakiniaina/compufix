@@ -1,11 +1,14 @@
 package model.reparation;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import model.composant.TypeComposant;
 import model.ordinateur.ComposantOrdinateur;
+import model.ordinateur.Ordinateur;
 import model.technicien.Technicien;
+import model.utils.Database;
 
 public class ComposantReparation {
     
@@ -13,6 +16,37 @@ public class ComposantReparation {
     private TypeReparation typeReparation;
     private Technicien technicien;
     private ComposantOrdinateur composantOrdinateur;
+
+    public void insert(Connection c, Reparation r) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String query = "INSERT INTO composant_reparation(id_reparation,id_technicien,id_type_reparation, id_composant_ordinateur) VALUES (?, ?, ?, ?)";
+        
+        try {
+            if(c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false);
+
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, r.getIdReparation());
+            prstm.setInt(2, this.getTechnicien().getIdTechnicien());
+            prstm.setInt(3, this.getTypeReparation().getIdTypeReparation());
+            prstm.setInt(4, this.getComposantOrdinateur().getIdComposantOrdinateur());
+            
+            prstm.executeUpdate();
+
+            c.commit();
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback();
+            }
+            throw e;
+        } finally {
+           Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
 
 /// GETTERS AND SETTERS
     public Reparation getReparation() {

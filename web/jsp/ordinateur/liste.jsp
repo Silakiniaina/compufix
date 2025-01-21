@@ -30,7 +30,7 @@
                                         <td><%= ordinateur.getDescription() %></td>
                                         <td><%= ordinateur.getPrix() %></td>
                                         <td class="text-center"> 
-                                            <a href="<%= request.getContextPath() %>/ordinateur/add?mode=u&id=<%= ordinateur.getIdOrdinateur() %>" type="button" class="btn btn-sm btn-primary mx-1"> 
+                                            <a href="<%= request.getContextPath() %>/reparations/add?ordinateur=<%= ordinateur.getIdOrdinateur() %>" type="button" class="btn btn-sm btn-primary mx-1"> 
                                                 <span class="fe fe-tool fe-16"></span>
                                             </a>
                                             <%-- <a href="<%= request.getContextPath() %>/ordinateur/add?mode=d&id=<%= ordinateur.getIdOrdinateur() %>" type="button" class="btn btn-sm btn-danger mx-1">
