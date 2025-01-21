@@ -50,6 +50,7 @@ public class Ordinateur {
                 ordi.setClient(c, rs.getInt("id_client"));
                 ordi.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 ordi.setPrix(rs.getDouble("prix"));
+                ordi.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, ordi.getIdOrdinateur()));
                 results.add(ordi);
             }
 
@@ -83,6 +84,7 @@ public class Ordinateur {
                 this.setClient(c, rs.getInt("id_client"));
                 this.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 this.setPrix(rs.getDouble("prix"));
+                this.setComposants(new ComposantOrdinateur().getComposantParOrdinateur(c, this.getIdOrdinateur()));
             }
 
             return this;
@@ -164,18 +166,17 @@ public class Ordinateur {
         // Dans tous les cas, on ajoute à la liste des composants
         ComposantOrdinateur comp = new ComposantOrdinateur();
         comp.setComposant(composant);
-        comp.setOrdinateur(this);
         
         this.getComposants().add(comp);
     }
 
     public void installerComposant(Connection c, ComposantOrdinateur comp)throws SQLException{
-        comp.insert(c);
+        comp.insert(c,this);
     }
 
     public void installerComposants(Connection c)throws SQLException{
         for(ComposantOrdinateur composant : this.getComposants()){
-            composant.insert(c);
+            composant.insert(c,this);
         }
     }
 

@@ -39,9 +39,7 @@ document.getElementById('addComposant').addEventListener('click', function() {
     // Add hidden inputs
     const hiddenInputs = document.getElementById('hiddenInputs');
     hiddenInputs.innerHTML += `
-        <input type="hidden" name="typeReparation[]" value="${typeReparationSelect.value}" data-index="${composantCounter}">
-        <input type="hidden" name="technicien[]" value="${technicienSelect.value}" data-index="${composantCounter}">
-        <input type="hidden" name="composant[]" value="${composantSelect.value}" data-index="${composantCounter}">
+        <input type="hidden" name="composantReparation" value="${typeReparationSelect.value},${technicienSelect.value},${composantSelect.value}" data-index="${composantCounter}">
     `;
 
     // Show preview if hidden

@@ -14,7 +14,6 @@ public class ComposantOrdinateur {
 
     private int idComposantOrdinateur;
     private Composant composant; 
-    private Ordinateur ordinateur;
 
     public List<ComposantOrdinateur> getComposantParOrdinateur(Connection c, int id) throws SQLException{
         List<ComposantOrdinateur> results = new ArrayList<>();
@@ -36,7 +35,6 @@ public class ComposantOrdinateur {
                 ComposantOrdinateur composant = new ComposantOrdinateur();
                 composant.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
                 composant.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
-                composant.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 results.add(composant);
             }
 
@@ -66,7 +64,6 @@ public class ComposantOrdinateur {
             if(rs.next()){
                this.setIdComposantOrdinateur(rs.getInt("id_composant_ordinateur"));
                this.setComposant(new Composant().getById(c, rs.getInt("id_composant")));
-               this.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 return this;
             }
 
@@ -78,7 +75,7 @@ public class ComposantOrdinateur {
         }
     }
 
-    public void insert(Connection c) throws SQLException {
+    public void insert(Connection c, Ordinateur o) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         String query = "INSERT INTO composant_ordinateur(id_composant,id_ordinateur) VALUES (?, ?)";
@@ -92,7 +89,7 @@ public class ComposantOrdinateur {
 
             prstm = c.prepareStatement(query);
             prstm.setInt(1, this.getComposant().getIdComposant());
-            prstm.setInt(2, this.getOrdinateur().getIdOrdinateur());
+            prstm.setInt(2, o.getIdOrdinateur());
             
             prstm.executeUpdate();
 
@@ -123,16 +120,5 @@ public class ComposantOrdinateur {
 
     public void setIdComposantOrdinateur(int idComposantOrdinateur) {
         this.idComposantOrdinateur = idComposantOrdinateur;
-    }
-    public Ordinateur getOrdinateur() {
-        return ordinateur;
-    }
-
-    public void setOrdinateur(Connection c,int ordinateur) throws SQLException{
-        this.ordinateur = new Ordinateur().getById(c, ordinateur);
-    }
-
-    public void setOrdinateur(Ordinateur o){
-        this.ordinateur = o;
     }
 }

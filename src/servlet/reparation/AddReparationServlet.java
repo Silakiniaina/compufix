@@ -14,7 +14,7 @@ import model.ordinateur.Ordinateur;
 import model.reparation.TypeReparation;
 import model.technicien.Technicien;
 
-@WebServlet("/reparation/add")
+@WebServlet("/reparations/add")
 public class AddReparationServlet extends HttpServlet{
 
     @Override
@@ -35,8 +35,9 @@ public class AddReparationServlet extends HttpServlet{
                 req.setAttribute("ordinateur", o);
                 req.setAttribute("types", types);
                 req.setAttribute("techniciens", techniciens);
-                
+
                 req.setAttribute("pageUrl", "/WEB-INF/views/reparation/addReparation.jsp");
+                req.setAttribute("jsFile", "addReparation.js");
                 req.getRequestDispatcher("/WEB-INF/views/shared/layout.jsp").forward(req, resp);
             }
 
