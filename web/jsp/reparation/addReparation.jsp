@@ -1,7 +1,7 @@
 <%
     Ordinateur ordinateur = (Ordinateur)request.getAttribute("ordinateur");
     List<Technicien> techniciens = (List<Technicien>)request.getAttribute("techniciens");
-    List<TypeReparation> typeReparations = (List<TypeReparation>)request.getAttribute("typeReparations");
+    List<TypeReparation> types = (List<TypeReparation>)request.getAttribute("types");
 %>
 
 <div class="col-12">
@@ -28,7 +28,7 @@
                         <label>Type de réparation</label>
                         <select id="typeReparation" class="form-control" required>
                             <option value="">Sélectionner un type</option>
-                            <% for(TypeReparation type : typeReparations) { %>
+                            <% for(TypeReparation type : types) { %>
                                 <option value="<%= type.getIdTypeReparation() %>"><%= type.getNom() %></option>
                             <% } %>
                         </select>
