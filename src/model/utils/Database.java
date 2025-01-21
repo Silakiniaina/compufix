@@ -38,9 +38,6 @@ public class Database {
             if( isNewConnection != null && isNewConnection.booleanValue() == true){
                 c.close();
             }
-            else if( isNewConnection == null){
-                c.close();
-            }
         }
     }
 }

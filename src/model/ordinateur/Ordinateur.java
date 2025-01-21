@@ -47,6 +47,7 @@ public class Ordinateur {
                 ordi.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 ordi.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 ordi.setDescription(rs.getString("description"));
+                ordi.setClient(c, rs.getInt("id_client"));
                 ordi.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 ordi.setPrix(rs.getDouble("prix"));
                 results.add(ordi);
@@ -79,6 +80,7 @@ public class Ordinateur {
                 this.setIdOrdinateur(rs.getInt("id_ordinateur"));
                 this.setNomOrdinateur(rs.getString("nom_ordinateur"));
                 this.setDescription(rs.getString("description"));
+                this.setClient(c, rs.getInt("id_client"));
                 this.setTypeOrdinateur(c, rs.getInt("id_type_ordinateur"));
                 this.setPrix(rs.getDouble("prix"));
             }
@@ -94,7 +96,7 @@ public class Ordinateur {
     public void insert(Connection c)throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement prstm = null; 
-        String sql = "INSERT INTO ordinateur(nom_ordinateur, description,id_type_ordinateur) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO ordinateur(nom_ordinateur, description,id_type_ordinateur,id_client) VALUES(?, ?, ?, ?)";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -107,6 +109,7 @@ public class Ordinateur {
             prstm.setString(1, this.getNomOrdinateur());
             prstm.setString(2, this.getDescription());
             prstm.setInt(3, this.getTypeOrdinateur().getIdTypeOrdinateur());
+            prstm.setInt(4, this.getClient().getIdClient());
 
             prstm.executeUpdate();
 

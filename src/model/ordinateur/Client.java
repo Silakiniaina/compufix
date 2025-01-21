@@ -29,7 +29,7 @@ public class Client {
     }
 
     public Client getById(Connection c, int id)throws SQLException{
-        boolean isNewConnection = true;
+        boolean isNewConnection = false;
         PreparedStatement pr = null;
         ResultSet rs = null;
         String query= "SELECT * FROM client WHERE id_client=?";
