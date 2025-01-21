@@ -1,10 +1,12 @@
 let composantCounter = 0;
 
+
 // Validation function for selects
 function validateSelects() {
     const typeReparationSelect = document.getElementById('typeReparation');
     const technicienSelect = document.getElementById('technicien');
     const composantSelect = document.getElementById('composant');
+    const prixInput = document.getElementById('prix');
     
     if (!typeReparationSelect.value) {
         alert('Veuillez sélectionner un type de réparation');
@@ -18,6 +20,10 @@ function validateSelects() {
         alert('Veuillez sélectionner un composant');
         return false;
     }
+    if (!prixInput.value || prixInput.value <= 0) {
+        alert('Veuillez entrer un prix valide');
+        return false;
+    }
     return true;
 }
 
@@ -26,6 +32,7 @@ document.getElementById('addComposant').addEventListener('click', function() {
     const typeReparationSelect = document.getElementById('typeReparation');
     const technicienSelect = document.getElementById('technicien');
     const composantSelect = document.getElementById('composant');
+    const prixInput = document.getElementById('prix');
     
     // Validate selects before adding
     if (!validateSelects()) {
@@ -36,6 +43,7 @@ document.getElementById('addComposant').addEventListener('click', function() {
     const typeReparationText = typeReparationSelect.options[typeReparationSelect.selectedIndex].text;
     const technicienText = technicienSelect.options[technicienSelect.selectedIndex].text;
     const composantText = composantSelect.options[composantSelect.selectedIndex].text;
+    const prix = parseFloat(prixInput.value).toFixed(2);
 
     // Create list item
     const composantsList = document.getElementById('composantsList');
@@ -46,7 +54,7 @@ document.getElementById('addComposant').addEventListener('click', function() {
             <div>
                 <strong>${composantText}</strong><br>
                 <small class="text-muted">
-                    Type: ${typeReparationText} | Technicien: ${technicienText}
+                    Type: ${typeReparationText} | Technicien: ${technicienText} | Prix: ${prix} €
                 </small>
             </div>
             <button type="button" class="btn btn-danger btn-sm" onclick="removeComposant(this, ${composantCounter})">
@@ -59,16 +67,17 @@ document.getElementById('addComposant').addEventListener('click', function() {
     // Add hidden input
     const hiddenInputs = document.getElementById('hiddenInputs');
     hiddenInputs.innerHTML += `
-        <input type="hidden" name="composantReparation" value="${typeReparationSelect.value},${technicienSelect.value},${composantSelect.value}" data-index="${composantCounter}">
+        <input type="hidden" name="composantReparation" value="${typeReparationSelect.value},${technicienSelect.value},${composantSelect.value},${prix}" data-index="${composantCounter}">
     `;
 
     // Show preview if hidden
     document.getElementById('composantsPreview').style.display = 'block';
     
-    // Reset selects
+    // Reset inputs
     typeReparationSelect.value = '';
     technicienSelect.value = '';
     composantSelect.value = '';
+    prixInput.value = '';
     
     composantCounter++;
 });

@@ -35,7 +35,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label>Type de reparation</label>
                                 <select id="typeReparation" class="form-control">
                                     <option value="">Selectionner le type de reparation</option>
@@ -45,7 +45,7 @@
                                 </select>
                             </div>
                             
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label>Technicien</label>
                                 <select id="technicien" class="form-control">
                                     <option value="">Selectionner un technicien</option>
@@ -55,7 +55,7 @@
                                 </select>
                             </div>
                             
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label>Composant</label>
                                 <select id="composant" class="form-control">
                                     <option value="">Selectionner un composant</option>
@@ -65,6 +65,11 @@
                                         </option>
                                     <% } %>
                                 </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label>Prix</label>
+                                <input type="number" id="prix" class="form-control" min="0" step="0.01" placeholder="0.00">
                             </div>
                         </div>
 
