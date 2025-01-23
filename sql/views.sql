@@ -293,3 +293,18 @@ JOIN
     v_commission_technicien_composant vctc 
 ON r.id_reparation = vctc.id_reparation
 ;
+
+CREATE OR REPLACE VIEW v_commission_technicien_genre AS 
+  select 
+    g.id_genre,
+    count(id_reparation) as nombre_reparation,
+    sum(prix) as total_reparation,
+    sum(commission_technicien) as total_commission
+  from 
+    v_commission_technicien_complet v
+  JOIN technicien t 
+  ON t.id_technicien = v.id_technicien 
+  JOIN genre g 
+  ON g.id_genre = t.id_genre
+  GROUP BY g.id_genre
+ ;

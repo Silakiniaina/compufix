@@ -15,8 +15,8 @@ public class Genre {
 
 /// CRUD Operations
 
-    public List<Genre> getAll()throws Exception{
-        Connection c =null;
+    public List<Genre> getAll(Connection c)throws Exception{
+        boolean isNewConnection = false;
         PreparedStatement pr = null;
         ResultSet rs = null;
         List<Genre> result = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Genre {
         }
     }
 
-    public Genre getById(int id)throws Exception{
+    public Genre getById(Connection c,int id)throws Exception{
         Connection c =null;
         PreparedStatement pr = null;
         ResultSet rs = null;
