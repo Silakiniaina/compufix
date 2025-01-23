@@ -70,12 +70,14 @@ public class AddReparationServlet extends HttpServlet{
                     ComposantOrdinateur co = new ComposantOrdinateur().getById(c, Integer.parseInt(split[2]));
                     TypeReparation tr = new TypeReparation().getById(c, Integer.parseInt(split[0]));
                     Technicien t = new Technicien().getById(c, Integer.parseInt(split[1]));
+                    double prix = Double.parseDouble(split[3]);
 
 
                     cr.setReparation(r);
                     cr.setComposantOrdinateur(co);
                     cr.setTypeReparation(tr);
                     cr.setTechnicien(t);
+                    cr.setPrix(prix);
 
                     r.getComposants().add(cr);
                 }

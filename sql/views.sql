@@ -267,3 +267,29 @@ GROUP BY
     rr.prix_total,
     o.id_ordinateur,
     o.id_client;
+
+-- view commission technicien : 
+CREATE OR REPLACE VIEW v_commission_technicien_composant AS
+SELECT 
+    cr.id_reparation,
+    cr.id_technicien,
+    cr.id_type_reparation,
+    cr.id_composant_ordinateur,
+    cr.prix,
+    (cr.prix * 0.05) AS commission_technicien 
+FROM 
+    composant_reparation cr;
+
+CREATE OR REPLACE VIEW v_commission_technicien_complet AS
+SELECT 
+    r.id_reparation,
+    r.date_reparation,
+    vctc.id_technicien,
+    vctc.prix,
+    vctc.commission_technicien
+FROM 
+    reparation r
+JOIN 
+    v_commission_technicien_composant vctc 
+ON r.id_reparation = vctc.id_reparation
+;

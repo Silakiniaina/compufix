@@ -16,11 +16,12 @@ public class ComposantReparation {
     private TypeReparation typeReparation;
     private Technicien technicien;
     private ComposantOrdinateur composantOrdinateur;
+    private double prix;
 
     public void insert(Connection c, Reparation r) throws SQLException {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String query = "INSERT INTO composant_reparation(id_reparation,id_technicien,id_type_reparation, id_composant_ordinateur) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO composant_reparation(id_reparation,id_technicien,id_type_reparation, id_composant_ordinateur,prix) VALUES (?, ?, ?, ?, ?)";
         
         try {
             if(c == null){
@@ -34,7 +35,7 @@ public class ComposantReparation {
             prstm.setInt(2, this.getTechnicien().getIdTechnicien());
             prstm.setInt(3, this.getTypeReparation().getIdTypeReparation());
             prstm.setInt(4, this.getComposantOrdinateur().getIdComposantOrdinateur());
-            
+            prstm.setDouble(5, this.getPrix());
             prstm.executeUpdate();
 
             c.commit();
@@ -89,5 +90,13 @@ public class ComposantReparation {
     }
     public void setComposantOrdinateur(Connection c, int composantOrdinateur) throws SQLException{
         this.composantOrdinateur = new ComposantOrdinateur().getById(c, composantOrdinateur);
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
     }
 }
