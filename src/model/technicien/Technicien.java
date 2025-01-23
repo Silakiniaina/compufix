@@ -35,6 +35,7 @@ public class Technicien {
                 Technicien g = new Technicien();
                 g.setIdTechnicien(rs.getInt("id_technicien"));
                 g.setNomTechnicien(rs.getString("nom_technicien"));
+                g.setGenre(c, rs.getInt("id_genre"));
                 result.add(g);
 
             }
@@ -63,6 +64,7 @@ public class Technicien {
             if(rs.next()) {
                 this.setIdTechnicien(rs.getInt("id_technicien"));
                 this.setNomTechnicien(rs.getString("nom_technicien"));
+                this.setGenre(c, rs.getInt("id_genre"));
             }
             return this;
         } catch (SQLException e) {
@@ -108,7 +110,72 @@ public class Technicien {
         }
     }
     
+    public void delete(Connection c) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String sql = "DELETE FROM technicien WHERE id_technicien = ?";
+    
+        try {
+            // Check if the connection is provided
+            if (c == null) {
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false); // Start transaction
+    
+            // Prepare the SQL statement
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, this.getIdTechnicien());
+    
+            // Execute the query
+            prstm.executeUpdate();
+    
+            c.commit(); // Commit the transaction
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback(); // Rollback in case of an error
+            }
+            throw e; // Re-throw the exception
+        } finally {
+            // Close resources
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
 
+    public void update(Connection c) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String sql = "UPDATE technicien SET nom_technicien = ?, id_genre = ? WHERE id_technicien = ?";
+    
+        try {
+            // Check if the connection is provided
+            if (c == null) {
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false); // Start transaction
+    
+            // Prepare the SQL statement
+            prstm = c.prepareStatement(sql);
+            prstm.setString(1, this.getNomTechnicien());
+            prstm.setInt(2, this.getGenre().getIdGenre());
+            prstm.setInt(3, this.getIdTechnicien());
+    
+            // Execute the query
+            prstm.executeUpdate();
+    
+            c.commit(); // Commit the transaction
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback(); // Rollback in case of an error
+            }
+            throw e; // Re-throw the exception
+        } finally {
+            // Close resources
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+    
     public int getIdTechnicien() {
         return idTechnicien;
     }
