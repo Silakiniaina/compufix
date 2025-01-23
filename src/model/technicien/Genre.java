@@ -3,6 +3,7 @@ package model.technicien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +16,18 @@ public class Genre {
 
 /// CRUD Operations
 
-    public List<Genre> getAll(Connection c)throws Exception{
+    public List<Genre> getAll(Connection c)throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement pr = null;
         ResultSet rs = null;
         List<Genre> result = new ArrayList<>();
         String query= "SELECT * FROM Genre ";
         try {
-            c = Database.getConnection();
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
             pr= c.prepareStatement(query);
             rs= pr.executeQuery();
 
@@ -34,28 +39,23 @@ public class Genre {
 
             }
             return result;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         } finally{
-            if (rs != null) {
-                rs.close();
-            }
-            if (pr != null) {
-                pr.close();
-            }
-            if (c != null) {
-                c.close();
-            }
+            Database.closeRessources(rs, pr, c, Boolean.valueOf(isNewConnection));
         }
     }
 
-    public Genre getById(Connection c,int id)throws Exception{
-        Connection c =null;
+    public Genre getById(Connection c,int id)throws SQLException{
+        boolean isNewConnection = false;
         PreparedStatement pr = null;
         ResultSet rs = null;
         String query= "SELECT * FROM Genre WHERE id_genre=?";
         try {
-            c = Database.getConnection();
+            if(c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
             pr= c.prepareStatement(query);
             pr.setInt(1, id);
             rs= pr.executeQuery();
@@ -65,18 +65,10 @@ public class Genre {
                 this.setNomGenre(rs.getString("label"));
             }
             return this;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         } finally{
-            if (rs != null) {
-                rs.close();
-            }
-            if (pr != null) {
-                pr.close();
-            }
-            if (c != null) {
-                c.close();
-            }
+           Database.closeRessources(rs, pr, c, Boolean.valueOf(isNewConnection));
         }
     }
 

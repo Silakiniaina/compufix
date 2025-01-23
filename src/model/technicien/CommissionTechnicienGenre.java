@@ -1,7 +1,13 @@
 package model.technicien;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.utils.Database;
 
 public class CommissionTechnicienGenre {
     
@@ -10,7 +16,55 @@ public class CommissionTechnicienGenre {
     private double totalReparation;
     private double totalCommission;
 
-/// SETTERS
+/// CRUD Operation
+
+    public List<CommissionTechnicienGenre> getAllCommissionsGenre(Connection c, CommissionGenreFilter filter)throws SQLException{
+        List<CommissionTechnicienGenre> results = new ArrayList<>();
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = filter != null ? filter.getQuery() : "SELECT * FROM v_commission_technicien_genre";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            int idArg = 1;
+            if(filter != null){
+                if(filter.getDebut() != null){
+                    prstm.setDate( idArg, filter.getDebut());
+                    idArg++;
+                }
+                if(filter.getFin() != null){
+                    prstm.setDate( idArg, filter.getFin());
+                    idArg++;
+                }
+                if(filter.getGenre() != null){
+                    prstm.setInt(idArg, filter.getGenre().getIdGenre());
+                    idArg++;
+                }
+            }
+
+            rs = prstm.executeQuery();
+            while(rs.next()){
+                CommissionTechnicienGenre commission = new CommissionTechnicienGenre();
+                commission.setGenre(c, rs.getInt("id_genre"));
+                commission.setTotalReparation(rs.getDouble("total_reparation"));
+                commission.setTotalCommission(rs.getDouble("total_commission"));
+                commission.setNombreReparation(rs.getInt("nombre_reparation"));
+
+                results.add(commission);
+            }
+
+            return results;
+        } catch (SQLException e) {
+            throw e;
+        } finally{
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
 
 /// GETTERS AND SETTERS
     public Genre getGenre() {
