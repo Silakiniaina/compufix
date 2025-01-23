@@ -163,6 +163,12 @@
                 </a>
             </li>
             <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/technicien/list">
+                  <i class="fe fe-list fe-16"></i>
+                  <span class="ml-3 item-text">List</span>
+                </a>
+            </li>
+            <li class="nav-item w-100">
                 <a class="nav-link" href="<%= request.getContextPath() %>/techniciens/commission">
                   <i class="fe fe-trending-up fe-16"></i>
                   <span class="ml-3 item-text">Commissions</span>

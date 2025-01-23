@@ -29,8 +29,8 @@ public class AddTechnicienServlet extends HttpServlet {
                 int id = Integer.parseInt(req.getParameter("id"));
                 Technicien t = new Technicien().getById(c, id); // Assuming you have a getById method in Technicien
                 if (mode.equals("d")) {
-                    //t.delete(c); // Assuming you have a delete method in Technicien
-                    //resp.sendRedirect(req.getContextPath() + "/technicien/list");
+                    t.delete(c); // Assuming you have a delete method in Technicien
+                    resp.sendRedirect(req.getContextPath() + "/technicien/list");
                 } else if (mode.equals("u")) {
                     req.setAttribute("updated", t);
                 }
@@ -59,13 +59,13 @@ public class AddTechnicienServlet extends HttpServlet {
             if (mode != null && mode.equals("u")) {
                 int id = Integer.parseInt(req.getParameter("id"));
                 technicien.setIdTechnicien(id);
-                //technicien.update(c); // Assuming you have an update method in Technicien
+                technicien.update(c); // Assuming you have an update method in Technicien
             } else {
                 technicien.insert(c);
             }
 
             String success = "Technicien ajouté avec succès";
-            resp.sendRedirect(req.getContextPath() + "/technicien/add?success=" + success);
+            resp.sendRedirect(req.getContextPath() + "/technicien/list?success=" + success);
         } catch (Exception e) {
             e.printStackTrace(out);
         }
