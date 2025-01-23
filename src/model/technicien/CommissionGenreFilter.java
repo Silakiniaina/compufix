@@ -1,6 +1,8 @@
 package model.technicien;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class CommissionGenreFilter {
     
@@ -66,4 +68,9 @@ public class CommissionGenreFilter {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
+
+    public void setGenre(Connection c, int genre) throws SQLException{
+        this.genre = new Genre().getById(c, genre);
+    }
 }
+
