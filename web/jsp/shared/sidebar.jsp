@@ -157,9 +157,21 @@
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/technicien/add">
+                  <i class="fe fe-plus fe-16"></i>
+                  <span class="ml-3 item-text">Add</span>
+                </a>
+            </li>
+            <li class="nav-item w-100">
                 <a class="nav-link" href="<%= request.getContextPath() %>/techniciens/commission">
                   <i class="fe fe-trending-up fe-16"></i>
                   <span class="ml-3 item-text">Commissions</span>
+                </a>
+            </li>
+            <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/techniciens/commission-genre">
+                  <i class="fe fe-list fe-16"></i>
+                  <span class="ml-3 item-text">Commissions Genre</span>
                 </a>
             </li>
         </ul>

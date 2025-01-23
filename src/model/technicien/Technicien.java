@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,9 @@ public class Technicien {
     
     private int idTechnicien;
     private String nomTechnicien;
+    private Genre genre;
 
-/// CRUD Operations
+    /// CRUD Operations
     public List<Technicien> getAll(Connection c)throws SQLException{  
         boolean isNewConnection = false;
         PreparedStatement pr = null;
@@ -70,6 +72,43 @@ public class Technicien {
         }
     }
 
+    public void insert(Connection c) throws SQLException {
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null;
+        String sql = "INSERT INTO technicien (nom_technicien, id_genre) VALUES (?, ?)";
+
+        try {
+            // Check if the connection is provided
+            if (c == null) {
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            c.setAutoCommit(false); 
+            prstm = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            prstm.setString(1, this.getNomTechnicien());
+            prstm.setInt(2, this.getGenre().getIdGenre());
+
+            prstm.executeUpdate();
+
+            try (ResultSet generatedKeys = prstm.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    this.setIdTechnicien(generatedKeys.getInt(1)); 
+                }
+            }
+
+            c.commit();
+        } catch (SQLException e) {
+            if (c != null) {
+                c.rollback(); 
+            }
+            throw e; 
+        } finally {
+            // Close resources
+            Database.closeRessources(null, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+    
+
     public int getIdTechnicien() {
         return idTechnicien;
     }
@@ -81,5 +120,15 @@ public class Technicien {
     }
     public void setNomTechnicien(String nomTechnicien) {
         this.nomTechnicien = nomTechnicien;
+    }
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+    public void setGenre(Connection c, int genre)throws SQLException {
+        this.genre = new Genre().getById(c, genre);
     }
 }
