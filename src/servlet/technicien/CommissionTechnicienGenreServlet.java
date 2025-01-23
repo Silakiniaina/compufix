@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.technicien.CommissionGenreFilter;
 import model.technicien.CommissionTechnicienGenre;
+import model.technicien.Genre;
 
 @WebServlet("/techniciens/commission-genre")
 public class CommissionTechnicienGenreServlet extends HttpServlet {
@@ -27,6 +28,8 @@ public class CommissionTechnicienGenreServlet extends HttpServlet {
 
         try {
             Connection c = (Connection) req.getSession().getAttribute("connexion");
+
+            List<Genre> genres = new Genre().getAll(c);
 
             CommissionGenreFilter filter = null;
 
@@ -53,6 +56,7 @@ public class CommissionTechnicienGenreServlet extends HttpServlet {
 
             // Set attributes for the JSP
             req.setAttribute("commissions", commissions);
+            req.setAttribute("genres", genres);
             req.setAttribute("pageUrl", "/WEB-INF/views/technicien/listeCommissionsGenre.jsp");
 
             // Forward to layout.jsp
