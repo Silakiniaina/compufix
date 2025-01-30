@@ -124,7 +124,7 @@ public class Composant {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM composant";
+        String query = "SELECT * FROM v_composant_complet";
         try {
             if( c == null){
                 c = Database.getConnection();
@@ -152,7 +152,7 @@ public class Composant {
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM composant WHERE id_composant = ?";
+        String query = "SELECT * FROM v_composant_complet WHERE id_composant = ?";
         try {
             if( c == null){
                 c = Database.getConnection();

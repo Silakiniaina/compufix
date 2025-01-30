@@ -1,6 +1,5 @@
 let composantCounter = 0;
 
-
 // Validation function for selects
 function validateSelects() {
     const typeReparationSelect = document.getElementById('typeReparation');
@@ -21,11 +20,29 @@ function validateSelects() {
         return false;
     }
     if (!prixInput.value || prixInput.value <= 0) {
-        alert('Veuillez entrer un prix valide');
-        return false;
+        if (!prixInput.disabled) { // Only validate prix if it's not disabled
+            alert('Veuillez entrer un prix valide');
+            return false;
+        }
     }
     return true;
 }
+
+// Function to handle typeReparation change
+function handleTypeReparationChange() {
+    const typeReparationSelect = document.getElementById('typeReparation');
+    const prixInput = document.getElementById('prix');
+
+    if (typeReparationSelect.value == "1") { 
+        prixInput.disabled = true; 
+        prixInput.value = ""; 
+    } else {
+        prixInput.disabled = false; 
+    }
+}
+
+// Add event listener to typeReparationSelect to handle changes
+document.getElementById('typeReparation').addEventListener('change', handleTypeReparationChange);
 
 // Ajout d'un composant
 document.getElementById('addComposant').addEventListener('click', function() {
@@ -78,6 +95,7 @@ document.getElementById('addComposant').addEventListener('click', function() {
     technicienSelect.value = '';
     composantSelect.value = '';
     prixInput.value = '';
+    prixInput.disabled = false; // Re-enable prix input after adding
     
     composantCounter++;
 });
@@ -108,3 +126,6 @@ document.getElementById('reparationForm').addEventListener('submit', function(e)
         alert('Veuillez ajouter au moins un composant à réparer');
     }
 });
+
+// Call handleTypeReparationChange initially to set the correct state of prixInput
+handleTypeReparationChange();
