@@ -22,8 +22,9 @@ public class Reparation {
     private Ordinateur ordinateur;
     private List<ComposantReparation> composants;
     private boolean returned;
+    private double prixTotal;
 
-/// Constructor
+    /// Constructor
     public Reparation(){
         this.setComposants(new ArrayList<ComposantReparation>());
     }
@@ -52,6 +53,7 @@ public class Reparation {
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 r.setComposants(r.getComposants(c));
                 r.setReturned(rs.getBoolean("est_retourne"));
+                r.getPrixTotal(c);
                 results.add(r);
             }
             return results;   
@@ -84,6 +86,7 @@ public class Reparation {
                 this.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 this.setReturned(rs.getBoolean("est_retourne"));
                 this.setComposants(this.getComposants(c));
+                this.getPrixTotal(c);
                 return this;
             }
 
@@ -119,6 +122,7 @@ public class Reparation {
                 r.setOrdinateur(c, rs.getInt("id_ordinateur"));
                 r.setReturned(rs.getBoolean("est_retourne"));
                 r.setComposants(r.getComposants(c));
+                r.getPrixTotal(c);
                 results.add(r);
             }
             return results;   
@@ -213,6 +217,33 @@ public class Reparation {
         }
     }
 
+    public void getPrixTotal(Connection c)throws SQLException{
+        double prix = 0;
+        boolean isNewConnection = false;
+        PreparedStatement prstm = null; 
+        ResultSet rs = null; 
+        String sql = "SELECT id_reparation,SUM(prix) AS prix_total FROM composant_reparation WHERE id_reparation = ? GROUP BY id_reparation";
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+
+            prstm = c.prepareStatement(sql);
+            prstm.setInt(1, this.getIdReparation());
+            
+            rs = prstm.executeQuery();
+
+            if(rs.next()){
+                this.setPrixTotal(rs.getDouble("prix_total"));
+            }  
+        } catch (SQLException e) {
+            throw e;
+        } finally{
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+    }
+
     public int getIdReparation() {
         return idReparation;
     }
@@ -257,5 +288,13 @@ public class Reparation {
 
     public void setReturned(boolean returned) {
         this.returned = returned;
+    }
+
+    public double getPrixTotal() {
+        return prixTotal;
+    }
+
+    public void setPrixTotal(double prixTotal) {
+        this.prixTotal = prixTotal;
     }
 }

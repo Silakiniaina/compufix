@@ -46,6 +46,7 @@
                             <th>Date</th>
                             <th>Ordinateur</th>
                             <th>Problemes</th>
+                            <th>Prix Total</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,6 +66,9 @@
                                     <% for(TypeComposant t : reparation.getTypeComposants()){ %>
                                     <%= t.getNomTypeComposant() %> ,   
                                     <% } %>
+                                </td>
+                                <td>
+                                    <%= reparation.getPrixTotal() %>
                                 </td>
                                 <td class="text-center"> 
                                     <a href="<%= request.getContextPath() %>/reparation/retour/add?reparation=<%= reparation.getIdReparation() %>" 
