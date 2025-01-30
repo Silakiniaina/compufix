@@ -7,6 +7,7 @@
     <title>CompuFix</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/simplebar.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/feather.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/loader.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/daterangepicker.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/app-light.css" id="lightTheme" disabled>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/app-dark.css" id="darkTheme">

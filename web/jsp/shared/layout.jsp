@@ -1,5 +1,8 @@
 <%@ include file="head.jsp" %>
 <body class="vertical dark">
+    <div class="loader-container" id="loaderContainer">
+        <div class="loader"></div>
+    </div>
     <div class="wrapper">
         <%@ include file="navbar.jsp" %>
         <%@ include file="sidebar.jsp" %>
