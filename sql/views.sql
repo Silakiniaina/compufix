@@ -149,58 +149,6 @@ FROM
     LEFT JOIN sorties_filtrees sf ON c.id_composant = sf.id_composant
     LEFT JOIN sorties_actuelles sa ON c.id_composant = sa.id_composant;
 
--- CREATE
--- OR REPLACE VIEW v_installation_ram AS
--- SELECT
---     c.*,
---     r.id_ram,
---     r.est_portable,
---     r.id_type_ram,
---     cmu.id_carte_mere,
---     cmu.type_slot,
---     cmu.date_installation,
---     co.id_ordinateur
--- FROM
---     ram r
---     JOIN composant c ON r.id_composant = c.id_composant
---     JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
---     JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
-
--- CREATE
--- OR REPLACE VIEW v_installation_processeur AS
--- SELECT
---     c.*,
---     p.id_processeur,
---     p.id_type_processeur,
---     p.nombre_coeur,
---     p.generation,
---     cmu.id_carte_mere,
---     cmu.type_slot,
---     cmu.date_installation,
---     co.id_ordinateur
--- FROM
---     processeur p
---     JOIN composant c ON p.id_composant = c.id_composant
---     JOIN carte_mere_utilisation cmu ON p.id_composant = cmu.id_composant
---     JOIN composant_ordinateur co ON c.id_composant = co.id_composant;
-
--- CREATE
--- OR REPLACE VIEW v_installation_disque AS
--- SELECT
---     c.*,
---     r.id_disque_dur,
---     r.est_portable,
---     r.id_type_disque,
---     cmu.id_carte_mere,
---     cmu.type_slot,
---     cmu.date_installation,
---     co.id_ordinateur
--- FROM
---     disque_dur r
---     JOIN composant c ON r.id_composant = c.id_composant
---     JOIN carte_mere_utilisation cmu ON r.id_composant = cmu.id_composant
---     JOIN composant_ordinateur co ON r.id_composant = co.id_composant;
-
 CREATE
 OR REPLACE VIEW v_composant_ordinateur AS
 SELECT
@@ -323,3 +271,22 @@ CREATE OR REPLACE VIEW v_commission_technicien_genre AS
   ON g.id_genre = t.id_genre
   GROUP BY g.id_genre
  ;
+
+ CREATE OR REPLACE VIEW v_composant_complet AS 
+	SELECT 
+    c.*,
+    COALESCE(
+        (SELECT hpc.nouveau_prix
+         FROM historique_prix_composant hpc
+         WHERE hpc.id_composant = c.id_composant
+           AND hpc.date_modification <= CURRENT_DATE
+         ORDER BY hpc.date_modification DESC
+         LIMIT 1),
+        (SELECT hpc.nouveau_prix
+         FROM historique_prix_composant hpc
+         WHERE hpc.id_composant = c.id_composant
+         ORDER BY hpc.date_modification DESC
+         LIMIT 1)
+    ,c.prix_unitaire) AS prix_actuel
+FROM 
+    composant c;
