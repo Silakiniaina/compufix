@@ -15,7 +15,6 @@ public class Retour {
     private int idRetour;
     private Date dateRetour;
     private Reparation reparation; 
-    private double prixTotal;
 
 /// CRUD Operation
     public List<Retour> getAllWithFilter(Connection c, RetourFilter filter) throws SQLException{
@@ -54,7 +53,6 @@ public class Retour {
                 Retour r = new Retour(); 
                 r.setIdRetour(rs.getInt("id_retour_reparation"));
                 r.setReparation(c, rs.getInt("id_reparation"));
-                r.setPrixTotal(rs.getDouble("prix_total"));
                 r.setDateRetour(rs.getDate("date_retour"));
 
                 results.add(r);
@@ -71,7 +69,7 @@ public class Retour {
     public void insert(Connection c)throws SQLException{
         boolean isNewConnection = false;
         PreparedStatement prstm = null;
-        String sql = "INSERT INTO retour_reparation (id_reparation, date_retour, prix_total) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO retour_reparation (id_reparation, date_retour) VALUES(?, ?)";
         try {
             if ( c == null){
                 c = Database.getConnection();
@@ -83,7 +81,6 @@ public class Retour {
             prstm = c.prepareStatement(sql);
             prstm.setInt(1, this.getReparation().getIdReparation());
             prstm.setDate(2, this.getDateRetour());
-            prstm.setDouble(3, this.getPrixTotal());
 
             prstm.executeUpdate();
             c.commit();
@@ -102,9 +99,6 @@ public class Retour {
     public Reparation getReparation() {
         return reparation;
     }
-    public double getPrixTotal() {
-        return prixTotal;
-    }
     public Date getDateRetour() {
         return dateRetour;
     }
@@ -120,8 +114,5 @@ public class Retour {
     }
     public void setReparation(Connection c, int reparation) throws SQLException{
         this.reparation = new Reparation().getById(c, reparation);
-    }
-    public void setPrixTotal(double prixTotal) {
-        this.prixTotal = prixTotal;
     }
 }

@@ -82,7 +82,6 @@
                             <th>Client</th>
                             <th>Type Ordinateur</th>
                             <th>Problemes</th>
-                            <th>Prix Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,9 +106,6 @@
                                     <% for(TypeComposant t : retour.getReparation().getTypeComposants()){ %>
                                     <%= t.getNomTypeComposant() %> ,   
                                     <% } %>
-                                </td>
-                                <td>
-                                    <%= retour.getPrixTotal() %>
                                 </td>
                             </tr>
                         <% } %>

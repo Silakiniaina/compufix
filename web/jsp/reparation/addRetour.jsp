@@ -12,10 +12,6 @@
                     <label for="dateRetour">Date</label>
                     <input type="date" name="date" class="form-control" id="dateRetour" placeholder="Nom Ordinateur" required>
                 </div>
-                <div class="form-group">
-                    <label for="prixTotal">Prix Total</label>
-                    <input type="number" name="prix" min="1" class="form-control" id="prixTotal" placeholder="Nom Ordinateur" required>
-                </div>
                 <button type="submit" class="btn btn-primary">Ajouter</button>
             </form>
         </div>

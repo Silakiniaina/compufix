@@ -28,13 +28,11 @@ public class AddRetourServlet extends HttpServlet{
                 Connection c = (Connection)req.getSession().getAttribute("connexion");
                 int idReparation = Integer.parseInt(idReparationStr);
                 Reparation r = new Reparation().getById(c, idReparation);
-                double prix = Double.parseDouble(req.getParameter("prix"));
                 Date date = Date.valueOf(LocalDate.parse(req.getParameter("date")));
 
                 Retour retour = new Retour();
                 retour.setReparation(r);
                 retour.setDateRetour(date);
-                retour.setPrixTotal(prix);
 
                 retour.insert(c);
 
