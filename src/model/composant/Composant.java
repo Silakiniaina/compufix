@@ -1,6 +1,7 @@
 package model.composant;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -174,6 +175,38 @@ public class Composant {
         } finally {
             Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
         }
+    }
+
+    public double getPUDate(Connection c, Date d) throws SQLException{
+        boolean isNewConnection = false;
+        double price = this.getPrixUnitaire();
+        String query = "SELECT nouveau_prix " +
+                       "FROM historique_prix_composant " +
+                       "WHERE id_composant = ? AND date_modification <= ? " +
+                       "ORDER BY date_modification DESC " +
+                       "LIMIT 1";
+        PreparedStatement prstm = null;
+        ResultSet rs = null;
+        try {
+            if( c == null){
+                c = Database.getConnection();
+                isNewConnection = true;
+            }
+            prstm = c.prepareStatement(query);
+            prstm.setInt(1, this.getIdComposant());
+            prstm.setDate(2, d); 
+
+            rs = prstm.executeQuery();
+            if(rs.next()){
+                price = rs.getDouble("nouveau_prix"); 
+            }
+
+        } catch (SQLException e) {
+            throw e;
+        } finally{
+            Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
+        }
+        return price;
     }
 
 /// Utils

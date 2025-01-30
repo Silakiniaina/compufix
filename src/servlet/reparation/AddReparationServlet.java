@@ -63,6 +63,7 @@ public class AddReparationServlet extends HttpServlet{
             Connection c = (Connection)req.getSession().getAttribute("connexion");
             String[] composants = req.getParameterValues("composantReparation");
             Reparation r = new Reparation();
+            Date d = Date.valueOf(LocalDate.parse(dateStr));
             if(composants != null && composants.length > 0){
                 for(String st : composants){
                     String[] split = st.split(",");
@@ -77,7 +78,11 @@ public class AddReparationServlet extends HttpServlet{
                     cr.setComposantOrdinateur(co);
                     cr.setTypeReparation(tr);
                     cr.setTechnicien(t);
-                    cr.setPrix(prix);
+                    if(cr.getTypeReparation().getNomTypeReparation().equals("Remplacement")){
+                        cr.setPrix(co.getComposant().getPUDate(c, d));
+                    }else{ 
+                        cr.setPrix(prix);
+                    }   
 
                     r.getComposants().add(cr);
                 }
