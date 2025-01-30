@@ -57,9 +57,6 @@ public class AddHistoriquePrixComposantServlet extends HttpServlet {
             historique.setComposant(composant);
             
             historique.insert(c);
-            composant.setPrixUnitaire(nouveauPrix);
-            composant.update(c);
-
             String success = "Historique de prix ajout&eacute; avec succès!";
             resp.sendRedirect(req.getContextPath() + "/composant/historique-prix?idComposant=" + idComposant + "&success=" + success);
         } catch (Exception e) {
