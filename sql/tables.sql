@@ -174,3 +174,13 @@ CREATE TABLE retour(
    PRIMARY KEY(id_retour),
    FOREIGN KEY(id_reparation) REFERENCES reparation(id_reparation)
 );
+
+CREATE TABLE historique_prix_composant(
+   id_historique SERIAL,
+   date_modification DATE DEFAULT NOW() ,
+   ancien_prix NUMERIC(18,2)   NOT NULL CHECK(ancien_prix >= 0),
+   nouveau_prix NUMERIC(18,2)   NOT NULL CHECK(nouveau_prix >= 0),
+   id_composant INTEGER NOT NULL,
+   PRIMARY KEY(id_historique),
+   FOREIGN KEY(id_composant) REFERENCES composant(id_composant)
+);

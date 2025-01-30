@@ -33,9 +33,16 @@
                 </a>
             </li>
             <li class="nav-item w-100">
-                <a class="nav-link" href="<%= request.getContextPath() %>/composant/recommandations">
+                <a class="nav-link" href="<%= request.getContextPath() %>/composant/update-prix">
                   <i class="fe fe-cpu fe-16"></i>
                   <span class="ml-3 item-text">Recommandation</span>
+                  <span class="badge badge-pill badge-primary">New</span>
+                </a>
+            </li>
+            <li class="nav-item w-100">
+                <a class="nav-link" href="<%= request.getContextPath() %>/composant/historique-prix">
+                  <i class="fe fe-cpu fe-16"></i>
+                  <span class="ml-3 item-text">Historique Prix</span>
                   <span class="badge badge-pill badge-primary">New</span>
                 </a>
             </li>

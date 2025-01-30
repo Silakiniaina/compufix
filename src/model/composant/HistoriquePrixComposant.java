@@ -53,7 +53,7 @@ public class HistoriquePrixComposant {
         List<HistoriquePrixComposant> historiques = new ArrayList<HistoriquePrixComposant>();
         ResultSet rs = null; 
         PreparedStatement prstm = null;
-        String query  = filter.getQuery();
+        String query  = filter != null ? filter.getQuery() : "SELECT * FROM historique_prix_composant";
         try {
             if(c == null){
                 c = Database.getConnection();
@@ -78,7 +78,7 @@ public class HistoriquePrixComposant {
             Database.closeRessources(rs, prstm, c, Boolean.valueOf(isNewConnection));
         }
     }
-    
+
 /// GETTERS SETTERS
     public int getIdHistorique() {
         return idHistorique;

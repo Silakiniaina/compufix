@@ -44,7 +44,6 @@ public class Composant {
                     this.setIdComposant(generatedKeys.getInt(1));
                 }
             }
-
             c.commit();
         }catch(SQLException e){
             c.rollback();
@@ -82,6 +81,8 @@ public class Composant {
                 throw new SQLException(
                         "Mise a jour echoue : le composant ID : " + this.getIdComposant() + " non trouve");
             }
+
+            c.commit();
         }catch(SQLException e){
             c.rollback();
             throw e;
@@ -182,6 +183,8 @@ public class Composant {
             result = "Go";
         }else if(this.getTypeComposant().getNomTypeComposant().contains("Processeur") || this.getTypeComposant().getNomTypeComposant().contains("Ecran")){
             result = "Hz";
+        }else{
+            result="Go";
         }
         return result;
     }

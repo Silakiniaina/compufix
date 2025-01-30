@@ -31,8 +31,11 @@
                                 <td><%= composant.getCapacite() %> <%= composant.getUnite() %></td>
                                 <td><%= composant.getPrixUnitaire() %></td>
                                 <td class="text-center"> 
-                                    <a href="<%= request.getContextPath() %>/composant/recommandations/add?composant=<%= composant.getIdComposant() %>" type="button" class="btn btn-sm btn-info mx-1">
+                                    <%-- <a href="<%= request.getContextPath() %>/composant/recommandations/add?composant=<%= composant.getIdComposant() %>" type="button" class="btn btn-sm btn-info mx-1">
                                         Recommander
+                                    </a> --%>
+                                    <a href="<%= request.getContextPath() %>/composant/update-prix?composant=<%= composant.getIdComposant() %>" type="button" class="btn btn-sm btn-info mx-1">
+                                        Update prix
                                     </a>
                                     <%-- <a href="<%= request.getContextPath() %>/composant/add?mode=u&id=<%= composant.getIdComposant() %>" type="button" class="btn btn-sm btn-primary mx-1"> 
                                         <span class="fe fe-book fe-16"></span>
