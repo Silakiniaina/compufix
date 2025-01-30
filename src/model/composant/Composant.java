@@ -139,7 +139,7 @@ public class Composant {
                 r.setIdComposant(rs.getInt("id_composant"));
                 r.setNomComposant(rs.getString("nom_composant"));
                 r.setCapacite(rs.getDouble("capacite"));
-                r.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                r.setPrixUnitaire(rs.getDouble("prix_actuel"));
                 r.setTypeComposant(c, rs.getInt("id_type_composant"));
                 results.add(r);
             }
@@ -167,7 +167,7 @@ public class Composant {
                 this.setIdComposant(rs.getInt("id_composant"));
                 this.setNomComposant(rs.getString("nom_composant"));
                 this.setCapacite(rs.getDouble("capacite"));
-                this.setPrixUnitaire(rs.getDouble("prix_unitaire"));
+                this.setPrixUnitaire(rs.getDouble("prix_actuel"));
                 this.setTypeComposant(c, rs.getInt("id_type_composant"));
                 return this;
             }
